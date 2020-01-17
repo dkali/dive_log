@@ -11,3 +11,37 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.app {
+  background-color: #5A6478;
+}
+
+.tabs {
+  flex-grow: initial;
+  /* TODO make gradient backround */
+}
+
+.dive_log {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+}
+
+.dive_entry {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 50px;
+  background: #495361;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.add_dive {
+  /* TODO fix for scrolling */
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 1rem;
+  align-self: flex-end;
+}

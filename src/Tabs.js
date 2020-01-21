@@ -37,27 +37,32 @@ function a11yProps(index) {
   };
 }
 
-export default function SimpleTabs() {
-  const [value, setValue] = React.useState(0);
+class SimpleTabs extends React.Component {
+  state = {value: 0};
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  render() {
+    const { diveData } = this.props;
+    const handleChange = (event, newValue) => {
+      this.setState({value: newValue})
+    };
 
-  return (
-    <div className="tabs">
-      <AppBar position="static">
-        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" centered>
-          <Tab label="Dive Log" {...a11yProps(0)} />
-          <Tab label="Map" {...a11yProps(1)} />
-        </Tabs>
-      </AppBar>
-      <TabPanel value={value} index={0}>
-        <DiveLog/>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        Item Two
-      </TabPanel>
-    </div>
-  );
+    return (
+      <div className="tabs">
+        <AppBar position="static">
+          <Tabs value={this.state.value} onChange={handleChange} aria-label="simple tabs example" centered>
+            <Tab label="Dive Log" {...a11yProps(0)} />
+            <Tab label="Map" {...a11yProps(1)} />
+          </Tabs>
+        </AppBar>
+        <TabPanel value={this.state.value} index={0}>
+          <DiveLog diveData={diveData}/>
+        </TabPanel>
+        <TabPanel value={this.state.value} index={1}>
+          Item Two
+        </TabPanel>
+      </div>
+    );
+  }
 }
+
+export default SimpleTabs;

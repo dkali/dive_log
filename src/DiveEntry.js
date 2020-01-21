@@ -1,6 +1,5 @@
 import React from 'react'
 
-
 class DiveEntry extends React.Component {
   render() {
     const { entryData } = this.props;
@@ -39,14 +38,14 @@ class DiveEntry extends React.Component {
     }
 
     return(
-      <div className='dive_entry' style={entry_style}>
-        <div className='dive_num' style={dive_num_style}>
+      <div style={entry_style}>
+        <div style={dive_num_style}>
           {entryData.dive_num}
         </div>
-        <div className='dive_date' style={dive_date_style}>
+        <div style={dive_date_style}>
           {entryData.date}
         </div>
-        <div className='dive_site' style={dive_site_style}>
+        <div style={dive_site_style}>
           {entryData.site}
         </div>
       </div>

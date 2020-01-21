@@ -50,7 +50,7 @@ class SimpleTabs extends React.Component {
     }
 
     return (
-      <div className="tabs" style={tabs_style}>
+      <div style={tabs_style}>
         <AppBar position="static">
           <Tabs value={this.state.value} onChange={handleChange} aria-label="simple tabs example" centered>
             <Tab label="Dive Log" {...a11yProps(0)} />

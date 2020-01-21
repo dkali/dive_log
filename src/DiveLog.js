@@ -2,19 +2,33 @@ import React from 'react'
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import DiveEntry from './DiveEntry'
+import AddDiveDialog from './AddDiveDialog.js'
 
 const DiveLogBody = props => {
   const entries = props.diveData.map((entry, index) => {
     entry["dive_num"] = props.diveData.length - index;
     return (
-      <DiveEntry entryData={entry}/>
+      <DiveEntry entryData={entry} key={props.diveData.length - index}/>
     )
   })
 
   return entries;
 }
 
+
 class DiveLog extends React.Component {
+  state = {
+    opened: false,
+  }
+
+  handleClickAdd = () => {
+    this.setState({opened: true})
+  }
+
+  handleClickClose = () => {
+    this.setState({opened: false})
+  }
+
   onEntryClick = index => {
 
   }
@@ -37,12 +51,18 @@ class DiveLog extends React.Component {
 
     return (
       <div>
-        <div className='dive_log' style={dive_log_style}>
+        <div style={dive_log_style}>
           <DiveLogBody diveData={diveData} onClick={this.onEntryClick}/>
-          <Fab style={add_dive_style} className='add_dive' color="primary" aria-label="add">
+          <Fab style={add_dive_style}
+               color="primary"
+               aria-label="add"
+               onClick={this.handleClickAdd}>
             <AddIcon />
           </Fab>
         </div>
+        <AddDiveDialog diveData={diveData}
+                       opened={this.state.opened}
+                       handleClickClose={this.handleClickClose}/>
       </div>
     )
   }

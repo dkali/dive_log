@@ -45,9 +45,12 @@ class SimpleTabs extends React.Component {
     const handleChange = (event, newValue) => {
       this.setState({value: newValue})
     };
+    const tabs_style = {
+      flexGrow: "initial",
+    }
 
     return (
-      <div className="tabs">
+      <div className="tabs" style={tabs_style}>
         <AppBar position="static">
           <Tabs value={this.state.value} onChange={handleChange} aria-label="simple tabs example" centered>
             <Tab label="Dive Log" {...a11yProps(0)} />

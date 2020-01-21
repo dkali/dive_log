@@ -5,13 +5,13 @@ import DiveEntry from './DiveEntry'
 
 const DiveLogBody = props => {
   const entries = props.diveData.map((entry, index) => {
-    entry["dive_num"] = index + 1;
+    entry["dive_num"] = props.diveData.length - index;
     return (
       <DiveEntry entryData={entry}/>
     )
   })
 
-  return entries
+  return entries;
 }
 
 class DiveLog extends React.Component {

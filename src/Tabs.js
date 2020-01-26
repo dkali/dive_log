@@ -38,7 +38,12 @@ function a11yProps(index) {
 }
 
 class SimpleTabs extends React.Component {
-  state = {value: 0};
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: 0,
+    };
+  }
 
   render() {
     const { diveData } = this.props;
@@ -58,7 +63,7 @@ class SimpleTabs extends React.Component {
           </Tabs>
         </AppBar>
         <TabPanel value={this.state.value} index={0}>
-          <DiveLog diveData={diveData}/>
+          <DiveLog diveData={diveData} handleSaveClick={this.props.handleSaveClick}/>
         </TabPanel>
         <TabPanel value={this.state.value} index={1}>
           Item Two

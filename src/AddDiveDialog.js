@@ -9,6 +9,7 @@ import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
 import 'date-fns';
+import format from "date-fns/format";
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
@@ -39,12 +40,47 @@ const location_style = {
 }
 
 class AddDiveDialog extends React.Component {
-  state = {
-    date: new Date()
+  constructor(props) {
+    super(props);
+    this.state = {
+      date: new Date(),
+      site: "",
+      depth: 0,
+      duration: 0,
+    };
+
+    this.handleSiteChange = this.handleSiteChange.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
+    this.handleDepthChange = this.handleDepthChange.bind(this);
+    this.handleDurationChange = this.handleDurationChange.bind(this);
   }
 
   handleDateChange = date => {
     this.setState({date: date})
+  }
+
+  handleSiteChange(event) {
+    this.setState({site: event.target.value})
+  }
+
+  handleDepthChange(event) {
+    this.setState({depth: event.target.value})
+  }
+
+  handleDurationChange(event) {
+    this.setState({duration: event.target.value})
+  }
+
+  handleClickSave = () => {
+    this.props.handleSaveClick({
+                                  date: format(this.state.date, "MM.dd.yyyy"),
+                                  site: this.state.site,
+                                  depth: this.state.depth,
+                                  duration: this.state.duration,
+                                  lat: 56.340,
+                                  lon: 43.977
+                                })
+    this.props.handleClickClose();
   }
 
   render() {
@@ -61,19 +97,23 @@ class AddDiveDialog extends React.Component {
                 id="dive_site"
                 label="Dive Site"
                 fullWidth
+                value={this.state.site}
+                onChange={this.handleSiteChange}
                 />
             </div>
             <div style={flex_row_style}>
               <Input
                 id="depth"
-                // onChange={handleChange('weight')}
                 endAdornment={<InputAdornment position="end">meters</InputAdornment>}
+                value={this.state.depth}
+                onChange={this.handleDepthChange}
               />
               <div style={offset_style}>
                 <Input
                 id="duration"
-                // onChange={handleChange('weight')}
                 endAdornment={<InputAdornment position="end">minutes</InputAdornment>}
+                value={this.state.duration}
+                onChange={this.handleDurationChange}
                 />
               </div>
             </div>
@@ -102,7 +142,7 @@ class AddDiveDialog extends React.Component {
           <Button onClick={this.props.handleClickClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={this.props.handleClickClose} color="primary">
+          <Button onClick={this.handleClickSave} color="primary">
             Save
           </Button>
         </DialogActions>

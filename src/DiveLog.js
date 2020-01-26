@@ -5,20 +5,22 @@ import DiveEntry from './DiveEntry'
 import AddDiveDialog from './AddDiveDialog.js'
 
 const DiveLogBody = props => {
-  const entries = props.diveData.map((entry, index) => {
-    entry["dive_num"] = props.diveData.length - index;
-    return (
-      <DiveEntry entryData={entry} key={props.diveData.length - index}/>
-    )
-  })
+  let entries = []
+  for (let index = props.diveData.length - 1; index >= 0; index--) {
+    let entry = props.diveData[index];
+    entry["dive_num"] = index;
+    entries.push(<DiveEntry entryData={entry} key={index}/>)
+  }
 
   return entries;
 }
 
-
 class DiveLog extends React.Component {
-  state = {
-    opened: false,
+  constructor(props) {
+    super(props);
+    this.state = {
+      opened: false,
+    };
   }
 
   handleClickAdd = () => {
@@ -62,7 +64,8 @@ class DiveLog extends React.Component {
         </div>
         <AddDiveDialog diveData={diveData}
                        opened={this.state.opened}
-                       handleClickClose={this.handleClickClose}/>
+                       handleClickClose={this.handleClickClose}
+                       handleSaveClick={this.props.handleSaveClick}/>
       </div>
     )
   }

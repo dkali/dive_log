@@ -1,6 +1,17 @@
 import React from 'react'
 
 class DiveEntry extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(){
+    // because how the fuck should I pass the parameter into callback :(
+    this.props.handleEntryClick(this.props.curr_dive);
+  }
+
   render() {
     const { entryData } = this.props;
 
@@ -38,7 +49,7 @@ class DiveEntry extends React.Component {
     }
 
     return(
-      <div style={entry_style}>
+      <div style={entry_style} onClick={this.handleClick}>
         <div style={dive_num_style}>
           {entryData.dive_num}
         </div>

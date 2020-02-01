@@ -6,6 +6,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import DiveLog from './DiveLog.js';
+import MapContainer from './MapContainer.js'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -66,7 +67,7 @@ class SimpleTabs extends React.Component {
           <DiveLog diveData={diveData} handleSaveClick={this.props.handleSaveClick}/>
         </TabPanel>
         <TabPanel value={this.state.value} index={1}>
-          Item Two
+          <MapContainer diveData={diveData}/>
         </TabPanel>
       </div>
     );

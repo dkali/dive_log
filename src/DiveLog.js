@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import DiveEntry from './DiveEntry'
-import AddDiveDialog from './AddDiveDialog.js'
-import DiveInfoDialog from './DiveInfoDialog.js'
+import DiveEntry from './DiveEntry';
+import AddDiveDialog from './AddDiveDialog.js';
+import DiveInfoDialog from './DiveInfoDialog.js';
 
 const DiveLogBody = props => {
   let entries = []

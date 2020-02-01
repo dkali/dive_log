@@ -1,5 +1,5 @@
-import React from 'react'
-import SimpleTabs from './Tabs'
+import React from 'react';
+import SimpleTabs from './Tabs';
 
 class App extends React.Component {
   constructor(props) {
@@ -11,24 +11,24 @@ class App extends React.Component {
           site: "Blue lagoon",
           depth: 30,
           duration: 25,
-          lat: 56.340,
-          lon: 43.977
+          lat: 56.265644,
+          lon: 44.880680
         },
         {
           date: "04.16.2019",
           site: "zkpd 4",
           depth: 13,
           duration: 34,
-          lat: 56.340,
-          lon: 43.977
+          lat: 56.369247,
+          lon: 43.773228
         },
         {
           date: "01.22.2020",
           site: "Thissel wreck",
           depth: 23,
           duration: 30,
-          lat: 56.340,
-          lon: 43.977
+          lat: 56.687842,
+          lon: 43.353961
         },
       ]
     };

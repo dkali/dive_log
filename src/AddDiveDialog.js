@@ -39,6 +39,16 @@ const location_style = {
   marginTop: "1em",
 }
 
+const dialog_header_style = {
+  backgroundColor: "#5A6478",
+  color: "white",
+}
+
+const dialog_body_style = {
+  backgroundColor: "#495361",
+  color: "white",
+}
+
 class AddDiveDialog extends React.Component {
   constructor(props) {
     super(props);
@@ -87,8 +97,8 @@ class AddDiveDialog extends React.Component {
     var open  = this.props.opened;
     return (
       <Dialog open={open} onClose={this.props.handleClickClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Add Dive location</DialogTitle>
-        <DialogContent>
+        <DialogTitle id="form-dialog-title" style={dialog_header_style}>Add Dive location</DialogTitle>
+        <DialogContent style={dialog_body_style}>
           <div style={flex_column_style}>
             <div style={flex_row_style}>
               <TextField
@@ -138,7 +148,7 @@ class AddDiveDialog extends React.Component {
             </Fab>
           </div>
         </DialogContent>
-        <DialogActions>
+        <DialogActions style={dialog_body_style}>
           <Button onClick={this.props.handleClickClose} color="primary">
             Cancel
           </Button>

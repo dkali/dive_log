@@ -1,6 +1,6 @@
 import React from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-var constants = require('./ApiKey.js'); 
+var constants = require('../ApiKey.js'); 
 
 const map_style = {
   width: '90%',

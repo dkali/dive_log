@@ -73,13 +73,13 @@ class DiveInfoDialog extends React.Component {
             Dive Info
             <div style={jend}>
               <img style={header_icon}
-                src={require("./icons/sharethis-5-512.png")}
+                src={require("../icons/sharethis-5-512.png")}
                 alt="share"/>
               <img style={header_icon}
-                src={require("./icons/edit-512.png")}
+                src={require("../icons/edit-512.png")}
                 alt="edit"/>
               <img style={header_icon}
-                src={require("./icons/delete-512.png")}
+                src={require("../icons/delete-512.png")}
                 alt="delete"/>
             </div>
           </div>
@@ -99,7 +99,7 @@ class DiveInfoDialog extends React.Component {
                 <div id="dive_duration">Duration: {this.props.diveData.duration} minutes</div>
               </div>
               <img style={globe_icon}
-                   src={require("./icons/globe-4-512.png")}
+                   src={require("../icons/globe-4-512.png")}
                    alt="globe"/>
             </div>
           </div>

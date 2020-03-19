@@ -19,6 +19,9 @@ import {
 import Fab from '@material-ui/core/Fab';
 import NavigationIcon from '@material-ui/icons/Navigation';
 
+import { connect } from "react-redux";
+import { addDive } from "../redux/actions";
+
 const flex_row_style = {
   display: "flex",
   flexDirection: "row",
@@ -52,8 +55,11 @@ const dialog_body_style = {
 class AddDiveDialog extends React.Component {
   constructor(props) {
     super(props);
+    const d = new Date(Date.now());
+    const dstr = d.getMonth() + "." + d.getDay() + "." + d.getFullYear();
+    
     this.state = {
-      date: new Date(),
+      date: dstr,
       site: "",
       depth: 0,
       duration: 0,
@@ -66,7 +72,8 @@ class AddDiveDialog extends React.Component {
   }
 
   handleDateChange = date => {
-    this.setState({date: date})
+    var datestring = date.getMonth() + "." + date.getDay() + "." + date.getFullYear();
+    this.setState({date: datestring})
   }
 
   handleSiteChange(event) {
@@ -82,14 +89,15 @@ class AddDiveDialog extends React.Component {
   }
 
   handleClickSave = () => {
-    this.props.handleSaveClick({
-                                  date: format(this.state.date, "MM.dd.yyyy"),
-                                  site: this.state.site,
-                                  depth: this.state.depth,
-                                  duration: this.state.duration,
-                                  lat: 56.340,
-                                  lon: 43.977
-                                })
+    // this.props.handleSaveClick({
+    //                               date: format(this.state.date, "MM.dd.yyyy"),
+    //                               site: this.state.site,
+    //                               depth: this.state.depth,
+    //                               duration: this.state.duration,
+    //                               lat: 56.340,
+    //                               lon: 43.977
+    //                             })
+    this.props.addDive(this.state);
     this.props.handleClickClose();
   }
 
@@ -97,7 +105,7 @@ class AddDiveDialog extends React.Component {
     var open  = this.props.opened;
     return (
       <Dialog open={open} onClose={this.props.handleClickClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title" style={dialog_header_style}>Add Dive location</DialogTitle>
+        <DialogTitle id="form-dialog-title" style={dialog_header_style}>{this.props.title}</DialogTitle>
         <DialogContent style={dialog_body_style}>
           <div style={flex_column_style}>
             <div style={flex_row_style}>
@@ -161,4 +169,7 @@ class AddDiveDialog extends React.Component {
   }
 }
 
-export default AddDiveDialog;
+export default connect(
+  null,
+  { addDive }
+)(AddDiveDialog);

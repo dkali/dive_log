@@ -51,7 +51,7 @@ class DiveEntry extends React.Component {
     return(
       <div style={entry_style} onClick={this.handleClick}>
         <div style={dive_num_style}>
-          {entryData.dive_num}
+          {entryData.id}
         </div>
         <div style={dive_date_style}>
           {entryData.date}

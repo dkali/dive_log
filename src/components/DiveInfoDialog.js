@@ -3,6 +3,8 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import 'date-fns';
+import { connect } from "react-redux";
+import { getDiveById } from "../redux/selectors";
 
 const flex_row_style = {
   display: "flex",
@@ -65,7 +67,7 @@ const jend = {
 
 class DiveInfoDialog extends React.Component {
   render() {
-    var open  = this.props.opened;
+    var open = this.props.opened;
     return (
       <Dialog open={open} onClose={this.props.handleClickClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title" style={dialog_header_style}>
@@ -87,16 +89,16 @@ class DiveInfoDialog extends React.Component {
         <DialogContent style={dialog_body_style}>
           <div style={flex_column_style}>
             <div style={flex_row_style}>
-              <div id="dive_num">Dive #{this.props.diveData.dive_num}</div>
-              <div id="dive_date" style={offset_style}>{this.props.diveData.date}</div>
+              <div id="dive_num">Dive #{this.props.dive_data.dive_num}</div>
+              <div id="dive_date" style={offset_style}>{this.props.dive_data.date}</div>
             </div>
             <div id="dive_site" style={{...flex_row_style, ...text_center_style}}>
-              <h3>{this.props.diveData.site}</h3>
+              <h3>{this.props.dive_data.site}</h3>
             </div>
             <div style={flex_row_style}>
               <div style={flex_column_style}>
-                <div id="dive_depth">Depth: {this.props.diveData.depth} meters</div>
-                <div id="dive_duration">Duration: {this.props.diveData.duration} minutes</div>
+                <div id="dive_depth">Depth: {this.props.dive_data.depth} meters</div>
+                <div id="dive_duration">Duration: {this.props.dive_data.duration} minutes</div>
               </div>
               <img style={globe_icon}
                    src={require("../icons/globe-4-512.png")}
@@ -109,4 +111,11 @@ class DiveInfoDialog extends React.Component {
   }
 }
 
-export default DiveInfoDialog;
+function mapStateToProps(state) {
+  const dive_data = getDiveById(state, state.dives.current_dive)
+  return { dive_data }
+}
+
+export default connect(
+  mapStateToProps
+)(DiveInfoDialog);

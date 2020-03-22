@@ -9,32 +9,29 @@ class DiveLog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dialog_title: "",
       add_dialog_opened: false,
       dive_info_opened: false,
-      // current_dive: 0,
+      dialog_view_state: "add",
     };
   }
 
   handleClickAddDive = () => {
-    this.setState({add_dialog_opened: true, dialog_title: "Add Dive location"})
+    this.setState({add_dialog_opened: true, dialog_view_state: "add"})
   }
 
   handleClickAddDiveClose = () => {
     this.setState({add_dialog_opened: false})
   }
 
-  // handleEntryClick = curr_dive => {
-  //   this.setState({dive_info_opened: true, current_dive: curr_dive})
-  // }
+  handleEntryClick = curr_dive => {
+    this.setState({dive_info_opened: true, current_dive: curr_dive})
+  }
 
-  // handleDiveInfoClose = () => {
-  //   this.setState({dive_info_opened: false})
-  // }
+  handleDiveInfoClose = () => {
+    this.setState({dive_info_opened: false})
+  }
 
   render() {
-    const { diveData } = this.props;
-
     const add_dive_style = {
       position: "fixed",
       bottom: "2em",
@@ -51,7 +48,7 @@ class DiveLog extends React.Component {
     return (
       <div>
         <div style={dive_log_style}>
-          <DiveList/>
+          <DiveList handleEntryClick={this.handleEntryClick}/>
           <Fab style={add_dive_style}
                color="primary"
                aria-label="add"
@@ -60,11 +57,10 @@ class DiveLog extends React.Component {
           </Fab>
         </div>
         <AddDiveDialog opened={this.state.add_dialog_opened}
-                       title={this.state.dialog_title}
+                       dialog_view_state={this.state.dialog_view_state}
                        handleClickClose={this.handleClickAddDiveClose}/>
-        {/* <DiveInfoDialog diveData={diveData[this.state.current_dive]}
-                        opened={this.state.dive_info_opened}
-                        handleClickClose={this.handleDiveInfoClose}/> */}
+        <DiveInfoDialog opened={this.state.dive_info_opened}
+                        handleClickClose={this.handleDiveInfoClose}/>
       </div>
     )
   }

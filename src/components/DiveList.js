@@ -3,10 +3,13 @@ import DiveEntry from './DiveEntry';
 import { connect } from "react-redux";
 import { getDives } from "../redux/selectors";
 
-const DiveList = ({ dives }) => {
+const DiveList = ( {dives, handleEntryClick} ) => {
   let entries = []
-  dives.forEach(dive_data => 
-    entries.push(<DiveEntry entryData={dive_data} key={dive_data.id}/>)
+  dives.forEach(dive_entry => 
+    entries.push(<DiveEntry entryData={dive_entry.dive_data}
+                            key={dive_entry.id}
+                            dive_num={dive_entry.id}
+                            handleEntryClick={handleEntryClick}/>)
   )
 
   return entries;

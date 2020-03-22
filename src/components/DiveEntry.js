@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from "react-redux";
+import { selectDive } from "../redux/actions";
 
 class DiveEntry extends React.Component {
   constructor(props) {
@@ -8,12 +10,13 @@ class DiveEntry extends React.Component {
   }
 
   handleClick(){
-    // because how the fuck should I pass the parameter into callback :(
-    this.props.handleEntryClick(this.props.curr_dive);
+    const { entryData } = this.props;
+    this.props.selectDive(entryData.id);
+    this.props.handleEntryClick();
   }
 
   render() {
-    const { entryData } = this.props;
+    const { entryData, dive_num } = this.props;
 
     const entry_style = {
       display: "flex",
@@ -51,7 +54,7 @@ class DiveEntry extends React.Component {
     return(
       <div style={entry_style} onClick={this.handleClick}>
         <div style={dive_num_style}>
-          {entryData.id}
+          {dive_num}
         </div>
         <div style={dive_date_style}>
           {entryData.date}
@@ -64,4 +67,7 @@ class DiveEntry extends React.Component {
   }
 }
 
-export default DiveEntry;
+export default connect(
+  null,
+  { selectDive }
+)(DiveEntry);

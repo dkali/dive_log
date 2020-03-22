@@ -1,4 +1,4 @@
-import { ADD_DIVE, EDIT_DIVE, DELETE_DIVE } from "../actionTypes"
+import { ADD_DIVE, SELECT_DIVE, EDIT_DIVE, DELETE_DIVE } from "../actionTypes"
 
 const initialState = {
   allIds: [1, 2, 3],
@@ -27,7 +27,8 @@ const initialState = {
       lat: 56.687842,
       lon: 43.353961
     },
-  }
+  },
+  current_dive: 1, // TODO, handle empty storage
 }
 
 export default function(state = initialState, action) {
@@ -39,6 +40,13 @@ export default function(state = initialState, action) {
         allIds: [...state.allIds, id],
         byIds: {...state.byIds,
                 [id]: content}
+      }
+    }
+
+    case SELECT_DIVE: {
+      return {
+        ...state,
+        current_dive: action.dive_id,
       }
     }
 

@@ -56,7 +56,7 @@ class AddDiveDialog extends React.Component {
   constructor(props) {
     super(props);
     const d = new Date(Date.now());
-    const dstr = d.getMonth() + "." + d.getDay() + "." + d.getFullYear();
+    const dstr = d.getDay() + "." + d.getMonth() + "." + d.getFullYear();
     
     this.state = {
       date: dstr,
@@ -72,7 +72,7 @@ class AddDiveDialog extends React.Component {
   }
 
   handleDateChange = date => {
-    var datestring = date.getMonth() + "." + date.getDay() + "." + date.getFullYear();
+    var datestring = date.getDay() + "." + date.getMonth() + "." + date.getFullYear();
     this.setState({date: datestring})
   }
 
@@ -89,14 +89,6 @@ class AddDiveDialog extends React.Component {
   }
 
   handleClickSave = () => {
-    // this.props.handleSaveClick({
-    //                               date: format(this.state.date, "MM.dd.yyyy"),
-    //                               site: this.state.site,
-    //                               depth: this.state.depth,
-    //                               duration: this.state.duration,
-    //                               lat: 56.340,
-    //                               lon: 43.977
-    //                             })
     this.props.addDive(this.state);
     this.props.handleClickClose();
   }
@@ -139,7 +131,7 @@ class AddDiveDialog extends React.Component {
               <KeyboardDatePicker
                 disableToolbar
                 variant="inline"
-                format="MM/dd/yyyy"
+                format="dd.MM.yyyy"
                 margin="normal"
                 id="date-picker-inline"
                 label="Date picker inline"
@@ -169,7 +161,26 @@ class AddDiveDialog extends React.Component {
   }
 }
 
+function mapStateToProps(state, ownProps) {
+  const { dialog_view_state } = ownProps;
+  let title = "";
+  switch (dialog_view_state) {
+    case "add":
+      title = "Add new dive"
+      break;
+
+    case "edit":
+      title = "Edit dive";
+      break;
+
+    default:
+      //wtf
+  }
+
+  return { title }
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   { addDive }
 )(AddDiveDialog);

@@ -4,7 +4,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import 'date-fns';
 import { connect } from "react-redux";
-import { getDiveById } from "../redux/selectors";
+import { getCurrentDiveData } from "../redux/selectors";
 
 const flex_row_style = {
   display: "flex",
@@ -112,8 +112,8 @@ class DiveInfoDialog extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const dive_data = getDiveById(state, state.dives.current_dive)
-  return { dive_data }
+  const dive_data = getCurrentDiveData(state)
+  return { dive_data };
 }
 
 export default connect(

@@ -11,7 +11,7 @@ class DiveEntry extends React.Component {
 
   handleClick(){
     const { entryData } = this.props;
-    this.props.selectDive(entryData.id);
+    this.props.selectDive(this.props.dive_num);
     this.props.handleEntryClick();
   }
 

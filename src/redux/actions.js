@@ -12,5 +12,5 @@ export const addDive = content => ({
 
 export const selectDive = id => ({
   type: SELECT_DIVE,
-  dive_id: { id }
+  dive_id: id,
 });

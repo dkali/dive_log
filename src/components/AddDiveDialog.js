@@ -21,6 +21,7 @@ import NavigationIcon from '@material-ui/icons/Navigation';
 
 import { connect } from "react-redux";
 import { addDive } from "../redux/actions";
+import { getCurrentDiveData } from "../redux/selectors"
 
 const flex_row_style = {
   display: "flex",
@@ -164,6 +165,7 @@ class AddDiveDialog extends React.Component {
 function mapStateToProps(state, ownProps) {
   const { dialog_view_state } = ownProps;
   let title = "";
+  let dialog_data = {};
   switch (dialog_view_state) {
     case "add":
       title = "Add new dive"
@@ -171,13 +173,14 @@ function mapStateToProps(state, ownProps) {
 
     case "edit":
       title = "Edit dive";
+      dialog_data = getCurrentDiveData(state);
       break;
 
     default:
       //wtf
   }
 
-  return { title }
+  return { title, dialog_data }
 }
 
 export default connect(

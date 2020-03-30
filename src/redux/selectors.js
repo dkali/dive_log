@@ -6,7 +6,12 @@ export const getDiveList = store =>
 export function getDiveById(store, id) {
   const dives = getDivesState(store);
   const dive_data = dives.byIds[id];
-  return { dive_data, id }
+  return dive_data;
+}
+
+export function getCurrentDiveData(store) { 
+  const dive_data = getDiveById(store, getDivesState(store).current_dive);
+  return dive_data;
 }
 
 export const getDives = store =>

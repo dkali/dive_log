@@ -4,7 +4,8 @@ const initialState = {
   allIds: [1, 2, 3],
   byIds: {
     1: {
-      date: "03.20.2019",
+      dive_num: 1,
+      date: "Mar 20, 2019",
       site: "Blue lagoon",
       depth: 30,
       duration: 25,
@@ -12,7 +13,8 @@ const initialState = {
       lon: 44.880680
     },
     2: {
-      date: "04.16.2019",
+      dive_num: 2,
+      date: "Apr 16, 2019",
       site: "zkpd 4",
       depth: 13,
       duration: 34,
@@ -20,7 +22,8 @@ const initialState = {
       lon: 43.773228
     },
     3: {
-      date: "01.22.2020",
+      dive_num: 3,
+      date: "Jan 22, 2020",
       site: "Thissel wreck",
       depth: 23,
       duration: 30,
@@ -34,7 +37,8 @@ const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
     case ADD_DIVE: {      
-      const {id, content} = action.payload
+      let {id, content} = action.payload;
+      content["dive_num"] = id;
       return {
         ...state,
         allIds: [...state.allIds, id],

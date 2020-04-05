@@ -57,10 +57,9 @@ class AddDiveDialog extends React.Component {
   constructor(props) {
     super(props);
     const d = new Date(Date.now());
-    const dstr = d.getDay() + "." + d.getMonth() + "." + d.getFullYear();
     
     this.state = {
-      date: dstr,
+      date: format(d, "MMM dd, yyyy"),
       site: "",
       depth: 0,
       duration: 0,
@@ -73,8 +72,7 @@ class AddDiveDialog extends React.Component {
   }
 
   handleDateChange = date => {
-    var datestring = date.getDay() + "." + date.getMonth() + "." + date.getFullYear();
-    this.setState({date: datestring})
+    this.setState({date: format(date, "MMM dd, yyyy")})
   }
 
   handleSiteChange(event) {
@@ -89,8 +87,19 @@ class AddDiveDialog extends React.Component {
     this.setState({duration: event.target.value})
   }
 
+  clear_state_values = () => {
+    const d = new Date(Date.now());
+    this.setState({
+      date: format(d, "MMM dd, yyyy"),
+      site: "",
+      depth: 0,
+      duration: 0,
+    });
+  }
+
   handleClickSave = () => {
     this.props.addDive(this.state);
+    this.clear_state_values();
     this.props.handleClickClose();
   }
 
@@ -132,7 +141,7 @@ class AddDiveDialog extends React.Component {
               <KeyboardDatePicker
                 disableToolbar
                 variant="inline"
-                format="dd.MM.yyyy"
+                format="MMM dd, yyyy"
                 margin="normal"
                 id="date-picker-inline"
                 label="Date picker inline"
@@ -174,6 +183,7 @@ function mapStateToProps(state, ownProps) {
     case "edit":
       title = "Edit dive";
       dialog_data = getCurrentDiveData(state);
+      // save dialod data in SetState 
       break;
 
     default:

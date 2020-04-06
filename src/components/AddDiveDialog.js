@@ -71,6 +71,16 @@ class AddDiveDialog extends React.Component {
     this.handleDurationChange = this.handleDurationChange.bind(this);
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot){
+    if (this.props.dialog_data !== prevProps.dialog_data)
+      this.setState({
+        date: this.props.dialog_data.date,
+        site: this.props.dialog_data.site,
+        depth: this.props.dialog_data.depth,
+        duration: this.props.dialog_data.duration,
+      });
+  }
+
   handleDateChange = date => {
     this.setState({date: format(date, "MMM dd, yyyy")})
   }
@@ -104,7 +114,8 @@ class AddDiveDialog extends React.Component {
   }
 
   render() {
-    var open  = this.props.opened;
+    var open = this.props.opened;
+
     return (
       <Dialog open={open} onClose={this.props.handleClickClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title" style={dialog_header_style}>{this.props.title}</DialogTitle>
@@ -177,13 +188,12 @@ function mapStateToProps(state, ownProps) {
   let dialog_data = {};
   switch (dialog_view_state) {
     case "add":
-      title = "Add new dive"
+      title = "Add new dive";
       break;
 
     case "edit":
       title = "Edit dive";
       dialog_data = getCurrentDiveData(state);
-      // save dialod data in SetState 
       break;
 
     default:

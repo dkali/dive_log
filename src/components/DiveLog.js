@@ -19,6 +19,10 @@ class DiveLog extends React.Component {
     this.setState({add_dialog_opened: true, dialog_view_state: "add"})
   }
 
+  handleClickEditDive = () => {
+    this.setState({add_dialog_opened: true, dialog_view_state: "edit"})
+  }
+
   handleClickAddDiveClose = () => {
     this.setState({add_dialog_opened: false})
   }
@@ -29,10 +33,6 @@ class DiveLog extends React.Component {
 
   handleDiveInfoClose = () => {
     this.setState({dive_info_opened: false})
-  }
-
-  toggleDialogView = (new_val) => {
-    this.setState({dialog_view_state: new_val});
   }
 
   render() {
@@ -65,7 +65,7 @@ class DiveLog extends React.Component {
                        handleClickClose={this.handleClickAddDiveClose}/>
         <DiveInfoDialog opened={this.state.dive_info_opened}
                         handleClickClose={this.handleDiveInfoClose}
-                        toggleDialogView={this.toggleDialogView}/>
+                        handleClickEditDive={this.handleClickEditDive}/>
       </div>
     )
   }

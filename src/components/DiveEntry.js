@@ -52,14 +52,14 @@ class DiveEntry extends React.Component {
     }
 
     return(
-      <div style={entry_style} onClick={this.handleClick}>
-        <div style={dive_num_style}>
+      <div aria-label={"dive_entry"} style={entry_style} onClick={this.handleClick}>
+        <div aria-label={"dive_number"} style={dive_num_style}>
           {dive_num}
         </div>
-        <div style={dive_date_style}>
+        <div aria-label={"dive_date"} style={dive_date_style}>
           {entryData.date}
         </div>
-        <div style={dive_site_style}>
+        <div aria-label={"dive_site"} style={dive_site_style}>
           {entryData.site}
         </div>
       </div>

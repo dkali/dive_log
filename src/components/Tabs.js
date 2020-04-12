@@ -59,8 +59,8 @@ class SimpleTabs extends React.Component {
       <div style={tabs_style}>
         <AppBar position="static">
           <Tabs value={this.state.value} onChange={handleChange} aria-label="simple tabs example" centered>
-            <Tab label="Dive Log" {...a11yProps(0)} />
-            <Tab label="Map" {...a11yProps(1)} />
+            <Tab data-testid={"dive_log_tab"} label="Dive Log" {...a11yProps(0)} />
+            <Tab data-testid={"map_tab"} label="Map" {...a11yProps(1)} />
           </Tabs>
         </AppBar>
         <TabPanel value={this.state.value} index={0}>

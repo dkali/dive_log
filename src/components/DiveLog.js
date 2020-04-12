@@ -50,7 +50,7 @@ class DiveLog extends React.Component {
     }
 
     return (
-      <div>
+      <div data-testid={'dive_log'}>
         <div style={dive_log_style}>
           <DiveList handleEntryClick={this.handleEntryClick}/>
           <Fab style={add_dive_style}

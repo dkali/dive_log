@@ -74,22 +74,22 @@ class DiveInfoDialog extends React.Component {
     var open = this.props.opened;
 
     return (
-      <Dialog open={open} onClose={this.props.handleClickClose} aria-labelledby="form-dialog-title">
+      <Dialog open={open} onClose={this.props.handleClickClose}>
         <DialogTitle id="form-dialog-title" style={dialog_header_style}>
           <div style={flex_header_style}>
             Dive Info
             <div style={jend}>
-              <IconButton aria-label="share" size="small">
+              <IconButton data-testid={"share"} size="small">
                 <img style={header_icon}
                   src={require("../icons/sharethis-5-512.png")}
                   alt="share"/>
               </IconButton>
-              <IconButton aria-label="edit" onClick={this.clickEditDive} size="small">
+              <IconButton data-testid={"edit"} onClick={this.clickEditDive} size="small">
                 <img style={header_icon}
                   src={require("../icons/edit-512.png")}
                   alt="edit"/>
               </IconButton>
-              <IconButton aria-label="delete" size="small">
+              <IconButton data-testid={"delete"} size="small">
                 <img style={header_icon}
                   src={require("../icons/delete-512.png")}
                   alt="delete"/>

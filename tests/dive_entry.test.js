@@ -36,9 +36,9 @@ test('component DiveEntry: displays UI elements', async () => {
     </Provider>);
 
   // Assert
-  expect(screen.getByTestId('dive_number')).toHaveTextContent(key);
-  expect(screen.getByTestId('dive_date')).toHaveTextContent(dive_entry.date);
-  expect(screen.getByTestId('dive_site')).toHaveTextContent(dive_entry.site);
+  expect(screen.getByTestId('dive_entry_number')).toHaveTextContent(key);
+  expect(screen.getByTestId('dive_entry_date')).toHaveTextContent(dive_entry.date);
+  expect(screen.getByTestId('dive_entry_site')).toHaveTextContent(dive_entry.site);
 })
 
 test('component DiveEntry: handle click event', async () => {

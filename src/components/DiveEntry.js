@@ -10,7 +10,6 @@ class DiveEntry extends React.Component {
   }
 
   handleClick(){
-    const { entryData } = this.props;
     this.props.selectDive(this.props.dive_num);
     this.props.handleEntryClick();
   }
@@ -53,13 +52,13 @@ class DiveEntry extends React.Component {
 
     return(
       <div data-testid={"dive_entry"} style={entry_style} onClick={this.handleClick}>
-        <div data-testid={"dive_number"} style={dive_num_style}>
+        <div data-testid={"dive_entry_number"} style={dive_num_style}>
           {dive_num}
         </div>
-        <div data-testid={"dive_date"} style={dive_date_style}>
+        <div data-testid={"dive_entry_date"} style={dive_date_style}>
           {entryData.date}
         </div>
-        <div data-testid={"dive_site"} style={dive_site_style}>
+        <div data-testid={"dive_entry_site"} style={dive_site_style}>
           {entryData.site}
         </div>
       </div>

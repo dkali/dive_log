@@ -60,7 +60,7 @@ class AddDiveDialog extends React.Component {
     
     this.state = {
       date: format(d, "MMM dd, yyyy"),
-      site: "",
+      site: '',
       depth: 0,
       duration: 0,
     };
@@ -69,16 +69,6 @@ class AddDiveDialog extends React.Component {
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleDepthChange = this.handleDepthChange.bind(this);
     this.handleDurationChange = this.handleDurationChange.bind(this);
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot){
-    if (this.props.dialog_data !== prevProps.dialog_data)
-      this.setState({
-        date: this.props.dialog_data.date,
-        site: this.props.dialog_data.site,
-        depth: this.props.dialog_data.depth,
-        duration: this.props.dialog_data.duration,
-      });
   }
 
   handleDateChange = date => {
@@ -109,6 +99,10 @@ class AddDiveDialog extends React.Component {
 
   handleClickSave = () => {
     this.props.addDive(this.state);
+    this.handleClickClose();
+  }
+
+  handleClickClose = () => {
     this.clear_state_values();
     this.props.handleClickClose();
   }
@@ -125,7 +119,7 @@ class AddDiveDialog extends React.Component {
               <TextField
                 autoFocus
                 margin="dense"
-                id="dive_site"
+                inputProps={{ 'data-testid': 'edit_dialog_site' }}
                 label="Dive Site"
                 fullWidth
                 value={this.state.site}
@@ -134,17 +128,17 @@ class AddDiveDialog extends React.Component {
             </div>
             <div style={flex_row_style}>
               <Input
-                id="depth"
+                inputProps={{ 'data-testid': 'edit_dialog_depth' }}
                 endAdornment={<InputAdornment position="end">meters</InputAdornment>}
                 value={this.state.depth}
                 onChange={this.handleDepthChange}
               />
               <div style={offset_style}>
                 <Input
-                id="duration"
-                endAdornment={<InputAdornment position="end">minutes</InputAdornment>}
-                value={this.state.duration}
-                onChange={this.handleDurationChange}
+                  inputProps={{ 'data-testid': 'edit_dialog_duration' }}
+                  endAdornment={<InputAdornment position="end">minutes</InputAdornment>}
+                  value={this.state.duration}
+                  onChange={this.handleDurationChange}
                 />
               </div>
             </div>
@@ -154,7 +148,7 @@ class AddDiveDialog extends React.Component {
                 variant="inline"
                 format="MMM dd, yyyy"
                 margin="normal"
-                id="date-picker-inline"
+                inputProps={{ 'data-testid': 'edit_dialog_date-picker-inline' }}
                 label="Date picker inline"
                 value={this.state.date}
                 onChange={this.handleDateChange}
@@ -170,7 +164,9 @@ class AddDiveDialog extends React.Component {
           </div>
         </DialogContent>
         <DialogActions style={dialog_body_style}>
-          <Button onClick={this.props.handleClickClose} color="primary">
+          <Button onClick={this.handleClickClose}
+                  color="primary"
+                  data-testid={'edit_dialog_close'} >
             Cancel
           </Button>
           <Button onClick={this.handleClickSave} color="primary">

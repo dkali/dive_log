@@ -11,7 +11,7 @@ export class MapContainer extends React.Component {
   render() {
     const { diveData } = this.props;
 
-    const listItems = this.props.diveData.map((dive) => <Marker
+    const listItems = diveData.map((dive) => <Marker
       title={dive.site}
       name={dive.site}
       key={dive.lat + dive.lon}

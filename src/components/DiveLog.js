@@ -55,15 +55,19 @@ class DiveLog extends React.Component {
           <DiveList handleEntryClick={this.handleEntryClick}/>
           <Fab style={add_dive_style}
                color="primary"
-               aria-label="add"
+               data-testid={'add_new_dive_btn'}
                onClick={this.handleClickAddDive}>
             <AddIcon />
           </Fab>
         </div>
-        <AddDiveDialog opened={this.state.add_dialog_opened}
+        <AddDiveDialog 
+                       // inputProps={{'data-testid': 'add_dive_dialog'}}
+                       data-testid={'add_dive_dialog'}
+                       opened={this.state.add_dialog_opened}
                        dialog_view_state={this.state.dialog_view_state}
                        handleClickClose={this.handleClickAddDiveClose}/>
-        <DiveInfoDialog opened={this.state.dive_info_opened}
+        <DiveInfoDialog data-testid={'dive_info_dialog'}
+                        opened={this.state.dive_info_opened}
                         handleClickClose={this.handleDiveInfoClose}
                         handleClickEditDive={this.handleClickEditDive}/>
       </div>

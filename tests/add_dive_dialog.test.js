@@ -1,12 +1,11 @@
 // import dependencies
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
-import 'date-fns';
-import format from "date-fns/format";
-
+import 'date-fns'
+import format from "date-fns/format"
 
 // import react-testing methods
-import { render, fireEvent, waitFor, screen } from '@testing-library/react'
+import { render, fireEvent, waitFor, screen, getAllByTestId } from '@testing-library/react'
 
 // add custom jest matchers from jest-dom
 import '@testing-library/jest-dom/extend-expect'
@@ -16,25 +15,27 @@ import AddDiveDialog from '../src/components/AddDiveDialog.js'
 import Tabs from '../src/components/Tabs.js'
 
 // for async to work
-import regeneratorRuntime from "regenerator-runtime";
+import regeneratorRuntime from "regenerator-runtime"
 
 //redux
-import { Provider } from 'react-redux';
+import { Provider } from 'react-redux'
 import store from '../src/redux/store'
 
-// test('component AddDiveDialog: press Add buton invokes dialog', async () => {
-//   // Arrange
-//   const { container, asFragment } = render(
-//     <Provider store={store}>
-//       <Tabs/>
-//     </Provider>);
+test('component AddDiveDialog: press Add buton invokes dialog', async () => {
+  // Arrange
+  const { container, asFragment } = render(
+    <Provider store={store}>
+      <Tabs/>
+    </Provider>);
 
-//   // Act
-//   fireEvent.click(screen.getByTestId('add_new_dive_btn'));
+  // Act
+  fireEvent.click(screen.getByTestId('add_new_dive_btn'));
 
-//   // Assert
-//   expect(screen.getByTestId('add_dive_dialog')).toHaveAttribute('opened', 'true');
-// })
+  // Assert;
+  expect(screen.getByTestId('edit_dialog_site')).toBeTruthy();
+  expect(screen.getByTestId('edit_dialog_depth')).toBeTruthy();
+  expect(screen.getByTestId('edit_dialog_duration')).toBeTruthy();
+})
 
 test('component AddDiveDialog: initial empty values', async () => {
   // Arrange
@@ -121,4 +122,36 @@ test('component AddDiveDialog: Cancel button clears input', async () => {
   expect(screen.getByTestId('edit_dialog_duration')).toHaveValue(test_values.duration.toString());
   const d = new Date(Date.now());
   expect(screen.getByTestId('edit_dialog_date-picker-inline')).toHaveValue(format(d, "MMM dd, yyyy"));
+})
+
+test('component AddDiveDialog: Add new dive', async () => {
+  // Arrange
+  const { container, asFragment } = render(
+    <Provider store={store}>
+      <Tabs/>
+    </Provider>);
+
+  const test_values = {site: 'Ozero 5',
+                       depth: 13,
+                       duration: 20}
+
+  // Act
+  const prev_len = screen.getAllByTestId('dive_entry').length;
+  // open dialog
+  fireEvent.click(screen.getByTestId('add_new_dive_btn'));
+  // fill in values
+  fireEvent.change(screen.getByTestId('edit_dialog_site'), {
+    target: {value: test_values.site},
+  });
+  fireEvent.change(screen.getByTestId('edit_dialog_depth'), {
+    target: {value: test_values.depth},
+  })
+  fireEvent.change(screen.getByTestId('edit_dialog_duration'), {
+    target: {value: test_values.duration},
+  })
+  // Save dive
+  fireEvent.click(screen.getByTestId('edit_dialog_save'));
+  
+  // Assert
+  expect(screen.getAllByTestId('dive_entry')).toHaveLength(prev_len + 1);
 })

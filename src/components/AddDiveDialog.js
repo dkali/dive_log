@@ -72,6 +72,7 @@ class AddDiveDialog extends React.Component {
   }
 
   handleDateChange = date => {
+    // TDOD: handle users manual imput, when date is invalid
     this.setState({date: format(date, "MMM dd, yyyy")})
   }
 
@@ -169,7 +170,9 @@ class AddDiveDialog extends React.Component {
                   data-testid={'edit_dialog_close'} >
             Cancel
           </Button>
-          <Button onClick={this.handleClickSave} color="primary">
+          <Button onClick={this.handleClickSave}
+                  color="primary"
+                  data-testid={'edit_dialog_save'}>
             Save
           </Button>
         </DialogActions>

@@ -55,7 +55,13 @@ export default function(state = initialState, action) {
     }
 
     case EDIT_DIVE: {
-      return state;
+      let {dive_id, content} = action.payload;
+      var updated_byIds = state.byIds;
+      updated_byIds[dive_id] = content;
+      return {
+        ...state,
+        byIds: updated_byIds,
+      }
     }
 
     case DELETE_DIVE: {

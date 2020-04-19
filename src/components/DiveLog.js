@@ -2,6 +2,7 @@ import React from 'react';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import AddDiveDialog from './AddDiveDialog.js';
+import EditDiveDialog from './EditDiveDialog.js';
 import DiveInfoDialog from './DiveInfoDialog.js';
 import DiveList from './DiveList.js'
 
@@ -10,29 +11,27 @@ class DiveLog extends React.Component {
     super(props);
     this.state = {
       add_dialog_opened: false,
+      edit_dialog_opened: false,
       dive_info_opened: false,
-      dialog_view_state: "add",
     };
   }
 
   handleClickAddDive = () => {
-    this.setState({add_dialog_opened: true, dialog_view_state: "add"})
+    this.setState({add_dialog_opened: true})
   }
 
   handleClickEditDive = () => {
-    this.setState({add_dialog_opened: true, dialog_view_state: "edit"})
+    this.setState({edit_dialog_opened: true})
   }
-
-  handleClickAddDiveClose = () => {
-    this.setState({add_dialog_opened: false})
-  }
-
+  
   handleEntryClick = () => {
     this.setState({dive_info_opened: true})
   }
 
-  handleDiveInfoClose = () => {
-    this.setState({dive_info_opened: false})
+  handleClickCloseDialog = () => {
+    this.setState({add_dialog_opened: false,
+                   edit_dialog_opened: false,
+                   dive_info_opened: false})
   }
 
   render() {
@@ -60,15 +59,15 @@ class DiveLog extends React.Component {
             <AddIcon />
           </Fab>
         </div>
-        <AddDiveDialog 
-                       // inputProps={{'data-testid': 'add_dive_dialog'}}
-                       data-testid={'add_dive_dialog'}
+        <AddDiveDialog data-testid={'add_dive_dialog'}
                        opened={this.state.add_dialog_opened}
-                       dialog_view_state={this.state.dialog_view_state}
-                       handleClickClose={this.handleClickAddDiveClose}/>
+                       handleClickClose={this.handleClickCloseDialog}/>
+        <EditDiveDialog data-testid={'add_dive_dialog'}
+                        opened={this.state.edit_dialog_opened}
+                        handleClickClose={this.handleClickCloseDialog}/>
         <DiveInfoDialog data-testid={'dive_info_dialog'}
                         opened={this.state.dive_info_opened}
-                        handleClickClose={this.handleDiveInfoClose}
+                        handleClickClose={this.handleClickCloseDialog}
                         handleClickEditDive={this.handleClickEditDive}/>
       </div>
     )

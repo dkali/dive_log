@@ -1,25 +1,25 @@
 // import dependencies
-import React from 'react'
-import '@testing-library/jest-dom/extend-expect'
-import 'date-fns'
-import format from "date-fns/format"
+import React from 'react';
+import '@testing-library/jest-dom/extend-expect';
+import 'date-fns';
+import format from "date-fns/format";
 
 // import react-testing methods
-import { render, fireEvent, waitFor, screen, getAllByTestId } from '@testing-library/react'
+import { render, fireEvent, waitFor, screen, getAllByTestId } from '@testing-library/react';
 
 // add custom jest matchers from jest-dom
-import '@testing-library/jest-dom/extend-expect'
+import '@testing-library/jest-dom/extend-expect';
 
 // the component to test
-import AddDiveDialog from '../src/components/AddDiveDialog.js'
-import Tabs from '../src/components/Tabs.js'
+import AddDiveDialog from '../src/components/AddDiveDialog.js';
+import Tabs from '../src/components/Tabs.js';
 
 // for async to work
-import regeneratorRuntime from "regenerator-runtime"
+import regeneratorRuntime from "regenerator-runtime";
 
 //redux
-import { Provider } from 'react-redux'
-import store from '../src/redux/store'
+import { Provider } from 'react-redux';
+import store from '../src/redux/store';
 
 test('component AddDiveDialog: press Add buton invokes dialog', async () => {
   // Arrange
@@ -39,13 +39,10 @@ test('component AddDiveDialog: press Add buton invokes dialog', async () => {
 
 test('component AddDiveDialog: initial empty values', async () => {
   // Arrange
-  const handleClickAddDiveClose = jest.fn();
   const { container, asFragment } = render(
     <Provider store={store}>
       <AddDiveDialog data-testid={'add_dive_dialog'}
-                     opened={true}
-                     dialog_view_state={"add"}
-                     handleClickClose={handleClickAddDiveClose}/>
+                     opened={true}/>
     </Provider>);
 
   // Assert

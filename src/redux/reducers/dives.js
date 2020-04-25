@@ -31,7 +31,7 @@ const initialState = {
       lon: 43.353961
     },
   },
-  current_dive: 1, // TODO, handle empty storage
+  current_dive: -1, // TODO, handle empty storage
 }
 
 export default function(state = initialState, action) {

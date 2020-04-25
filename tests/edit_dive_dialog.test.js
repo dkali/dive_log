@@ -11,6 +11,7 @@ import { render, fireEvent, waitFor, screen, getAllByTestId } from '@testing-lib
 import '@testing-library/jest-dom/extend-expect';
 
 // the component to test
+import EditDiveDialog from '../src/components/EditDiveDialog.js';
 import Tabs from '../src/components/Tabs.js';
 
 // for async to work
@@ -22,8 +23,9 @@ import store from '../src/redux/store';
 
 jest.mock('../src/redux/selectors')
 
-test('component DiveInfoDialog: display currently selected dive data', async () => {
+test('component EditDiveDialog: display currently selected dive data', async () => {
   // Arrange
+  const handle_close_click = jest.fn();
   const dives = {
     allIds: [1, 2, 3],
     byIds: {
@@ -36,8 +38,17 @@ test('component DiveInfoDialog: display currently selected dive data', async () 
         lat: 56.265644,
         lon: 44.880680
       },
+      2: {
+        dive_num: 2,
+        date: "Mar 20, 2019",
+        site: "Red lagoon",
+        depth: 30,
+        duration: 25,
+        lat: 56.265644,
+        lon: 44.880680
+      }
     },
-    current_dive: 1, // TODO, handle empty storage
+    current_dive: 2,
   };
   const test_dive = dives.byIds[1];
 
@@ -45,7 +56,9 @@ test('component DiveInfoDialog: display currently selected dive data', async () 
   foo.getDivesState.mockImplementation(() => dives);
   foo.getDiveList.mockImplementation(() => dives.allIds);
   foo.getDiveById.mockImplementation(() => test_dive);
-  foo.getCurrentDiveData.mockImplementation(() => test_dive);
+  // getCurrentDiveData mocked twice to trigger change in props for EditDiveDialog,
+  // that are checked in componentDidUpdate 
+  foo.getCurrentDiveData.mockReturnValueOnce(dives.byIds[2]).mockReturnValue(test_dive);
   foo.getDives.mockImplementation(() => [test_dive]);
 
   const { container, asFragment } = render(
@@ -55,15 +68,11 @@ test('component DiveInfoDialog: display currently selected dive data', async () 
 
   // Act
   fireEvent.click(screen.getAllByTestId('dive_entry')[0]);
+  fireEvent.click(screen.getByTestId('edit_icon'));
 
-  // Assert;
-  expect(screen.getByTestId('share_icon')).toBeTruthy();
-  expect(screen.getByTestId('edit_icon')).toBeTruthy();
-  expect(screen.getByTestId('delete_icon')).toBeTruthy();
-
-  expect(screen.getByTestId('info_dialog_num')).toHaveTextContent(dives.current_dive);
-  expect(screen.getByTestId('info_dialog_date')).toHaveTextContent(test_dive.date);
-  expect(screen.getByTestId('info_dialog_site')).toHaveTextContent(test_dive.site);
-  expect(screen.getByTestId('info_dialog_depth')).toHaveTextContent(test_dive.depth);
-  expect(screen.getByTestId('info_dialog_duration')).toHaveTextContent(test_dive.duration);
+  // Assert
+  expect(screen.getByTestId('edit_dialog_site')).toHaveValue(test_dive.site);
+  expect(screen.getByTestId('edit_dialog_depth')).toHaveValue(test_dive.depth.toString());
+  expect(screen.getByTestId('edit_dialog_duration')).toHaveValue(test_dive.duration.toString());
+  expect(screen.getByTestId('edit_dialog_date-picker-inline')).toHaveValue(test_dive.date);
 })

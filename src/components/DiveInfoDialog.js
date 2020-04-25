@@ -123,7 +123,11 @@ class DiveInfoDialog extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const dive_data = getCurrentDiveData(state)
+  let dive_data = getCurrentDiveData(state)
+  if (dive_data == undefined)
+  {
+    dive_data = {}
+  }
   return { dive_data };
 }
 

@@ -4,7 +4,7 @@ import AddIcon from '@material-ui/icons/Add';
 import AddDiveDialog from './AddDiveDialog.js';
 import EditDiveDialog from './EditDiveDialog.js';
 import DiveInfoDialog from './DiveInfoDialog.js';
-import DiveList from './DiveList.js'
+import DiveList from './DiveList.js';
 
 class DiveLog extends React.Component {
   constructor(props) {
@@ -62,7 +62,7 @@ class DiveLog extends React.Component {
         <AddDiveDialog data-testid={'add_dive_dialog'}
                        opened={this.state.add_dialog_opened}
                        handleClickClose={this.handleClickCloseDialog}/>
-        <EditDiveDialog data-testid={'add_dive_dialog'}
+        <EditDiveDialog data-testid={'edit_dive_dialog'}
                         opened={this.state.edit_dialog_opened}
                         handleClickClose={this.handleClickCloseDialog}/>
         <DiveInfoDialog data-testid={'dive_info_dialog'}

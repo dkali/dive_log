@@ -70,6 +70,11 @@ class DiveInfoDialog extends React.Component {
     this.props.handleClickEditDive();
   }
 
+  clickMapBurron = () => {
+    this.props.handleClickClose();
+    this.props.handleTabChange(null, 1);
+  }
+
   render() {
     var open = this.props.opened;
 
@@ -111,9 +116,11 @@ class DiveInfoDialog extends React.Component {
                 <div data-testid="info_dialog_depth">Depth: {this.props.dive_data.depth} meters</div>
                 <div data-testid="info_dialog_duration">Duration: {this.props.dive_data.duration} minutes</div>
               </div>
-              <img style={globe_icon}
-                   src={require("../icons/globe-4-512.png")}
-                   alt="globe"/>
+              <IconButton data-testid={"globe_icon"} onClick={this.clickMapBurron}>
+                <img style={globe_icon}
+                  src={require("../icons/globe-4-512.png")}
+                  alt="globe"/>
+              </IconButton>
             </div>
           </div>
         </DialogContent>

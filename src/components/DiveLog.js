@@ -68,7 +68,8 @@ class DiveLog extends React.Component {
         <DiveInfoDialog data-testid={'dive_info_dialog'}
                         opened={this.state.dive_info_opened}
                         handleClickClose={this.handleClickCloseDialog}
-                        handleClickEditDive={this.handleClickEditDive}/>
+                        handleClickEditDive={this.handleClickEditDive}
+                        handleTabChange={this.props.handleTabChange}/>
       </div>
     )
   }

@@ -45,12 +45,12 @@ class SimpleTabs extends React.Component {
       value: 0,
     };
   }
+  
+  handleChange = (event, newValue) => {
+    this.setState({value: newValue})
+  };
 
   render() {
-    const { diveData } = this.props;
-    const handleChange = (event, newValue) => {
-      this.setState({value: newValue})
-    };
     const tabs_style = {
       flexGrow: "initial",
     }
@@ -58,16 +58,17 @@ class SimpleTabs extends React.Component {
     return (
       <div style={tabs_style}>
         <AppBar position="static">
-          <Tabs value={this.state.value} onChange={handleChange} aria-label="simple tabs example" centered>
+          <Tabs value={this.state.value} onChange={this.handleChange} aria-label="simple tabs example" centered>
             <Tab data-testid={"dive_log_tab"} label="Dive Log" {...a11yProps(0)} />
             <Tab data-testid={"map_tab"} label="Map" {...a11yProps(1)} />
           </Tabs>
         </AppBar>
         <TabPanel value={this.state.value} index={0}>
-          <DiveLog diveData={diveData} handleSaveClick={this.props.handleSaveClick}/>
+          <DiveLog handleSaveClick={this.props.handleSaveClick}
+                   handleTabChange={this.handleChange}/>
         </TabPanel>
         <TabPanel value={this.state.value} index={1}>
-          <MapContainer diveData={diveData}/>
+          <MapContainer />
         </TabPanel>
       </div>
     );

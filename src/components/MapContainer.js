@@ -1,5 +1,7 @@
 import React from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import { connect } from "react-redux";
+import { getDives, getCurrentDiveData } from "../redux/selectors";
 var constants = require('../ApiKey.js'); 
 
 const map_style = {
@@ -9,20 +11,24 @@ const map_style = {
 
 export class MapContainer extends React.Component {
   render() {
-    const { diveData } = this.props;
+    const { dives, cur_duve } = this.props;
 
-    const listItems = diveData.map((dive) => <Marker
+    const listItems = dives.map((dive) => <Marker
       title={dive.site}
       name={dive.site}
       key={dive.lat + dive.lon}
       position={{lat: dive.lat, lng: dive.lon}}
       onClick={this.onMarkerClick} />);
 
+    // center map on selected dive, or a last known dive, if nothing selected
+    var center_lat = cur_duve === undefined ? dives[0].lat : cur_duve.lat;
+    var center_lon = cur_duve === undefined ? dives[0].lon : cur_duve.lon;
+
     return (
       <Map google={this.props.google} zoom={8} style={map_style}
             initialCenter={{
-              lat: 56.329913,
-              lng: 43.990241
+              lat: center_lat,
+              lng: center_lon
             }}
             >
  
@@ -31,7 +37,13 @@ export class MapContainer extends React.Component {
     );
   }
 }
- 
-export default GoogleApiWrapper({
+
+const mapStateToProps = state => {
+  const dives = getDives(state);
+  const cur_duve = getCurrentDiveData(state);
+  return { dives, cur_duve };
+}
+
+export default connect(mapStateToProps)(GoogleApiWrapper({
   apiKey: (constants.GOOGLE_API_KEY)
-})(MapContainer)
+})(MapContainer));

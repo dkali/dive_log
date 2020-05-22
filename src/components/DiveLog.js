@@ -4,6 +4,7 @@ import AddIcon from '@material-ui/icons/Add';
 import AddDiveDialog from './AddDiveDialog.js';
 import EditDiveDialog from './EditDiveDialog.js';
 import DiveInfoDialog from './DiveInfoDialog.js';
+import DeleteConfirmationDialog from './DeleteConfirmationDialog.js'
 import DiveList from './DiveList.js';
 
 class DiveLog extends React.Component {
@@ -13,6 +14,7 @@ class DiveLog extends React.Component {
       add_dialog_opened: false,
       edit_dialog_opened: false,
       dive_info_opened: false,
+      del_confirmation_opened: false,
     };
   }
 
@@ -28,10 +30,19 @@ class DiveLog extends React.Component {
     this.setState({dive_info_opened: true})
   }
 
+  handleDeleteClick = () => {
+    this.setState({del_confirmation_opened: true})
+  }
+
   handleClickCloseDialog = () => {
     this.setState({add_dialog_opened: false,
                    edit_dialog_opened: false,
-                   dive_info_opened: false})
+                   dive_info_opened: false,
+                   del_confirmation_opened: false})
+  }
+
+  handleClickCloseDelConfirmationDialog = () => {
+    this.setState({del_confirmation_opened: false})
   }
 
   render() {
@@ -61,15 +72,20 @@ class DiveLog extends React.Component {
         </div>
         <AddDiveDialog data-testid={'add_dive_dialog'}
                        opened={this.state.add_dialog_opened}
-                       handleClickClose={this.handleClickCloseDialog}/>
+                       handleClickClose={this.handleClickCloseDialog} />
         <EditDiveDialog data-testid={'edit_dive_dialog'}
                         opened={this.state.edit_dialog_opened}
-                        handleClickClose={this.handleClickCloseDialog}/>
+                        handleClickClose={this.handleClickCloseDialog} />
         <DiveInfoDialog data-testid={'dive_info_dialog'}
                         opened={this.state.dive_info_opened}
                         handleClickClose={this.handleClickCloseDialog}
                         handleClickEditDive={this.handleClickEditDive}
-                        handleTabChange={this.props.handleTabChange}/>
+                        handleTabChange={this.props.handleTabChange}
+                        handleDeleteClick={this.handleDeleteClick} />
+        <DeleteConfirmationDialog data-testid={'delete_confirmation'}
+                        opened={this.state.del_confirmation_opened}
+                        handleClickCloseDelConfirmationDialog={this.handleClickCloseDelConfirmationDialog}
+                        handleClickCloseDialog={this.handleClickCloseDialog} />
       </div>
     )
   }

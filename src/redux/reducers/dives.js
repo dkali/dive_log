@@ -65,7 +65,13 @@ export default function(state = initialState, action) {
     }
 
     case DELETE_DIVE: {
-      return state;
+      delete state.byIds[state.current_dive]
+      // TODO: re-enumerate dives after deletion
+
+      return {
+        ...state,
+        current_dive: state.allIds[state.allIds.length - 1],
+      };
     }
 
     default:

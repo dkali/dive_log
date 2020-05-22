@@ -94,7 +94,7 @@ class DiveInfoDialog extends React.Component {
                   src={require("../icons/edit-512.png")}
                   alt="edit"/>
               </IconButton>
-              <IconButton data-testid={"delete_icon"} size="small">
+              <IconButton data-testid={"delete_icon"} onClick={this.props.handleDeleteClick} size="small">
                 <img style={header_icon}
                   src={require("../icons/delete-512.png")}
                   alt="delete"/>

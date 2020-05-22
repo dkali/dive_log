@@ -21,4 +21,8 @@ export const editDive = (id, content) => ({
     dive_id: id,
     content
   }
+});
+
+export const deleteDive = id => ({
+  type: DELETE_DIVE,
 })

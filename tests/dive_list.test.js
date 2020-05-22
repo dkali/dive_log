@@ -29,7 +29,7 @@ test('component DiveList: display all dives from a list', async () => {
                  {date: "Apr 6, 2020", site: "doma 3" },
                  {date: "Apr 6, 2020", site: "doma 4" }]
   const foo = require('../src/redux/selectors');
-  foo.getDives.mockImplementation(() => dives);
+  foo.getDiveList.mockImplementation(() => dives);
 
   const { container, asFragment } = render(
     <Provider store={store}>

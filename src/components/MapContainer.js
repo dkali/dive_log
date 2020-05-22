@@ -1,7 +1,7 @@
 import React from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import { connect } from "react-redux";
-import { getDives, getCurrentDiveData } from "../redux/selectors";
+import { getDiveList, getCurrentDiveData } from "../redux/selectors";
 var constants = require('../ApiKey.js'); 
 
 const map_style = {
@@ -39,7 +39,7 @@ export class MapContainer extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const dives = getDives(state);
+  const dives = getDiveList(state);
   const cur_duve = getCurrentDiveData(state);
   return { dives, cur_duve };
 }

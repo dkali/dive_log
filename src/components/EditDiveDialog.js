@@ -9,15 +9,10 @@ import { getCurrentDiveData } from "../redux/selectors";
 class EditDiveDialog extends React.Component {
   constructor(props) {
     super(props);
-    const d = new Date(Date.now());
     
+    // local dive data is used to edit dive before commit is made
     this.state = {
-      dive_data: {
-        date: format(d, "MMM dd, yyyy"),
-        site: '',
-        depth: 0,
-        duration: 0,
-      },
+      dive_data: {},
       need_to_init_values: false,
     };
 
@@ -56,12 +51,7 @@ class EditDiveDialog extends React.Component {
 
   init_state_values = () => {
     this.setState({
-      dive_data: {
-        date: this.props.initial_dialog_data.date,
-        site: this.props.initial_dialog_data.site,
-        depth: this.props.initial_dialog_data.depth,
-        duration: this.props.initial_dialog_data.duration,
-      }
+      dive_data: this.props.initial_dialog_data,
     });
   }
 

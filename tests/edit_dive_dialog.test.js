@@ -59,7 +59,7 @@ test('component EditDiveDialog: display currently selected dive data', async () 
   // getCurrentDiveData mocked twice to trigger change in props for EditDiveDialog,
   // that are checked in componentDidUpdate 
   foo.getCurrentDiveData.mockReturnValueOnce(dives.byIds[2]).mockReturnValue(test_dive);
-  foo.getDives.mockImplementation(() => [test_dive]);
+  foo.getDiveList.mockImplementation(() => [test_dive]);
 
   const { container, asFragment } = render(
     <Provider store={store}>

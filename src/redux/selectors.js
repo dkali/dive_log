@@ -1,18 +1,12 @@
 export const getDivesState = store => store.dives;
 
 export const getDiveList = store =>
-  getDivesState(store) ? getDivesState(store).allIds : [];
+  getDivesState(store) ? getDivesState(store).diveList : [];
 
 export function getDiveById(store, id) {
-  const dives = getDivesState(store);
-  const dive_data = dives.byIds[id];
-  return dive_data;
+  return getDivesState(store).diveList[id - 1];
 }
 
 export function getCurrentDiveData(store) { 
-  const dive_data = getDiveById(store, getDivesState(store).current_dive);
-  return dive_data;
+  return getDiveById(store, getDivesState(store).current_dive);
 }
-
-export const getDives = store =>
-  getDiveList(store).map(id => getDiveById(store, id)).reverse();

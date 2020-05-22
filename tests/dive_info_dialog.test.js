@@ -46,7 +46,7 @@ test('component DiveInfoDialog: display currently selected dive data', async () 
   foo.getDiveList.mockImplementation(() => dives.allIds);
   foo.getDiveById.mockImplementation(() => test_dive);
   foo.getCurrentDiveData.mockImplementation(() => test_dive);
-  foo.getDives.mockImplementation(() => [test_dive]);
+  foo.getDiveList.mockImplementation(() => [test_dive]);
 
   const { container, asFragment } = render(
     <Provider store={store}>

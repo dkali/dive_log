@@ -25,9 +25,8 @@ jest.mock('../src/redux/selectors')
 test('component DiveInfoDialog: display currently selected dive data', async () => {
   // Arrange
   const dives = {
-    allIds: [1, 2, 3],
-    byIds: {
-      1: {
+    diveList: [
+      {
         dive_num: 1,
         date: "Mar 20, 2019",
         site: "Blue lagoon",
@@ -36,17 +35,16 @@ test('component DiveInfoDialog: display currently selected dive data', async () 
         lat: 56.265644,
         lon: 44.880680
       },
-    },
+    ],
     current_dive: 1, // TODO, handle empty storage
   };
-  const test_dive = dives.byIds[1];
+  const test_dive = dives.diveList[0];
 
   const foo = require('../src/redux/selectors');
   foo.getDivesState.mockImplementation(() => dives);
-  foo.getDiveList.mockImplementation(() => dives.allIds);
+  foo.getDiveList.mockImplementation(() => dives.diveList);
   foo.getDiveById.mockImplementation(() => test_dive);
   foo.getCurrentDiveData.mockImplementation(() => test_dive);
-  foo.getDiveList.mockImplementation(() => [test_dive]);
 
   const { container, asFragment } = render(
     <Provider store={store}>

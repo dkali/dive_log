@@ -27,9 +27,8 @@ test('component EditDiveDialog: display currently selected dive data', async () 
   // Arrange
   const handle_close_click = jest.fn();
   const dives = {
-    allIds: [1, 2, 3],
-    byIds: {
-      1: {
+    diveList: [
+      {
         dive_num: 1,
         date: "Mar 20, 2019",
         site: "Blue lagoon",
@@ -38,7 +37,7 @@ test('component EditDiveDialog: display currently selected dive data', async () 
         lat: 56.265644,
         lon: 44.880680
       },
-      2: {
+      {
         dive_num: 2,
         date: "Mar 20, 2019",
         site: "Red lagoon",
@@ -47,10 +46,10 @@ test('component EditDiveDialog: display currently selected dive data', async () 
         lat: 56.265644,
         lon: 44.880680
       }
-    },
+    ],
     current_dive: 2,
   };
-  const test_dive = dives.byIds[1];
+  const test_dive = dives.diveList[1];
 
   const foo = require('../src/redux/selectors');
   foo.getDivesState.mockImplementation(() => dives);
@@ -58,7 +57,7 @@ test('component EditDiveDialog: display currently selected dive data', async () 
   foo.getDiveById.mockImplementation(() => test_dive);
   // getCurrentDiveData mocked twice to trigger change in props for EditDiveDialog,
   // that are checked in componentDidUpdate 
-  foo.getCurrentDiveData.mockReturnValueOnce(dives.byIds[2]).mockReturnValue(test_dive);
+  foo.getCurrentDiveData.mockReturnValueOnce(dives.diveList[2]).mockReturnValue(test_dive);
   foo.getDiveList.mockImplementation(() => [test_dive]);
 
   const { container, asFragment } = render(

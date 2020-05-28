@@ -65,7 +65,10 @@ export default function(state = initialState, action) {
     case DELETE_DIVE: {
       state.diveList.splice(state.current_dive - 1, 1);
       var updated_diveList = [...state.diveList];
-      // TODO: re-enumerate dives after deletion
+      // re-enumerate dives after deletion
+      for (let i = 0; i < updated_diveList.length; i++) {
+        updated_diveList[i].dive_num = i + 1;
+      }
 
       return {
         ...state,

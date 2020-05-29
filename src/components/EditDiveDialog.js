@@ -13,7 +13,6 @@ class EditDiveDialog extends React.Component {
     // local dive data is used to edit dive before commit is made
     this.state = {
       dive_data: {},
-      need_to_init_values: false,
     };
 
     this.handleSiteChange = this.handleSiteChange.bind(this);
@@ -23,7 +22,8 @@ class EditDiveDialog extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.initial_dialog_data !== this.props.initial_dialog_data) {
+    if (prevProps.initial_dialog_data !== this.props.initial_dialog_data &&
+        this.props.initial_dialog_data !== undefined) {
       this.init_state_values();
     }
   }

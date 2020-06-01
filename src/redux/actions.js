@@ -20,6 +20,6 @@ export const editDive = (id, content) => ({
   }
 });
 
-export const deleteDive = id => ({
+export const deleteDive = () => ({
   type: DELETE_DIVE,
 })

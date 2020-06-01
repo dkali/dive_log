@@ -36,7 +36,7 @@ test('component DiveInfoDialog: display currently selected dive data', async () 
         lon: 44.880680
       },
     ],
-    current_dive: 1, // TODO, handle empty storage
+    current_dive: 1,
   };
   const test_dive = dives.diveList[0];
 

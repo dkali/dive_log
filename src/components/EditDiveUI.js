@@ -1,10 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import DateFnsUtils from '@date-io/date-fns';
@@ -45,12 +41,20 @@ const dialog_body_style = {
   color: "white",
 }
 
-class EditDiveDialogUI extends React.Component {
+const add_dive_style = {
+  marginLeft: "1em",
+  marginRight: "1em",
+}
+
+class EditDiveUI extends React.Component {
   render() {
     return (
-      <Dialog open={this.props.opened} onClose={this.props.handleClickClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title" style={dialog_header_style}>{this.props.title}</DialogTitle>
-        <DialogContent style={dialog_body_style}>
+      <div>
+        <div style={dialog_header_style}>
+          <h1>{this.props.title}</h1>
+        </div>
+
+        <div style={add_dive_style}>
           <div style={flex_column_style}>
             <div style={flex_row_style}>
               <TextField
@@ -99,22 +103,23 @@ class EditDiveDialogUI extends React.Component {
               Set Location
             </Fab>
           </div>
-        </DialogContent>
-        <DialogActions style={dialog_body_style}>
-          <Button onClick={this.props.handleClickClose}
-                  color="primary"
-                  data-testid={'edit_dialog_close'} >
-            Cancel
-          </Button>
-          <Button onClick={this.props.handleClickSave}
-                  color="primary"
-                  data-testid={'edit_dialog_save'}>
-            Save
-          </Button>
-        </DialogActions>
-      </Dialog>
+
+          <div>
+            <Button onClick={this.props.handleClickClose}
+                    color="primary"
+                    data-testid={'edit_dialog_close'} >
+              Cancel
+            </Button>
+            <Button onClick={this.props.handleClickSave}
+                    color="primary"
+                    data-testid={'edit_dialog_save'}>
+              Save
+            </Button>
+          </div>
+        </div>
+      </div>
     )
   }
 }
 
-export default EditDiveDialogUI;
+export default EditDiveUI;

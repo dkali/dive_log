@@ -9,7 +9,7 @@ import { render, fireEvent, waitFor, screen } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 
 // the component to test
-import Tabs from '../src/components/Tabs.js'
+import App from '../src/components/App.js'
 
 // for async to work
 import regeneratorRuntime from "regenerator-runtime";
@@ -22,7 +22,7 @@ test('component Tabs: display Dive Log', async () => {
   // Arrange
   const { container, asFragment } = render(
     <Provider store={store}>
-      <Tabs/>
+      <App/>
     </Provider>);
 
   // Act

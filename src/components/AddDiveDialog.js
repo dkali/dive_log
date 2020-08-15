@@ -1,9 +1,10 @@
 import React from 'react';
-import EditDiveDialogUI from './EditDiveDialogUI.js';
+import EditDiveUI from './EditDiveUI.js';
 import 'date-fns';
 import format from "date-fns/format";
 import { connect } from "react-redux";
 import { addDive } from "../redux/actions";
+import { Redirect } from 'react-router';
 
 class AddDiveDialog extends React.Component {
   constructor(props) {
@@ -40,16 +41,6 @@ class AddDiveDialog extends React.Component {
     this.setState({duration: event.target.value})
   }
 
-  clear_state_values = () => {
-    const d = new Date(Date.now());
-    this.setState({
-      date: format(d, "MMM dd, yyyy"),
-      site: "",
-      depth: 0,
-      duration: 0,
-    });
-  }
-
   handleClickSave = () => {
     this.props.addDive(this.state);
     this.handleClickClose();
@@ -57,15 +48,16 @@ class AddDiveDialog extends React.Component {
   }
 
   handleClickClose = () => {
-    this.clear_state_values();
-    this.props.handleClickClose();
+    this.setState({redirect: true});
   }
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect push to="/" />;
+    }
+
     return (
-      <EditDiveDialogUI opened = {this.props.opened}
-                        onClose = {this.props.handleClickClose}
-                        title = "Add new dive"
+      <EditDiveUI title = "Add new dive"
                         dive_data = {this.state}
                         handleSiteChange = {this.handleSiteChange}
                         handleDateChange = {this.handleDateChange}

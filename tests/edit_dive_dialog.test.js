@@ -12,7 +12,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 // the component to test
 import EditDiveDialog from '../src/components/EditDiveDialog.js';
-import Tabs from '../src/components/Tabs.js';
+import App from '../src/components/App.js';
 
 // for async to work
 import regeneratorRuntime from "regenerator-runtime";
@@ -62,7 +62,7 @@ test('component EditDiveDialog: display currently selected dive data', async () 
 
   const { container, asFragment } = render(
     <Provider store={store}>
-      <Tabs />
+      <App />
     </Provider>);
 
   // Act

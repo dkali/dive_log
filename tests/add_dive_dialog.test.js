@@ -3,6 +3,8 @@ import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import 'date-fns';
 import format from "date-fns/format";
+import { Router, MemoryRouter } from 'react-router-dom';
+import { createMemoryHistory } from 'history'
 
 // import react-testing methods
 import { render, fireEvent, waitFor, screen, getAllByTestId } from '@testing-library/react';
@@ -12,7 +14,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 // the component to test
 import AddDiveDialog from '../src/components/AddDiveDialog.js';
-import Tabs from '../src/components/Tabs.js';
+import App from '../src/components/App.js';
 
 // for async to work
 import regeneratorRuntime from "regenerator-runtime";
@@ -24,9 +26,13 @@ import store from '../src/redux/store';
 test('component AddDiveDialog: press Add buton invokes dialog', async () => {
   // Arrange
   const { container, asFragment } = render(
-    <Provider store={store}>
-      <Tabs/>
-    </Provider>);
+    <MemoryRouter initialEntries={["/wtf"]}
+                  initialIndex={0}>
+      <Provider store={store}>
+        <App/>
+      </Provider>
+    </MemoryRouter>
+    );
 
   // Act
   fireEvent.click(screen.getByTestId('add_new_dive_btn'));
@@ -35,14 +41,16 @@ test('component AddDiveDialog: press Add buton invokes dialog', async () => {
   expect(screen.getByTestId('edit_dialog_site')).toBeTruthy();
   expect(screen.getByTestId('edit_dialog_depth')).toBeTruthy();
   expect(screen.getByTestId('edit_dialog_duration')).toBeTruthy();
+
+  //Workaround, cannot reset Router between tests
+  fireEvent.click(screen.getByTestId('edit_dialog_close'));
 })
 
 test('component AddDiveDialog: initial empty values', async () => {
   // Arrange
   const { container, asFragment } = render(
     <Provider store={store}>
-      <AddDiveDialog data-testid={'add_dive_dialog'}
-                     opened={true}/>
+      <AddDiveDialog data-testid={'add_dive_dialog'}/>
     </Provider>);
 
   // Assert
@@ -53,12 +61,17 @@ test('component AddDiveDialog: initial empty values', async () => {
   expect(screen.getByTestId('edit_dialog_date-picker-inline')).toHaveValue(format(d, "MMM dd, yyyy"));
 })
 
-test('component AddDiveDialog: User\'s input displayed ', async () => {
+test('component AddDiveDialog: Users input displayed', async () => {
   // Arrange
+  const history = createMemoryHistory()
+  history.push('/some/bad/route')
   const { container, asFragment } = render(
-    <Provider store={store}>
-      <Tabs/>
-    </Provider>);
+    <Router history={history}>
+      <Provider store={store}>
+        <App/>
+      </Provider>
+    </Router>
+    );
 
   const test_values = {site: "Ozero 4",
                        depth: 23,
@@ -82,14 +95,20 @@ test('component AddDiveDialog: User\'s input displayed ', async () => {
   expect(screen.getByTestId('edit_dialog_duration')).toHaveValue(test_values.duration.toString());
   const d = new Date(Date.now());
   expect(screen.getByTestId('edit_dialog_date-picker-inline')).toHaveValue(format(d, "MMM dd, yyyy"));
+
+  //Workaround, cannot reset Router between tests
+  fireEvent.click(screen.getByTestId('edit_dialog_close'));
 })
 
 test('component AddDiveDialog: Cancel button clears input', async () => {
   // Arrange
   const { container, asFragment } = render(
-    <Provider store={store}>
-      <Tabs/>
-    </Provider>);
+    <MemoryRouter initialEntries={['/']}>
+      <Provider store={store}>
+        <App/>
+      </Provider>
+    </MemoryRouter>
+    );
 
   const test_values = {site: '',
                        depth: 0,
@@ -119,14 +138,23 @@ test('component AddDiveDialog: Cancel button clears input', async () => {
   expect(screen.getByTestId('edit_dialog_duration')).toHaveValue(test_values.duration.toString());
   const d = new Date(Date.now());
   expect(screen.getByTestId('edit_dialog_date-picker-inline')).toHaveValue(format(d, "MMM dd, yyyy"));
+
+  //Workaround, cannot reset Router between tests
+  fireEvent.click(screen.getByTestId('edit_dialog_close'));
 })
 
 test('component AddDiveDialog: Add new dive', async () => {
   // Arrange
+  const history = createMemoryHistory();
+  history.push('/');
+
   const { container, asFragment } = render(
-    <Provider store={store}>
-      <Tabs/>
-    </Provider>);
+    <MemoryRouter initialEntries={['/']}>
+      <Provider store={store}>
+        <App/>
+      </Provider>
+    </MemoryRouter>
+    );
 
   const test_values = {site: 'Ozero 5',
                        depth: 13,

@@ -1,10 +1,11 @@
 import React from 'react';
-import EditDiveDialogUI from './EditDiveDialogUI.js';
+import EditDiveUI from './EditDiveUI.js';
 import 'date-fns';
 import format from "date-fns/format";
 import { connect } from "react-redux";
 import { editDive } from "../redux/actions";
 import { getCurrentDiveData } from "../redux/selectors";
+import { Redirect } from 'react-router';
 
 class EditDiveDialog extends React.Component {
   constructor(props) {
@@ -12,20 +13,13 @@ class EditDiveDialog extends React.Component {
     
     // local dive data is used to edit dive before commit is made
     this.state = {
-      dive_data: {},
+      dive_data: props.initial_dialog_data,
     };
 
     this.handleSiteChange = this.handleSiteChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleDepthChange = this.handleDepthChange.bind(this);
     this.handleDurationChange = this.handleDurationChange.bind(this);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.initial_dialog_data !== this.props.initial_dialog_data &&
-        this.props.initial_dialog_data !== undefined) {
-      this.init_state_values();
-    }
   }
 
   handleDateChange(date) {
@@ -49,12 +43,6 @@ class EditDiveDialog extends React.Component {
     this.setState({dive_data: updated_data})
   }
 
-  init_state_values = () => {
-    this.setState({
-      dive_data: this.props.initial_dialog_data,
-    });
-  }
-
   handleClickSave = () => {
     this.props.editDive(this.props.initial_dialog_data.dive_num, this.state.dive_data);
     this.handleClickClose();
@@ -62,24 +50,25 @@ class EditDiveDialog extends React.Component {
   }
 
   handleClickClose = () => {
-    this.init_state_values();
-    this.props.handleClickClose();
+    this.setState({redirect: true});
   }
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect push to="/" />;
+    }
+
     return (
-      <EditDiveDialogUI opened = {this.props.opened}
-                        onClose = {this.props.handleClickClose}
-                        title = "Edit dive"
-                        dive_data = {this.state.dive_data}
-                        handleSiteChange = {this.handleSiteChange}
-                        handleDateChange = {this.handleDateChange}
-                        handleDepthChange = {this.handleDepthChange}
-                        handleDurationChange = {this.handleDurationChange}
-                        handleClickSave = {this.handleClickSave}
-                        handleClickClose = {this.handleClickClose}
-                        />
-    )
+      <EditDiveUI title = "Edit dive"
+                  dive_data = {this.state.dive_data}
+                  handleSiteChange = {this.handleSiteChange}
+                  handleDateChange = {this.handleDateChange}
+                  handleDepthChange = {this.handleDepthChange}
+                  handleDurationChange = {this.handleDurationChange}
+                  handleClickSave = {this.handleClickSave}
+                  handleClickClose = {this.handleClickClose}
+                  />
+            )
   }
 }
 

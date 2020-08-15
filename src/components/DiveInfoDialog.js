@@ -6,6 +6,7 @@ import 'date-fns';
 import { connect } from "react-redux";
 import { getCurrentDiveData } from "../redux/selectors";
 import IconButton from '@material-ui/core/IconButton';
+import { NavLink } from 'react-router-dom';
 
 const flex_row_style = {
   display: "flex",
@@ -64,12 +65,6 @@ const jend = {
 }
 
 class DiveInfoDialog extends React.Component {
-  
-  clickEditDive = () => {
-    this.props.handleClickClose();
-    this.props.handleClickEditDive();
-  }
-
   clickMapBurron = () => {
     this.props.handleClickClose();
     this.props.handleTabChange(null, 1);
@@ -89,11 +84,13 @@ class DiveInfoDialog extends React.Component {
                   src={require("../icons/sharethis-5-512.png")}
                   alt="share"/>
               </IconButton>
-              <IconButton data-testid={"edit_icon"} onClick={this.clickEditDive} size="small">
-                <img style={header_icon}
-                  src={require("../icons/edit-512.png")}
-                  alt="edit"/>
-              </IconButton>
+              <NavLink to="/edit_dive">
+                <IconButton data-testid={"edit_icon"} size="small">
+                  <img style={header_icon}
+                    src={require("../icons/edit-512.png")}
+                    alt="edit"/>
+                </IconButton>
+              </NavLink>
               <IconButton data-testid={"delete_icon"} onClick={this.props.handleDeleteClick} size="small">
                 <img style={header_icon}
                   src={require("../icons/delete-512.png")}

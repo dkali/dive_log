@@ -1,29 +1,18 @@
 import React from 'react';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import AddDiveDialog from './AddDiveDialog.js';
-import EditDiveDialog from './EditDiveDialog.js';
 import DiveInfoDialog from './DiveInfoDialog.js';
 import DeleteConfirmationDialog from './DeleteConfirmationDialog.js'
 import DiveList from './DiveList.js';
+import { NavLink } from 'react-router-dom';
 
 class DiveLog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      add_dialog_opened: false,
-      edit_dialog_opened: false,
       dive_info_opened: false,
       del_confirmation_opened: false,
     };
-  }
-
-  handleClickAddDive = () => {
-    this.setState({add_dialog_opened: true})
-  }
-
-  handleClickEditDive = () => {
-    this.setState({edit_dialog_opened: true})
   }
   
   handleEntryClick = () => {
@@ -35,9 +24,7 @@ class DiveLog extends React.Component {
   }
 
   handleClickCloseDialog = () => {
-    this.setState({add_dialog_opened: false,
-                   edit_dialog_opened: false,
-                   dive_info_opened: false,
+    this.setState({dive_info_opened: false,
                    del_confirmation_opened: false})
   }
 
@@ -63,23 +50,17 @@ class DiveLog extends React.Component {
       <div data-testid={'dive_log'}>
         <div style={dive_log_style}>
           <DiveList handleEntryClick={this.handleEntryClick}/>
-          <Fab style={add_dive_style}
-               color="primary"
-               data-testid={'add_new_dive_btn'}
-               onClick={this.handleClickAddDive}>
-            <AddIcon />
-          </Fab>
+          <NavLink to="/add_dive">
+            <Fab style={add_dive_style}
+                color="primary"
+                data-testid={'add_new_dive_btn'}>
+              <AddIcon />
+            </Fab>
+          </NavLink>
         </div>
-        <AddDiveDialog data-testid={'add_dive_dialog'}
-                       opened={this.state.add_dialog_opened}
-                       handleClickClose={this.handleClickCloseDialog} />
-        <EditDiveDialog data-testid={'edit_dive_dialog'}
-                        opened={this.state.edit_dialog_opened}
-                        handleClickClose={this.handleClickCloseDialog} />
         <DiveInfoDialog data-testid={'dive_info_dialog'}
                         opened={this.state.dive_info_opened}
                         handleClickClose={this.handleClickCloseDialog}
-                        handleClickEditDive={this.handleClickEditDive}
                         handleTabChange={this.props.handleTabChange}
                         handleDeleteClick={this.handleDeleteClick} />
         <DeleteConfirmationDialog data-testid={'delete_confirmation'}

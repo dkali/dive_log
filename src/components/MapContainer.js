@@ -30,9 +30,11 @@ export class MapContainer extends React.Component {
               lat: center_lat,
               lng: center_lon
             }}
+            onClick={this.props.mapClicked}
             >
  
         {listItems}
+        {this.props.newMarker != null && this.props.newMarker}
       </Map>
     );
   }

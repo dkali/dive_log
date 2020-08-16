@@ -10,6 +10,7 @@ import {
 } from '@material-ui/pickers';
 import Fab from '@material-ui/core/Fab';
 import NavigationIcon from '@material-ui/icons/Navigation';
+import { NavLink } from 'react-router-dom';
 
 const flex_row_style = {
   display: "flex",
@@ -98,10 +99,12 @@ class EditDiveUI extends React.Component {
                 }}
               />
             </MuiPickersUtilsProvider>
-            <Fab variant="extended" color="primary" style={location_style}>
-              <NavigationIcon/>
-              Set Location
-            </Fab>
+            <NavLink to="/select_location">
+              <Fab variant="extended" color="primary" style={location_style}>
+                <NavigationIcon/>
+                Set Location
+              </Fab>
+            </NavLink>
           </div>
 
           <div>

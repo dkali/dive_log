@@ -49,9 +49,15 @@ test('component AddDiveDialog: press Add buton invokes dialog', async () => {
 test('component AddDiveDialog: initial empty values', async () => {
   // Arrange
   const { container, asFragment } = render(
-    <Provider store={store}>
-      <AddDiveDialog data-testid={'add_dive_dialog'}/>
-    </Provider>);
+    <MemoryRouter initialEntries={['/']}>
+      <Provider store={store}>
+        <App/>
+      </Provider>
+    </MemoryRouter>
+    );
+
+  // Act
+  fireEvent.click(screen.getByTestId('add_new_dive_btn'));
 
   // Assert
   expect(screen.getByTestId('edit_dialog_site')).toHaveValue('');
@@ -59,6 +65,9 @@ test('component AddDiveDialog: initial empty values', async () => {
   expect(screen.getByTestId('edit_dialog_duration')).toHaveValue('0');
   const d = new Date(Date.now());
   expect(screen.getByTestId('edit_dialog_date-picker-inline')).toHaveValue(format(d, "MMM dd, yyyy"));
+
+  //Workaround, cannot reset Router between tests
+  fireEvent.click(screen.getByTestId('edit_dialog_close'));
 })
 
 test('component AddDiveDialog: Users input displayed', async () => {

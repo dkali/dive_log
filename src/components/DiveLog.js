@@ -5,6 +5,9 @@ import DiveInfoDialog from './DiveInfoDialog.js';
 import DeleteConfirmationDialog from './DeleteConfirmationDialog.js'
 import DiveList from './DiveList.js';
 import { NavLink } from 'react-router-dom';
+import firebase from 'firebase';
+import { Redirect } from 'react-router';
+import { Button } from '@material-ui/core';
 
 class DiveLog extends React.Component {
   constructor(props) {
@@ -12,6 +15,7 @@ class DiveLog extends React.Component {
     this.state = {
       dive_info_opened: false,
       del_confirmation_opened: false,
+      sign_out: false,
     };
   }
   
@@ -46,6 +50,11 @@ class DiveLog extends React.Component {
       justifyContent: "space-around",
     }
 
+    if (this.state.sign_out) {
+      console.log("Divelog: signed out, redirect to /")
+      return <Redirect push to='/' />;
+    }
+
     return (
       <div data-testid={'dive_log'}>
         <div style={dive_log_style}>
@@ -67,6 +76,10 @@ class DiveLog extends React.Component {
                         opened={this.state.del_confirmation_opened}
                         handleClickCloseDelConfirmationDialog={this.handleClickCloseDelConfirmationDialog}
                         handleClickCloseDialog={this.handleClickCloseDialog} />
+        <Button onClick={() => {
+          firebase.auth().signOut();
+          this.setState({sign_out: true});
+        }}>Sign out</Button>
       </div>
     )
   }

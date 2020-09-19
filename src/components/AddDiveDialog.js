@@ -9,10 +9,10 @@ import { Redirect } from 'react-router';
 class AddDiveDialog extends React.Component {
   constructor(props) {
     super(props);
-    const d = new Date(Date.now());
+    const date_in_seconds = Date.now() / 1000 | 0;
     
     this.state = {
-      date: format(d, "MMM dd, yyyy"),
+      date: {seconds: date_in_seconds},
       site: '',
       depth: 0,
       duration: 0,
@@ -26,7 +26,7 @@ class AddDiveDialog extends React.Component {
 
   handleDateChange = date => {
     // TDOD: handle users manual input, when date is invalid
-    this.setState({date: format(date, "MMM dd, yyyy")})
+    this.setState({date: {seconds: date / 1000}})
   }
 
   handleSiteChange(event) {
@@ -58,14 +58,14 @@ class AddDiveDialog extends React.Component {
 
     return (
       <EditDiveUI title = "Add new dive"
-                        dive_data = {this.state}
-                        handleSiteChange = {this.handleSiteChange}
-                        handleDateChange = {this.handleDateChange}
-                        handleDepthChange = {this.handleDepthChange}
-                        handleDurationChange = {this.handleDurationChange}
-                        handleClickSave = {this.handleClickSave}
-                        handleClickClose = {this.handleClickClose}
-                        />
+                  dive_data = {this.state}
+                  handleSiteChange = {this.handleSiteChange}
+                  handleDateChange = {this.handleDateChange}
+                  handleDepthChange = {this.handleDepthChange}
+                  handleDurationChange = {this.handleDurationChange}
+                  handleClickSave = {this.handleClickSave}
+                  handleClickClose = {this.handleClickClose}
+                  />
     )
   }
 }

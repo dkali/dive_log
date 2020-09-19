@@ -24,7 +24,7 @@ class EditDiveDialog extends React.Component {
 
   handleDateChange(date) {
     // TODO: handle users manual input, when date is invalid
-    const updated_data = { ...this.state.dive_data, ...{date: format(date, "MMM dd, yyyy")} };
+    const updated_data = { ...this.state.dive_data, ...{date: {seconds: date / 1000}} };
     this.setState({dive_data: updated_data })
   }
 

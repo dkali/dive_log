@@ -8,6 +8,8 @@ import { NavLink } from 'react-router-dom';
 import firebase from 'firebase';
 import { Redirect } from 'react-router';
 import { Button } from '@material-ui/core';
+import { connect } from "react-redux";
+import { initStore } from "../redux/actions";
 
 class DiveLog extends React.Component {
   constructor(props) {
@@ -18,7 +20,42 @@ class DiveLog extends React.Component {
       sign_out: false,
     };
   }
-  
+
+  componentDidMount(){
+    var db = firebase.firestore();
+    var user = firebase.auth().currentUser;
+    if (user != null) {
+      console.log("initializing store for user id " + user.uid);
+      var divesRef = db.collection("dives");
+      var query = divesRef.where("user", "==", user.uid).orderBy("timestamp", "asc");
+      var vld = this;
+      query.get()
+      .then(function(querySnapshot) {
+        let dive_list_init = [];
+        querySnapshot.forEach(function(doc) {
+          let dive_data = new Map();
+          dive_data["dive_id"] = doc.id;
+          dive_data["date"] = doc.data().timestamp;
+          dive_data["site"] = doc.data().location.name;
+          dive_data["depth"] = doc.data().depth;
+          dive_data["duration"] = doc.data().duration;
+          dive_data["lat"] = doc.data().location.geopoint.latitude;
+          dive_data["lon"] = doc.data().location.geopoint.longitude;
+          
+          dive_list_init.push(dive_data);
+          // location: new firebase.firestore.GeoPoint(latitude, longitude)
+        });
+
+        // save data to redux
+        // TODO: why "this" is undefined in callbacks?
+        vld.props.initStore(dive_list_init);
+      })
+      .catch(function(error) {
+          console.log("Error getting dives: ", error);
+      });
+    }
+  }
+
   handleEntryClick = () => {
     this.setState({dive_info_opened: true})
   }
@@ -85,4 +122,7 @@ class DiveLog extends React.Component {
   }
 }
 
-export default DiveLog;
+export default connect(
+  null,
+  { initStore }
+)(DiveLog);

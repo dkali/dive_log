@@ -1,4 +1,4 @@
-import { ADD_DIVE, SELECT_DIVE, EDIT_DIVE, DELETE_DIVE } from "./actionTypes"
+import { ADD_DIVE, SELECT_DIVE, EDIT_DIVE, DELETE_DIVE, INIT_STORE } from "./actionTypes"
 
 export const addDive = content => ({
   type: ADD_DIVE,
@@ -22,4 +22,9 @@ export const editDive = (id, content) => ({
 
 export const deleteDive = () => ({
   type: DELETE_DIVE,
-})
+});
+
+export const initStore = content => ({
+  type: INIT_STORE,
+  payload: content,
+});

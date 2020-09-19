@@ -13,3 +13,7 @@ export function getDiveById(store, id) {
 export function getCurrentDiveData(store) { 
   return getDiveById(store, getDivesState(store).current_dive);
 }
+
+export function getCurrentDiveID(store) {
+  return getDivesState(store).current_dive;
+}

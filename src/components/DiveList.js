@@ -9,7 +9,7 @@ const DiveList = ( {dives, handleEntryClick} ) => {
     let dive_entry = dives[ind];
     entries.push(<DiveEntry entryData={dive_entry}
                             key={dives.length - ind}
-                            dive_num={dive_entry.dive_num}
+                            dive_num={ind + 1}
                             handleEntryClick={handleEntryClick}/>)
   }
 

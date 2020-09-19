@@ -1,8 +1,6 @@
 // Import FirebaseAuth and firebase.
 import React from 'react';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase';
-import App from './App'
 import { Redirect } from 'react-router';
 
 var sign_in_states = Object.freeze({"unknown": 0, "sign_in_required": 1, "logged_in": 2})
@@ -19,9 +17,9 @@ class SplashScreen extends React.Component {
     this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
       (user) => {
         if (user) {
-          this.setState({isSignedIn: sign_in_states.logged_in})
+          this.setState({isSignedIn: sign_in_states.logged_in});
         } else {
-          this.setState({isSignedIn: sign_in_states.sign_in_required})
+          this.setState({isSignedIn: sign_in_states.sign_in_required});
         }
       }
     );

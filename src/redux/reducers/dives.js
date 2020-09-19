@@ -1,34 +1,54 @@
-import { ADD_DIVE, SELECT_DIVE, EDIT_DIVE, DELETE_DIVE } from "../actionTypes"
+import { ADD_DIVE, SELECT_DIVE, EDIT_DIVE, DELETE_DIVE, INIT_STORE } from "../actionTypes"
+
+// import firebase from 'firebase';
+const firebase = require("firebase");
+// Required for side-effects
+require("firebase/firestore");
+
+// var db = firebase.firestore();
+
+// db.collection("cities").doc("LA").set({
+//   name: "Los Angeles",
+//   state: "CA",
+//   country: "USA"
+// })
+// .then(function() {
+//   console.log("Document successfully written!");
+// })
+// .catch(function(error) {
+//   console.error("Error writing document: ", error);
+// });
+
 
 const initialState = {
   diveList: [
-    {
-      dive_num: 1,
-      date: "Mar 20, 2019",
-      site: "Blue lagoon",
-      depth: 30,
-      duration: 25,
-      lat: 56.265644,
-      lon: 44.880680
-    },
-    {
-      dive_num: 2,
-      date: "Apr 16, 2019",
-      site: "zkpd 4",
-      depth: 13,
-      duration: 34,
-      lat: 56.369247,
-      lon: 43.773228
-    },
-    {
-      dive_num: 3,
-      date: "Jan 22, 2020",
-      site: "Thissel wreck",
-      depth: 23,
-      duration: 30,
-      lat: 56.687842,
-      lon: 43.353961
-    },
+    // {
+    //   dive_num: 1,
+    //   date: "Mar 20, 2019",
+    //   site: "Blue lagoon",
+    //   depth: 30,
+    //   duration: 25,
+    //   lat: 56.265644,
+    //   lon: 44.880680
+    // },
+    // {
+    //   dive_num: 2,
+    //   date: "Apr 16, 2019",
+    //   site: "zkpd 4",
+    //   depth: 13,
+    //   duration: 34,
+    //   lat: 56.369247,
+    //   lon: 43.773228
+    // },
+    // {
+    //   dive_num: 3,
+    //   date: "Jan 22, 2020",
+    //   site: "Thissel wreck",
+    //   depth: 23,
+    //   duration: 30,
+    //   lat: 56.687842,
+    //   lon: 43.353961
+    // },
   ],
   current_dive: 0,
 }
@@ -38,6 +58,14 @@ export default function(state = initialState, action) {
     case ADD_DIVE: {
       let {content} = action.payload;
       content["dive_num"] = state.diveList.length + 1;
+
+      // db.collection("dives").add(content)
+      // .then(function(docRef) {
+      //   console.log("Document written with ID: ", docRef.id);
+      // })
+      // .catch(function(error) {
+      //   console.error("Error adding document: ", error);
+      // });
 
       return {
         ...state,
@@ -74,6 +102,13 @@ export default function(state = initialState, action) {
         ...state,
         diveList: updated_diveList,
         current_dive: updated_diveList.length,
+      };
+    }
+
+    case INIT_STORE: {
+      return {
+        ...state,
+        diveList: action.payload,
       };
     }
 

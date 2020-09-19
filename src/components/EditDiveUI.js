@@ -4,6 +4,9 @@ import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import DateFnsUtils from '@date-io/date-fns';
+import 'date-fns';
+import format from "date-fns/format";
+import fromUnixTime from 'date-fns/fromUnixTime'
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -34,11 +37,6 @@ const location_style = {
 
 const dialog_header_style = {
   backgroundColor: "#5A6478",
-  color: "white",
-}
-
-const dialog_body_style = {
-  backgroundColor: "#495361",
   color: "white",
 }
 
@@ -92,7 +90,7 @@ class EditDiveUI extends React.Component {
                 margin="normal"
                 inputProps={{ 'data-testid': 'edit_dialog_date-picker-inline' }}
                 label="Date picker inline"
-                value={this.props.dive_data.date}
+                value={format(fromUnixTime(this.props.dive_data.date.seconds), "MMM dd, yyyy")}
                 onChange={this.props.handleDateChange}
                 KeyboardButtonProps={{
                   'aria-label': 'change date',

@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { selectDive } from "../redux/actions";
+import 'date-fns';
+import format from "date-fns/format";
+import fromUnixTime from 'date-fns/fromUnixTime'
 
 class DiveEntry extends React.Component {
   constructor(props) {
@@ -56,7 +59,7 @@ class DiveEntry extends React.Component {
           {dive_num}
         </div>
         <div data-testid={"dive_entry_date"} style={dive_date_style}>
-          {entryData.date}
+          {format(fromUnixTime(entryData.date.seconds), "MMM dd, yyyy")}
         </div>
         <div data-testid={"dive_entry_site"} style={dive_site_style}>
           {entryData.site}

@@ -110,7 +110,7 @@ class DiveInfoDialog extends React.Component {
                   <div data-testid="info_dialog_date" style={offset_style}>{format(fromUnixTime(this.props.dive_data.date.seconds), "MMM dd, yyyy")}</div>
                 </div>
                 <div data-testid="info_dialog_site" style={{...flex_row_style, ...text_center_style}}>
-                  <h3>{this.props.dive_data.location.site}</h3>
+                  <h3>{this.props.dive_data.location.name}</h3>
                 </div>
                 <div style={flex_row_style}>
                   <div style={flex_column_style}>

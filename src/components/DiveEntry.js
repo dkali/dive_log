@@ -62,7 +62,7 @@ class DiveEntry extends React.Component {
           {format(fromUnixTime(entryData.date.seconds), "MMM dd, yyyy")}
         </div>
         <div data-testid={"dive_entry_site"} style={dive_site_style}>
-          {entryData.location.site}
+          {entryData.location.name}
         </div>
       </div>
     )

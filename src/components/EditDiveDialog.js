@@ -33,7 +33,7 @@ class EditDiveDialog extends React.Component {
   }
 
   handleSiteChange(event) {
-    const updated_data = { ...this.state.dive_data, ...{site: event.target.value} };
+    const updated_data = { ...this.state.dive_data, ...{name: event.target.value} };
     this.setState({dive_data: updated_data})
   }
 

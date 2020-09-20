@@ -116,7 +116,7 @@ class EditDiveUI extends React.Component {
                 inputProps={{ 'data-testid': 'edit_dialog_site' }}
                 label="Dive Site"
                 fullWidth
-                value={this.props.dive_data.site}
+                value={this.props.dive_data.name}
                 onChange={this.props.handleSiteChange}
                 />
             </div>

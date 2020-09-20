@@ -40,7 +40,7 @@ class DiveLog extends React.Component {
           dive_data["depth"] = doc.data().depth;
           dive_data["duration"] = doc.data().duration;
           let location = new DiveLocation(doc.data().location.name,
-                                          doc.data().location.locid,
+                                          doc.data().location.loc_id,
                                           doc.data().location.geopoint);
           dive_data["location"] = location;
           

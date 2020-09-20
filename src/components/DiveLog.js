@@ -10,6 +10,7 @@ import { Redirect } from 'react-router';
 import { Button } from '@material-ui/core';
 import { connect } from "react-redux";
 import { initStore } from "../redux/actions";
+import DiveLocation from '../helpers/DiveLocation.js'
 
 class DiveLog extends React.Component {
   constructor(props) {
@@ -36,11 +37,12 @@ class DiveLog extends React.Component {
           let dive_data = new Map();
           dive_data["dive_id"] = doc.id;
           dive_data["date"] = doc.data().timestamp;
-          dive_data["site"] = doc.data().location.name;
           dive_data["depth"] = doc.data().depth;
           dive_data["duration"] = doc.data().duration;
-          dive_data["lat"] = doc.data().location.geopoint.latitude;
-          dive_data["lon"] = doc.data().location.geopoint.longitude;
+          let location = new DiveLocation(doc.data().location.name,
+                                          doc.data().location.locid,
+                                          doc.data().location.geopoint);
+          dive_data["location"] = location;
           
           dive_list_init.push(dive_data);
           // location: new firebase.firestore.GeoPoint(latitude, longitude)

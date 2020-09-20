@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import SimpleTabs from './Tabs';
 import AddDive from './AddDiveDialog';
 import EditDive from './EditDiveDialog';
-import SelectLocation from './SelectLocation';
 import SignInScreen from './SignInScreen';
 import SplashScreen from './SplashScreen'
 import firebase from 'firebase';
@@ -29,7 +28,6 @@ class App extends React.Component {
             <Route path="/main" component={SimpleTabs}/>
             <Route path="/add_dive" component={AddDive}/>
             <Route path="/edit_dive" component={EditDive}/>
-            <Route path="/select_location" component={SelectLocation}/>
             <Route component={NoMatch}/>
           </Switch>
         </div> 

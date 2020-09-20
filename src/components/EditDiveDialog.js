@@ -1,11 +1,15 @@
 import React from 'react';
 import EditDiveUI from './EditDiveUI.js';
 import 'date-fns';
-import format from "date-fns/format";
 import { connect } from "react-redux";
 import { editDive } from "../redux/actions";
 import { getCurrentDiveData } from "../redux/selectors";
 import { Redirect } from 'react-router';
+
+// import firebase from 'firebase';
+const firebase = require("firebase");
+// Required for side-effects
+require("firebase/firestore");
 
 class EditDiveDialog extends React.Component {
   constructor(props) {
@@ -24,7 +28,7 @@ class EditDiveDialog extends React.Component {
 
   handleDateChange(date) {
     // TODO: handle users manual input, when date is invalid
-    const updated_data = { ...this.state.dive_data, ...{date: {seconds: date / 1000}} };
+    const updated_data = { ...this.state.dive_data, ...{date: firebase.firestore.Timestamp.fromDate(date)} };
     this.setState({dive_data: updated_data })
   }
 

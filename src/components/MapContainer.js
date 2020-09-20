@@ -5,8 +5,8 @@ import { getDiveList, getCurrentDiveData } from "../redux/selectors";
 var constants = require('../ApiKey.js'); 
 
 const map_style = {
-  width: '90%',
-  height: '85%',
+  width: '100%',
+  height: '45%',
 }
 
 export class MapContainer extends React.Component {
@@ -14,15 +14,17 @@ export class MapContainer extends React.Component {
     const { dives, cur_duve } = this.props;
 
     const listItems = dives.map((dive) => <Marker
-      title={dive.site}
-      name={dive.site}
-      key={dive.lat + dive.lon}
-      position={{lat: dive.lat, lng: dive.lon}}
-      onClick={this.onMarkerClick} />);
+      title={dive.location.site}
+      name={dive.location.site}
+      loc_id={dive.location.loc_id}
+      geopoint={dive.location.geopoint}
+      key={dive.location.geopoint.latitude + dive.location.geopoint.longitude}
+      position={{lat: dive.location.geopoint.latitude, lng: dive.location.geopoint.longitude}}
+      onClick={this.props.onMarkerClick} />);
 
     // center map on selected dive, or a last known dive, if nothing selected
-    var center_lat = cur_duve === undefined ? dives[0].lat : cur_duve.lat;
-    var center_lon = cur_duve === undefined ? dives[0].lon : cur_duve.lon;
+    var center_lat = cur_duve === undefined ? dives[0].location.geopoint.latitude : cur_duve.location.geopoint.latitude;
+    var center_lon = cur_duve === undefined ? dives[0].location.geopoint.longitude : cur_duve.location.geopoint.longitude;
 
     return (
       <Map google={this.props.google} zoom={8} style={map_style}

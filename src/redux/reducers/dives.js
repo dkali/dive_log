@@ -5,8 +5,6 @@ const firebase = require("firebase");
 // Required for side-effects
 require("firebase/firestore");
 
-// var db = firebase.firestore();
-
 // db.collection("cities").doc("LA").set({
 //   name: "Los Angeles",
 //   state: "CA",
@@ -58,14 +56,6 @@ export default function(state = initialState, action) {
     case ADD_DIVE: {
       let {content} = action.payload;
       content["dive_num"] = state.diveList.length + 1;
-
-      // db.collection("dives").add(content)
-      // .then(function(docRef) {
-      //   console.log("Document written with ID: ", docRef.id);
-      // })
-      // .catch(function(error) {
-      //   console.error("Error adding document: ", error);
-      // });
 
       return {
         ...state,

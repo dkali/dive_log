@@ -137,11 +137,14 @@ class AddDiveDialog extends React.Component {
 
   // selected_marker - Map object
   changeSelectedLoc(selected_marker) {
-    this.setState({selected_loc_id: {type: selected_marker.type,
-                                     geopoint: selected_marker.geopoint,
-                                     name: selected_marker.name,
-                                     loc_id: selected_marker.loc_id},
-                   name: selected_marker.name});
+    let updated_chunk = {selected_loc_id: {type: selected_marker.type,
+                                           geopoint: selected_marker.geopoint,
+                                           name: selected_marker.name,
+                                           loc_id: selected_marker.loc_id}}
+    if (selected_marker.name !== undefined) {
+      updated_chunk.name = selected_marker.name;
+    }
+    this.setState(updated_chunk);
   }
 
   render() {

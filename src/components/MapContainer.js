@@ -24,7 +24,7 @@ export class MapContainer extends React.Component {
   }
 
   render() {
-    const { dives, cur_duve } = this.props;
+    const { dives, cur_dive } = this.props;
 
     // filter for only unique locations
     let uniq_locations = new Set();
@@ -39,9 +39,9 @@ export class MapContainer extends React.Component {
     // center map on selected dive, or a last known dive, if nothing selected
     var center_lat = 56.336893;
     var center_lon = 43.986196;
-    if (dives.size > 0) {
-      center_lat = cur_duve === undefined ? dives[0].location.geopoint.latitude : cur_duve.location.geopoint.latitude;
-      center_lon = cur_duve === undefined ? dives[0].location.geopoint.longitude : cur_duve.location.geopoint.longitude;
+    if (dives.length > 0) {
+      center_lat = cur_dive === undefined ? dives[dives.length-1].location.geopoint.latitude : cur_dive.location.geopoint.latitude;
+      center_lon = cur_dive === undefined ? dives[dives.length-1].location.geopoint.longitude : cur_dive.location.geopoint.longitude;
     }
 
     return (
@@ -62,8 +62,8 @@ export class MapContainer extends React.Component {
 
 const mapStateToProps = state => {
   const dives = getDiveList(state);
-  const cur_duve = getCurrentDiveData(state);
-  return { dives, cur_duve };
+  const cur_dive = getCurrentDiveData(state);
+  return { dives, cur_dive };
 }
 
 export default connect(mapStateToProps)(GoogleApiWrapper({

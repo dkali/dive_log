@@ -116,7 +116,7 @@ class EditDiveUI extends React.Component {
                 inputProps={{ 'data-testid': 'edit_dialog_site' }}
                 label="Dive Site"
                 fullWidth
-                value={this.props.dive_data.name}
+                value={this.props.dive_data.location.name}
                 onChange={this.props.handleSiteChange}
                 />
             </div>
@@ -159,11 +159,16 @@ class EditDiveUI extends React.Component {
                       data-testid={'edit_dialog_close'} >
                 Cancel
               </Button>
-              <Button onClick={this.props.handleClickSave}
+              {this.props.dive_data.input_valid === false && <Button disabled
                       color="primary"
                       data-testid={'edit_dialog_save'}>
                 Save
-              </Button>
+              </Button>}
+              {this.props.dive_data.input_valid === true && <Button onClick={this.props.handleClickSave}
+                      color="primary"
+                      data-testid={'edit_dialog_save'}>
+                Save
+              </Button>}
             </div>
           </div>
 

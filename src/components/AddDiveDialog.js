@@ -13,11 +13,12 @@ class AddDiveDialog extends React.Component {
     
     this.state = {
       date: firebase.firestore.Timestamp.fromDate(new Date()),
-      name: '',
+      location: {name: ''},
       depth: 0,
       duration: 0,
 
-      selected_loc_id: {},
+      selected_loc: {},
+      input_valid: false,
     };
 
     this.handleSiteChange = this.handleSiteChange.bind(this);
@@ -33,15 +34,18 @@ class AddDiveDialog extends React.Component {
   }
 
   handleSiteChange(event) {
-    this.setState({name: event.target.value})
+    this.setState({location: {name: event.target.value}},
+                  () => {this.validate_input()});
   }
 
   handleDepthChange(event) {
-    this.setState({depth: event.target.value})
+    this.setState({depth: event.target.value},
+                  () => {this.validate_input()})
   }
 
   handleDurationChange(event) {
-    this.setState({duration: event.target.value})
+    this.setState({duration: event.target.value},
+                  () => {this.validate_input()})
   }
 
   createFireStoreEntry(state) {
@@ -51,9 +55,9 @@ class AddDiveDialog extends React.Component {
       timestamp: state.date,
       user: firebase.auth().currentUser.uid,
       location: {
-        geopoint: state.selected_loc_id.geopoint,
-        loc_id: state.selected_loc_id.loc_id,
-        name: state.selected_loc_id.name,
+        geopoint: state.selected_loc.geopoint,
+        loc_id: state.selected_loc.loc_id,
+        name: state.selected_loc.name,
       },
     };
 
@@ -66,9 +70,9 @@ class AddDiveDialog extends React.Component {
     redux_entry["date"] = state.date;
     redux_entry["depth"] = state.depth;
     redux_entry["duration"] = state.duration;
-    let location = new DiveLocation(state.selected_loc_id.name,
-                                    state.selected_loc_id.loc_id,
-                                    state.selected_loc_id.geopoint);
+    let location = new DiveLocation(state.selected_loc.name,
+                                    state.selected_loc.loc_id,
+                                    state.selected_loc.geopoint);
     redux_entry["location"] = location;
 
     return redux_entry;
@@ -78,7 +82,7 @@ class AddDiveDialog extends React.Component {
     var db = firebase.firestore();
 
     let vld = this;
-    if (this.state.selected_loc_id.type === "old") {
+    if (this.state.selected_loc.type === "old") {
       // reuse the existing location
       let fire_store_entry = this.createFireStoreEntry(this.state);
 
@@ -97,17 +101,17 @@ class AddDiveDialog extends React.Component {
         vld.handleClickClose();
       });
     }
-    else if (this.state.selected_loc_id.type === "new") {
+    else if (this.state.selected_loc.type === "new") {
       // we need to create a new Location in a Firestore first
       let fire_store_entry = {description: "",
-                              geopoint: this.state.selected_loc_id.geopoint,
-                              name: this.state.name};
+                              geopoint: this.state.selected_loc.geopoint,
+                              name: this.state.location.name};
       db.collection("locations").add(fire_store_entry)
       .then(function(docRef) {
         console.log("New Location created with ID: ", docRef.id);
-        vld.setState({selected_loc_id: { geopoint: vld.state.selected_loc_id.geopoint,
+        vld.setState({selected_loc: { geopoint: vld.state.selected_loc.geopoint,
                                          loc_id: docRef.id,
-                                         name: vld.state.name,
+                                         name: vld.state.location.name,
                       }})
         // add new dive using created location
         let fire_store_entry = vld.createFireStoreEntry(vld.state);
@@ -137,14 +141,25 @@ class AddDiveDialog extends React.Component {
 
   // selected_marker - Map object
   changeSelectedLoc(selected_marker) {
-    let updated_chunk = {selected_loc_id: {type: selected_marker.type,
-                                           geopoint: selected_marker.geopoint,
-                                           name: selected_marker.name,
-                                           loc_id: selected_marker.loc_id}}
+    let updated_chunk = {selected_loc: {type: selected_marker.type,
+                                        geopoint: selected_marker.geopoint,
+                                        name: selected_marker.name,
+                                        loc_id: selected_marker.loc_id}}
     if (selected_marker.name !== undefined) {
-      updated_chunk.name = selected_marker.name;
+      updated_chunk.location = {name: selected_marker.name};
     }
-    this.setState(updated_chunk);
+    this.setState(updated_chunk, () => {this.validate_input()});
+  }
+
+  validate_input() {
+    let regex = /^\d+$/;
+    let valid = (this.state.location.name === "" ||
+                 Object.keys(this.state.selected_loc).length === 0 ||
+                 regex.test(this.state.depth) === false ||
+                 this.state.depth === 0 ||
+                 regex.test(this.state.duration) === false ||
+                 this.state.duration === 0) ? false : true;
+    this.setState({input_valid: valid});
   }
 
   render() {

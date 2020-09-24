@@ -145,9 +145,8 @@ class AddDiveDialog extends React.Component {
                                         geopoint: selected_marker.geopoint,
                                         name: selected_marker.name,
                                         loc_id: selected_marker.loc_id}}
-    if (selected_marker.name !== undefined) {
-      updated_chunk.location = {name: selected_marker.name};
-    }
+    
+    updated_chunk.location = selected_marker.name === undefined ? {name: ""} : {name: selected_marker.name};
     this.setState(updated_chunk, () => {this.validate_input()});
   }
 

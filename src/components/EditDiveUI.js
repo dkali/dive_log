@@ -110,7 +110,20 @@ class EditDiveUI extends React.Component {
         <div style={add_dive_style}>
           <div style={flex_column_style}>
             <div style={flex_row_style}>
-              <TextField
+              {this.props.dive_data.selected_loc.type === "old" &&
+                <TextField
+                autoFocus
+                disabled
+                margin="dense"
+                inputProps={{ 'data-testid': 'edit_dialog_site' }}
+                label="Dive Site"
+                fullWidth
+                value={this.props.dive_data.location.name}
+                />}
+
+              {(this.props.dive_data.selected_loc.type === "new" ||
+               Object.keys(this.props.dive_data.selected_loc).length === 0) &&
+                <TextField
                 autoFocus
                 margin="dense"
                 inputProps={{ 'data-testid': 'edit_dialog_site' }}
@@ -118,7 +131,7 @@ class EditDiveUI extends React.Component {
                 fullWidth
                 value={this.props.dive_data.location.name}
                 onChange={this.props.handleSiteChange}
-                />
+                />}
             </div>
             <div style={flex_row_style}>
               <Input

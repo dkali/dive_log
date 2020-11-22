@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import { getCurrentDiveData, getCurrentDiveID } from "../redux/selectors";
 import IconButton from '@material-ui/core/IconButton';
 import { NavLink } from 'react-router-dom';
+import DeleteConfirmationDialog from './DeleteConfirmationDialog.js'
 
 const flex_row_style = {
   display: "flex",
@@ -67,9 +68,25 @@ const jend = {
 }
 
 class DiveInfoDialog extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      del_confirmation_opened: false,
+    }
+  }
+
   clickMapBurron = () => {
-    this.props.handleClickClose();
+    this.props.handleClickCloseDialog();
     this.props.handleTabChange(null, 1);
+  }
+
+  handleDeleteClick = () => {
+    this.setState({del_confirmation_opened: true})
+  }
+
+  handleClickCloseDelConfirmationDialog = () => {
+    this.setState({del_confirmation_opened: false})
+    this.props.handleClickCloseDialog();
   }
 
   render() {
@@ -78,7 +95,7 @@ class DiveInfoDialog extends React.Component {
     return (
       <div>
         {open &&
-          <Dialog open={open} onClose={this.props.handleClickClose}>
+          <Dialog open={open} onClose={this.props.handleClickCloseDialog}>
             <DialogTitle id="form-dialog-title" style={dialog_header_style}>
               <div style={flex_header_style}>
                 Dive Info
@@ -95,7 +112,7 @@ class DiveInfoDialog extends React.Component {
                         alt="edit"/>
                     </IconButton>
                   </NavLink>
-                  <IconButton data-testid={"delete_icon"} onClick={this.props.handleDeleteClick} size="small">
+                  <IconButton data-testid={"delete_icon"} onClick={this.handleDeleteClick} size="small">
                     <img style={header_icon}
                       src={require("../icons/delete-512.png")}
                       alt="delete"/>
@@ -127,6 +144,11 @@ class DiveInfoDialog extends React.Component {
             </DialogContent>
           </Dialog>
         }
+        {this.state.del_confirmation_opened &&
+          <DeleteConfirmationDialog data-testid={'delete_confirmation'}
+                        opened={this.state.del_confirmation_opened}
+                        handleClickCloseDelConfirmationDialog={this.handleClickCloseDelConfirmationDialog}
+                        dive_id={this.props.dive_data.dive_id}/>}
       </div>
     )
   }

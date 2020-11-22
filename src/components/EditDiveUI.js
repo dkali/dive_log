@@ -73,6 +73,7 @@ class EditDiveUI extends React.Component {
                            name: marker.name,
                            geopoint: marker.geopoint,
                            loc_id: marker.loc_id};
+    this.setState({new_marker: null});
     this.props.changeSelectedLoc(selected_marker);
     // TODO: change selected marker icon to be unique and remove "new" marker from map
   }

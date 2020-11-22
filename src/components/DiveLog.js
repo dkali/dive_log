@@ -2,7 +2,6 @@ import React from 'react';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import DiveInfoDialog from './DiveInfoDialog.js';
-import DeleteConfirmationDialog from './DeleteConfirmationDialog.js'
 import DiveList from './DiveList.js';
 import { NavLink } from 'react-router-dom';
 import firebase from 'firebase';
@@ -17,7 +16,6 @@ class DiveLog extends React.Component {
     super(props);
     this.state = {
       dive_info_opened: false,
-      del_confirmation_opened: false,
       sign_out: false,
     };
   }
@@ -62,17 +60,8 @@ class DiveLog extends React.Component {
     this.setState({dive_info_opened: true})
   }
 
-  handleDeleteClick = () => {
-    this.setState({del_confirmation_opened: true})
-  }
-
   handleClickCloseDialog = () => {
-    this.setState({dive_info_opened: false,
-                   del_confirmation_opened: false})
-  }
-
-  handleClickCloseDelConfirmationDialog = () => {
-    this.setState({del_confirmation_opened: false})
+    this.setState({dive_info_opened: false})
   }
 
   render() {
@@ -108,13 +97,9 @@ class DiveLog extends React.Component {
         </div>
         <DiveInfoDialog data-testid={'dive_info_dialog'}
                         opened={this.state.dive_info_opened}
-                        handleClickClose={this.handleClickCloseDialog}
+                        handleClickCloseDialog={this.handleClickCloseDialog}
                         handleTabChange={this.props.handleTabChange}
                         handleDeleteClick={this.handleDeleteClick} />
-        <DeleteConfirmationDialog data-testid={'delete_confirmation'}
-                        opened={this.state.del_confirmation_opened}
-                        handleClickCloseDelConfirmationDialog={this.handleClickCloseDelConfirmationDialog}
-                        handleClickCloseDialog={this.handleClickCloseDialog} />
         <Button onClick={() => {
           firebase.auth().signOut();
           this.setState({sign_out: true});

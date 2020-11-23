@@ -58,9 +58,8 @@ class SignInScreen extends React.Component {
       // Success
     })
     .catch(function(error) {
-      // Handle Errors here. TODO
-      var errorCode = error.code;
-      var errorMessage = error.message;
+      // Handle Errors here
+      console.log("Failed to SignIn: error code ", error.code, " msg: ", error.message);
     });
   }
   // Configure FirebaseUI.

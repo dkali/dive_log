@@ -1,5 +1,3 @@
-import firebase from 'firebase';
-
 class DiveLocation{
   constructor(name, loc_id, geopoint) {
     this.name = name;

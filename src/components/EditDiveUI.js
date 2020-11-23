@@ -13,11 +13,8 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
-import Fab from '@material-ui/core/Fab';
-import NavigationIcon from '@material-ui/icons/Navigation';
-import { NavLink } from 'react-router-dom';
 import MapContainer from './MapContainer';
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import { Marker } from 'google-maps-react';
 import firebase from 'firebase';
 
 const flex_row_style = {
@@ -39,11 +36,6 @@ const flex_column_style2 = {
 
 const offset_style = {
   paddingLeft: "4em",
-}
-
-const location_style = {
-  width: "60%",
-  marginTop: "1em",
 }
 
 const dialog_header_style = {

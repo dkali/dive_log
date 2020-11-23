@@ -64,8 +64,7 @@ class SimpleTabs extends React.Component {
           </Tabs>
         </AppBar>
         <TabPanel value={this.state.value} index={0}>
-          <DiveLog handleSaveClick={this.props.handleSaveClick}
-                   handleTabChange={this.handleChange}/>
+          <DiveLog handleTabChange={this.handleChange}/>
         </TabPanel>
         <TabPanel value={this.state.value} index={1}>
           <MapContainer />

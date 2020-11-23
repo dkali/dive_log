@@ -129,7 +129,7 @@ class AddDiveDialog extends React.Component {
         });
       })
       .catch(function(error) {
-        console.error("Error creating locstion: ", error);
+        console.error("Error creating location: ", error);
         vld.handleClickClose();
       });
     }

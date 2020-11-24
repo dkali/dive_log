@@ -4,7 +4,7 @@ import 'date-fns';
 import { connect } from "react-redux";
 import { addDive } from "../redux/actions";
 import { Redirect } from 'react-router';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import DiveLocation from '../helpers/DiveLocation.js'
 
 class AddDiveDialog extends React.Component {

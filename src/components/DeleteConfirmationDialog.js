@@ -5,7 +5,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import { connect } from "react-redux";
 import { deleteDive } from "../redux/actions";
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 
 const flex_row_style = {
   display: "flex",

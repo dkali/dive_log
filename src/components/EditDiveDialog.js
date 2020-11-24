@@ -7,10 +7,7 @@ import { getCurrentDiveData } from "../redux/selectors";
 import { Redirect } from 'react-router';
 import DiveLocation from '../helpers/DiveLocation.js'
 
-// import firebase from 'firebase';
-const firebase = require("firebase");
-// Required for side-effects
-require("firebase/firestore");
+import firebase from 'firebase/app';
 
 class EditDiveDialog extends React.Component {
   constructor(props) {

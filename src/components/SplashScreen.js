@@ -1,7 +1,8 @@
 // Import FirebaseAuth and firebase.
 import React from 'react';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import { Redirect } from 'react-router';
+require('firebase/auth');
 
 var sign_in_states = Object.freeze({"unknown": 0, "sign_in_required": 1, "logged_in": 2})
 

@@ -15,7 +15,8 @@ import {
 } from '@material-ui/pickers';
 import MapContainer from './MapContainer';
 import { Marker } from 'google-maps-react';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import arrow_icon from '../icons/arrow-down-4-512.png';
 
 const flex_row_style = {
   display: "flex",
@@ -72,7 +73,7 @@ class EditDiveUI extends React.Component {
 
   mapClicked(mapProps, map, clickEvent) {
     var icon = {
-      url: require("../icons/arrow-down-4-512.png"),
+      url: arrow_icon,
       scaledSize: new google.maps.Size(40, 40),
       origin: new google.maps.Point(0, 0),
       anchor: new google.maps.Point(20, 40)
@@ -83,7 +84,7 @@ class EditDiveUI extends React.Component {
                 name={"New Location"}
                 key={clickEvent.latLng.lat() + clickEvent.latLng.lng()}
                 position={clickEvent.latLng}
-                onClick={this.onMarkerClick} 
+                onClick={this.onMarkerClick}
                 icon={icon}/>
 
     this.setState({new_marker: mark})

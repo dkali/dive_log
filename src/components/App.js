@@ -5,7 +5,7 @@ import AddDive from './AddDiveDialog';
 import EditDive from './EditDiveDialog';
 import SignInScreen from './SignInScreen';
 import SplashScreen from './SplashScreen'
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 
 const NoMatch = () => <h1>404 Not Found :(</h1>
 

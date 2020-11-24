@@ -9,7 +9,11 @@ import { connect } from "react-redux";
 import { getCurrentDiveData, getCurrentDiveID } from "../redux/selectors";
 import IconButton from '@material-ui/core/IconButton';
 import { NavLink } from 'react-router-dom';
-import DeleteConfirmationDialog from './DeleteConfirmationDialog.js'
+import DeleteConfirmationDialog from './DeleteConfirmationDialog.js';
+import globe_icon from '../icons/globe-4-512.png';
+import share_icon from '../icons/sharethis-5-512.png';
+import edit_icon from '../icons/edit-512.png';
+import delete_icon from '../icons/delete-512.png';
 
 const flex_row_style = {
   display: "flex",
@@ -36,7 +40,7 @@ const text_center_style = {
   marginRight: "auto",
 }
 
-const globe_icon = {
+const globe_icon_style = {
     height: "170px",
     width: "170px",
     display: "block",
@@ -44,7 +48,7 @@ const globe_icon = {
     paddingBottom: "1em",
 }
 
-const header_icon = {
+const header_icon_style = {
   height: "2em",
   width: "2em",
   display: "block",
@@ -101,20 +105,20 @@ class DiveInfoDialog extends React.Component {
                 Dive Info
                 <div style={jend}>
                   <IconButton data-testid={"share_icon"} size="small">
-                    <img style={header_icon}
-                      src={require("../icons/sharethis-5-512.png")}
+                    <img style={header_icon_style}
+                      src={share_icon}
                       alt="share"/>
                   </IconButton>
                   <NavLink to="/edit_dive">
                     <IconButton data-testid={"edit_icon"} size="small">
-                      <img style={header_icon}
-                        src={require("../icons/edit-512.png")}
+                      <img style={header_icon_style}
+                        src={edit_icon}
                         alt="edit"/>
                     </IconButton>
                   </NavLink>
                   <IconButton data-testid={"delete_icon"} onClick={this.handleDeleteClick} size="small">
-                    <img style={header_icon}
-                      src={require("../icons/delete-512.png")}
+                    <img style={header_icon_style}
+                      src={delete_icon}
                       alt="delete"/>
                   </IconButton>
                 </div>
@@ -135,8 +139,8 @@ class DiveInfoDialog extends React.Component {
                     <div data-testid="info_dialog_duration">Duration: {this.props.dive_data.duration} minutes</div>
                   </div>
                   <IconButton data-testid={"globe_icon"} onClick={this.clickMapBurron}>
-                    <img style={globe_icon}
-                      src={require("../icons/globe-4-512.png")}
+                    <img style={globe_icon_style}
+                      src={globe_icon}
                       alt="globe"/>
                   </IconButton>
                 </div>

@@ -88,17 +88,20 @@ class SignInScreen extends React.Component {
 
     return (
       <div>
-        <h1>My App</h1>
-        <p>Please sign-in:</p>
-        <StyledFirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()}/>
-
+        
         <div style={centered_style}>
+          <h1>Welcome to Dive Log</h1>
+          <p>Please sign-in:</p>
+          <StyledFirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()}/>
+          
+          <p>or enter with local account:</p>
           <div>
             <TextField id="standard-basic" label="email" onChange={this.handleEmailChange}/>
           </div>
           <div>
             <TextField id="standard-basic" label="password" onChange={this.handlePswdChange}/>
           </div>
+          <p></p>
           <div>
             <Button variant="contained" color="primary" onClick={this.handleSignInClick}>Sign-in</Button>
           </div>

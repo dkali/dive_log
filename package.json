@@ -28,7 +28,7 @@
     "test": "jest",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "scp -r /Users/dkalinnikov/git/dive_log/build pi@192.168.0.141:/home/pi/git/dive_log/",
     "server": "node-env-run server --exec nodemon"
   },
   "eslintConfig": {

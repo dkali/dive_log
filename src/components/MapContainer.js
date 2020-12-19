@@ -6,8 +6,8 @@ import { getDiveList, getCurrentDiveData } from "../redux/selectors";
 var constants = require('../ApiKey.js'); 
 
 const map_style = {
-  width: '100%',
-  height: '100vh',
+  height: '90vh',
+  width: 'calc(100% - 48px)'
 }
 
 export class MapContainer extends React.Component {

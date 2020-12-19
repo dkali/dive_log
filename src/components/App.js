@@ -6,6 +6,31 @@ import EditDive from './EditDiveDialog';
 import SignInScreen from './SignInScreen';
 import SplashScreen from './SplashScreen'
 import firebase from 'firebase/app';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#2196F3',
+    },
+    secondary: {
+      main: '#E10050',
+    },
+  },
+
+  overrides: {
+    MuiInput: {
+      root: {
+        color: "#ffebee",
+        '& p': {
+          color: '#ffebee'
+        }
+      },
+    }
+  }
+});
 
 const NoMatch = () => <h1>404 Not Found :(</h1>
 
@@ -20,18 +45,23 @@ firebase.initializeApp({
 class App extends React.Component {
   render() {
     return(
-      <BrowserRouter>
-        <div className='app'>
-          <Switch>
-            <Route exact path="/" component={SplashScreen}/>
-            <Route path="/login" component={SignInScreen}/>
-            <Route path="/main" component={SimpleTabs}/>
-            <Route path="/add_dive" component={AddDive}/>
-            <Route path="/edit_dive" component={EditDive}/>
-            <Route component={NoMatch}/>
-          </Switch>
-        </div> 
-      </BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          {/* <AppBar position="static">
+            <h1>test</h1>
+          </AppBar> */}
+          <div>
+            <Switch>
+              <Route exact path="/" component={SplashScreen}/>
+              <Route path="/login" component={SignInScreen}/>
+              <Route path="/main" component={SimpleTabs}/>
+              <Route path="/add_dive" component={AddDive}/>
+              <Route path="/edit_dive" component={EditDive}/>
+              <Route component={NoMatch}/>
+            </Switch>
+          </div> 
+        </BrowserRouter>
+      </ThemeProvider>
     )
   }
 }

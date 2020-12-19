@@ -135,8 +135,8 @@ class DiveInfoDialog extends React.Component {
                 </div>
                 <div style={flex_row_style}>
                   <div style={flex_column_style}>
-                    <div data-testid="info_dialog_depth">Depth: {this.props.dive_data.depth} meters</div>
-                    <div data-testid="info_dialog_duration">Duration: {this.props.dive_data.duration} minutes</div>
+                    <div data-testid="info_dialog_depth">Depth: {this.props.dive_data.depth} m</div>
+                    <div data-testid="info_dialog_duration">Duration: {this.props.dive_data.duration} min</div>
                   </div>
                   <IconButton data-testid={"globe_icon"} onClick={this.clickMapBurron}>
                     <img style={globe_icon_style}

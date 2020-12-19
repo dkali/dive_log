@@ -45,8 +45,8 @@ const dialog_header_style = {
 }
 
 const add_dive_style = {
-  marginLeft: "1em",
-  marginRight: "1em",
+  marginLeft: "24px",
+  marginRight: "24px",
 }
 
 class EditDiveUI extends React.Component {
@@ -133,6 +133,8 @@ class EditDiveUI extends React.Component {
                 endAdornment={<InputAdornment position="end">meters</InputAdornment>}
                 value={this.props.dive_data.depth}
                 onChange={this.props.handleDepthChange}
+                color='primary'
+                type='number'
               />
               <div style={offset_style}>
                 <Input
@@ -140,6 +142,8 @@ class EditDiveUI extends React.Component {
                   endAdornment={<InputAdornment position="end">minutes</InputAdornment>}
                   value={this.props.dive_data.duration}
                   onChange={this.props.handleDurationChange}
+                  color='primary'
+                  type='number'
                 />
               </div>
             </div>

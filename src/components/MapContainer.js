@@ -2,11 +2,12 @@ import React from 'react';
 import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
 import { connect } from "react-redux";
 import { getDiveList, getCurrentDiveData } from "../redux/selectors";
+
 var constants = require('../ApiKey.js'); 
 
 const map_style = {
   width: '100%',
-  height: '45%',
+  height: '100vh',
 }
 
 export class MapContainer extends React.Component {

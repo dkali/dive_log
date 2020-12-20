@@ -8,7 +8,7 @@ import SplashScreen from './SplashScreen'
 import firebase from 'firebase/app';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
+import TopAppBar from './TopAppBar';
 
 const theme = createMuiTheme({
   palette: {
@@ -47,9 +47,7 @@ class App extends React.Component {
     return(
       <ThemeProvider theme={theme}>
         <BrowserRouter>
-          {/* <AppBar position="static">
-            <h1>test</h1>
-          </AppBar> */}
+          <TopAppBar/>
           <div>
             <Switch>
               <Route exact path="/" component={SplashScreen}/>

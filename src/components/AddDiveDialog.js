@@ -167,8 +167,7 @@ class AddDiveDialog extends React.Component {
     }
 
     return (
-      <EditDiveUI title = "Add new dive"
-                  dive_data = {this.state}
+      <EditDiveUI dive_data = {this.state}
                   handleSiteChange = {this.handleSiteChange}
                   handleDateChange = {this.handleDateChange}
                   handleDepthChange = {this.handleDepthChange}

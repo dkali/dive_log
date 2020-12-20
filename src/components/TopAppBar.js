@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import user_icon from '../icons/user-4-128.png';
 import back_icon from '../icons/arrow-98-128.png';
 import IconButton from '@material-ui/core/IconButton';
-import {
-  BrowserRouter as Router,
-  Switch,
-  useLocation
-} from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { NavLink } from 'react-router-dom';
+import ProfileDialog from './ProfileDialog.js';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 
 const flex_header_style = {
   display: "flex",
@@ -46,16 +45,33 @@ const header_title = {
 function TopAppBar() {
   let location = useLocation();
   let screen = 'default';
-
+  if (location.pathname === '/main') {
+    screen = 'main';
+  }
   if (location.pathname === '/edit_dive') {
     screen = 'edit';
   }
-  
   if (location.pathname === '/add_dive') {
     screen = 'add';
   }
-  
+
+  let [profileOpen, setProfileOpen] = useState(false);
+  const handleClose = () => {
+    setProfileOpen(false);
+  }
+  const clickOnProfile = () => {
+    setProfileOpen(true);
+  }
+
+  let user = firebase.auth().currentUser;
+  var photoUrl;
+  if (user != null) {
+    photoUrl = user.photoURL;
+  }
+  var user_pic = photoUrl === null? user_icon : photoUrl;
+
   return(
+    <div>
     <AppBar position="static">
       <div style={flex_header_style}>
         <div style={left_side}>
@@ -70,6 +86,11 @@ function TopAppBar() {
           }
         </div>
 
+        {screen === 'default' &&
+          <div style={header_title}>
+            <h2>Welcome to Dive Log</h2>
+          </div>
+        }
         {screen === 'edit' &&
           <div style={header_title}>
             <h2>Edit dive</h2>
@@ -82,16 +103,19 @@ function TopAppBar() {
         }
         
         <div style={right_side}>
-          {screen === 'default' &&
-            <IconButton data-testid={"user_icon"} size="small">
+          {screen === 'main' &&
+            <IconButton data-testid={"user_icon"} size="small" onClick={clickOnProfile}>
               <img style={header_icon_style}
-                src={user_icon}
+                src={user_pic}
                 alt="user"/>
             </IconButton>
           }
         </div>
       </div>
     </AppBar>
+    <ProfileDialog open={profileOpen}
+      onClose={handleClose}/>
+    </div>
   )
 }
 

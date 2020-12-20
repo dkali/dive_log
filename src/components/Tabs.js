@@ -57,12 +57,10 @@ class SimpleTabs extends React.Component {
 
     return (
       <div style={tabs_style}>
-        <AppBar position="static">
-          <Tabs value={this.state.value} onChange={this.handleChange} aria-label="simple tabs example" centered>
-            <Tab data-testid={"dive_log_tab"} label="Dive Log" {...a11yProps(0)} />
-            <Tab data-testid={"map_tab"} label="Map" {...a11yProps(1)} />
-          </Tabs>
-        </AppBar>
+        <Tabs value={this.state.value} onChange={this.handleChange} aria-label="simple tabs example" centered>
+          <Tab data-testid={"dive_log_tab"} label="Dive Log" {...a11yProps(0)} />
+          <Tab data-testid={"map_tab"} label="Map" {...a11yProps(1)} />
+        </Tabs>
         <TabPanel value={this.state.value} index={0}>
           <DiveLog handleTabChange={this.handleChange}/>
         </TabPanel>

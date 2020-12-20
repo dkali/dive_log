@@ -88,9 +88,7 @@ class SignInScreen extends React.Component {
 
     return (
       <div>
-        
         <div style={centered_style}>
-          <h1>Welcome to Dive Log</h1>
           <p>Please sign-in:</p>
           <StyledFirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()}/>
           

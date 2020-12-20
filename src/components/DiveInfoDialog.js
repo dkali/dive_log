@@ -11,7 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { NavLink } from 'react-router-dom';
 import DeleteConfirmationDialog from './DeleteConfirmationDialog.js';
 import globe_icon from '../icons/globe-4-512.png';
-import share_icon from '../icons/sharethis-5-512.png';
+// import share_icon from '../icons/sharethis-5-512.png';
 import edit_icon from '../icons/edit-512.png';
 import delete_icon from '../icons/delete-512.png';
 
@@ -104,11 +104,11 @@ class DiveInfoDialog extends React.Component {
               <div style={flex_header_style}>
                 Dive Info
                 <div style={jend}>
-                  <IconButton data-testid={"share_icon"} size="small">
+                  {/* <IconButton data-testid={"share_icon"} size="small">
                     <img style={header_icon_style}
                       src={share_icon}
                       alt="share"/>
-                  </IconButton>
+                  </IconButton> */}
                   <NavLink to="/edit_dive">
                     <IconButton data-testid={"edit_icon"} size="small">
                       <img style={header_icon_style}

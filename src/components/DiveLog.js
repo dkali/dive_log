@@ -6,8 +6,6 @@ import DiveList from './DiveList.js';
 import { NavLink } from 'react-router-dom';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
-import { Redirect } from 'react-router';
-import { Button } from '@material-ui/core';
 import { connect } from "react-redux";
 import { initStore } from "../redux/actions";
 import DiveLocation from '../helpers/DiveLocation.js'
@@ -17,7 +15,6 @@ class DiveLog extends React.Component {
     super(props);
     this.state = {
       dive_info_opened: false,
-      sign_out: false,
     };
   }
 
@@ -48,7 +45,6 @@ class DiveLog extends React.Component {
         });
 
         // save data to redux
-        // TODO: why "this" is undefined in callbacks?
         vld.props.initStore(dive_list_init);
       })
       .catch(function(error) {
@@ -79,11 +75,6 @@ class DiveLog extends React.Component {
       justifyContent: "space-around",
     }
 
-    if (this.state.sign_out) {
-      console.log("Divelog: signed out, redirect to /")
-      return <Redirect push to='/' />;
-    }
-
     return (
       <div data-testid={'dive_log'}>
         <div style={dive_log_style}>
@@ -101,10 +92,6 @@ class DiveLog extends React.Component {
                         handleClickCloseDialog={this.handleClickCloseDialog}
                         handleTabChange={this.props.handleTabChange}
                         handleDeleteClick={this.handleDeleteClick} />
-        <Button onClick={() => {
-          firebase.auth().signOut();
-          this.setState({sign_out: true});
-        }}>Sign out</Button>
       </div>
     )
   }

@@ -5,11 +5,18 @@ import firebase from 'firebase/app';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { Redirect } from 'react-router';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const centered_style = {
   position: "absolute",
   left: "40%",
-}
+};
+
+const progress_style = {
+  position: "absolute",
+  left: "40%",
+  top: "40%",
+};
 
 var sign_in_states = Object.freeze({"unknown": 0, "sign_in_required": 1, "logged_in": 2})
 
@@ -84,6 +91,10 @@ class SignInScreen extends React.Component {
 
     if (this.state.isSignedIn === sign_in_states.logged_in) {
       return <Redirect push to="/" />;
+    }
+
+    if (this.state.isSignedIn === sign_in_states.unknown) {
+        return <CircularProgress color="primary" style={progress_style} />
     }
 
     return (

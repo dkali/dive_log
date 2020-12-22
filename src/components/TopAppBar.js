@@ -8,6 +8,7 @@ import { NavLink } from 'react-router-dom';
 import ProfileDialog from './ProfileDialog.js';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+require('firebase/auth')
 
 const flex_header_style = {
   display: "flex",
@@ -45,7 +46,7 @@ const header_title = {
 function TopAppBar() {
   let location = useLocation();
   let screen = 'default';
-  if (location.pathname === '/main') {
+  if (location.pathname === '/') {
     screen = 'main';
   }
   if (location.pathname === '/edit_dive') {

@@ -48,7 +48,7 @@ function ProfileDialog(props) {
             <div style={flex_header_style}>
               User Profile
               <div style={jend}>
-                <NavLink to="/">
+                <NavLink to="/login">
                   <IconButton data-testid={"logout_icon"} size="small"
                     onClick={() => {
                       firebase.auth().signOut();

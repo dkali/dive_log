@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
-import user_icon from '../icons/user-4-128.png';
-import back_icon from '../icons/arrow-98-128.png';
+import PersonIcon from '@material-ui/icons/Person';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
 import { useLocation } from "react-router-dom";
 import { NavLink } from 'react-router-dom';
@@ -65,11 +65,6 @@ function TopAppBar() {
   }
 
   let user = firebase.auth().currentUser;
-  var photoUrl;
-  if (user != null) {
-    photoUrl = user.photoURL;
-  }
-  var user_pic = photoUrl === null ? user_icon : photoUrl;
 
   return (
     <div>
@@ -78,38 +73,38 @@ function TopAppBar() {
           <div style={left_side}>
             {(screen === 'edit' || screen === 'add') &&
               <NavLink to="/">
-                <IconButton data-testid={"back_icon"} size="small">
-                  <img style={header_icon_style}
-                    src={back_icon}
-                    alt="back" />
-                </IconButton>
+                <ArrowBackIcon fonrSize="large" />
               </NavLink>
             }
           </div>
 
           {screen === 'default' &&
             <div style={header_title}>
-              <h2>Welcome to Dive Log</h2>
+              <h3>Welcome to Dive Log</h3>
             </div>
           }
           {screen === 'edit' &&
             <div style={header_title}>
-              <h2>Edit dive</h2>
+              <p>Edit dive</p>
             </div>
           }
           {screen === 'add' &&
             <div style={header_title}>
-              <h2>Add new dive</h2>
+              <p>Add new dive</p>
             </div>
           }
 
           <div style={right_side}>
-            {screen === 'main' &&
+            {screen === 'main' && user !== null && user.photoURL !== null &&
               <IconButton data-testid={"user_icon"} size="small" onClick={clickOnProfile}>
                 <img style={header_icon_style}
-                  src={user_pic}
+                  src={user.photoURL}
                   alt="user" />
               </IconButton>
+            }
+            {screen === 'main' && user !== null && user.photoURL === null &&
+              <PersonIcon onClick={clickOnProfile}
+                fontSize="large" />
             }
           </div>
         </div>

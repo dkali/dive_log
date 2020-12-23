@@ -4,18 +4,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { NavLink } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
-import logout_icon from '../icons/account-logout-128.png';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 
 const flex_header_style = {
   display: "flex",
   flexDirection: "row",
-}
-const header_icon_style = {
-  height: "2em",
-  width: "2em",
-  display: "block",
 }
 const jend = {
   display: "flex",
@@ -54,17 +49,15 @@ function ProfileDialog(props) {
                       firebase.auth().signOut();
                       props.onClose();
                     }}>
-                    <img style={header_icon_style}
-                      src={logout_icon}
-                      alt="logout" />
+                    <ExitToAppIcon fontSize="large" />
                   </IconButton>
                 </NavLink>
               </div>
             </div>
           </DialogTitle>
           <DialogContent style={dialog_body_style}>
-            {name && <div>user name: {name}</div>}
-            <div>user email: {email}</div>
+            {name && <div>name: {name}</div>}
+            <div>email: {email}</div>
           </DialogContent>
         </Dialog>
       }

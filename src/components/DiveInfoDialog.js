@@ -11,35 +11,29 @@ import IconButton from '@material-ui/core/IconButton';
 import { NavLink } from 'react-router-dom';
 import DeleteConfirmationDialog from './DeleteConfirmationDialog.js';
 import globe_icon from '../icons/globe-4-512.png';
-// import share_icon from '../icons/sharethis-5-512.png';
-import edit_icon from '../icons/edit-512.png';
-import delete_icon from '../icons/delete-512.png';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 const flex_row_style = {
   display: "flex",
   flexDirection: "row",
   paddingTop: "1em",
 }
-
 const flex_header_style = {
   display: "flex",
   flexDirection: "row",
 }
-
 const flex_column_style = {
   display: "flex",
   flexDirection: "column",
 }
-
 const offset_style = {
   paddingLeft: "4em",
 }
-
 const text_center_style = {
   marginLeft: "auto",
   marginRight: "auto",
 }
-
 const globe_icon_style = {
   height: "170px",
   width: "170px",
@@ -47,23 +41,14 @@ const globe_icon_style = {
   paddingLeft: "1em",
   paddingBottom: "1em",
 }
-
-const header_icon_style = {
-  height: "2em",
-  width: "2em",
-  display: "block",
-}
-
 const dialog_header_style = {
   backgroundColor: "#5A6478",
   color: "white",
 }
-
 const dialog_body_style = {
   backgroundColor: "#495361",
   color: "white",
 }
-
 const jend = {
   display: "flex",
   flexDirection: "row",
@@ -104,22 +89,15 @@ class DiveInfoDialog extends React.Component {
               <div style={flex_header_style}>
                 Dive Info
                 <div style={jend}>
-                  {/* <IconButton data-testid={"share_icon"} size="small">
-                    <img style={header_icon_style}
-                      src={share_icon}
-                      alt="share"/>
-                  </IconButton> */}
                   <NavLink to="/edit_dive">
                     <IconButton data-testid={"edit_icon"} size="small">
-                      <img style={header_icon_style}
-                        src={edit_icon}
-                        alt="edit" />
+                      <EditIcon fontSize="large"
+                        color="primary" />
                     </IconButton>
                   </NavLink>
                   <IconButton data-testid={"delete_icon"} onClick={this.handleDeleteClick} size="small">
-                    <img style={header_icon_style}
-                      src={delete_icon}
-                      alt="delete" />
+                    <DeleteForeverIcon fontSize="large"
+                      color="primary" />
                   </IconButton>
                 </div>
               </div>

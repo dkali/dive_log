@@ -2,8 +2,16 @@ import React from 'react';
 import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
 import { connect } from "react-redux";
 import { getDiveList, getCurrentDiveData } from "../redux/selectors";
+import { Box, Container } from '@material-ui/core';
+import { Fragment } from 'react';
 
 var constants = require('../ApiKey.js');
+
+const containerStyle = {
+  position: 'relative',  
+  width: '100%',
+  height: '100%'
+}
 
 export class MapContainer extends React.Component {
   createMarker(location) {
@@ -46,6 +54,7 @@ export class MapContainer extends React.Component {
           lat: center_lat,
           lng: center_lon
         }}
+        containerStyle={containerStyle}
         onClick={this.props.mapClicked}
       >
 

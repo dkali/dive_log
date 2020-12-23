@@ -4,11 +4,31 @@ import { selectDive } from "../redux/actions";
 import 'date-fns';
 import format from "date-fns/format";
 import fromUnixTime from 'date-fns/fromUnixTime'
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import ListItem from '@material-ui/core/ListItem';
+import Box from '@material-ui/core/Box';
+import { Pool, Timelapse } from '@material-ui/icons';
+
+
+const styles = theme => ({
+  root: {
+    width: "100%"
+  },
+  paper: {
+    width: "100%",
+  },
+  icons: {
+    display: "flex",
+    alignItems: "center"
+  }
+});
 
 class DiveEntry extends React.Component {
   constructor(props) {
     super(props);
-
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -19,52 +39,39 @@ class DiveEntry extends React.Component {
 
   render() {
     const { entryData, dive_num } = this.props;
-
-    const entry_style = {
-      display: "flex",
-      flexDirection: "row",
-      width: "100%",
-      height: "50px",
-      background: "#495361",
-      borderRadius: "12px",
-      marginBottom: "10px",
-    }
-
-    const dive_num_style = {
-      width: "20%",
-      fontSize: "x-large",
-      color: "white",
-      marginTop: "auto",
-      marginBottom: "auto",
-      marginLeft: "1em",
-    }
-
-    const dive_date_style = {
-      width: "30%",
-      color: "white",
-      marginTop: "auto",
-      marginBottom: "auto",
-    }
-
-    const dive_site_style = {
-      width: "50%",
-      color: "white",
-      marginTop: "auto",
-      marginBottom: "auto",
-    }
+    const { classes } = this.props;
 
     return (
-      <div data-testid={"dive_entry"} style={entry_style} onClick={this.handleClick}>
-        <div data-testid={"dive_entry_number"} style={dive_num_style}>
-          {dive_num}
-        </div>
-        <div data-testid={"dive_entry_date"} style={dive_date_style}>
-          {format(fromUnixTime(entryData.date.seconds), "MMM dd, yyyy")}
-        </div>
-        <div data-testid={"dive_entry_site"} style={dive_site_style}>
-          {entryData.location.name}
-        </div>
-      </div>
+      <ListItem className={classes.root} onClick={this.handleClick}>
+        <Paper className={classes.paper}>
+          <Box p={1}>
+            <Grid container>
+              <Grid item xs={12} sm container>
+                <Grid item xs container direction="column" spacing={2}>
+                  <Grid item xs alignItems="center">
+                    <Typography gutterBottom variant="subtitle1">
+                      {entryData.location.name}
+                    </Typography>
+                    <Typography variant="body2" className={classes.icons} align="center">
+                      <Box p={1}>
+                        <Pool fontSize="small" />
+                      </Box>
+                      <span>{dive_num}</span>
+                      <Box p={1}>
+                        <Timelapse fontSize="small" />
+                      </Box>
+                      <span>{entryData.depth}</span>
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Grid item>
+                  <Typography variant="subtitle1">{format(fromUnixTime(entryData.date.seconds), "MMM dd, yyyy")}</Typography>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Box>
+        </Paper>
+      </ListItem>
     )
   }
 }
@@ -72,4 +79,4 @@ class DiveEntry extends React.Component {
 export default connect(
   null,
   { selectDive }
-)(DiveEntry);
+)(withStyles(styles)(DiveEntry));

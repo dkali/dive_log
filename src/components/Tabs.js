@@ -1,11 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { Fragment } from 'react';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
 import DiveLog from './DiveLog.js';
 import MapContainer from './MapContainer.js';
+import Media from 'react-media';
+import Grid from '@material-ui/core/Grid';
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -19,25 +20,14 @@ function TabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && <Box p={3}>{children}</Box>}
+      {value === index && <div p={3}>{children}</div>}
     </Typography>
   );
 }
 
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
 
 class SimpleTabs extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -50,22 +40,41 @@ class SimpleTabs extends React.Component {
   };
 
   render() {
-    const tabs_style = {
-      flexGrow: "initial",
-    }
-
     return (
-      <div style={tabs_style}>
-        <Tabs value={this.state.value} onChange={this.handleChange} aria-label="simple tabs example" centered>
-          <Tab data-testid={"dive_log_tab"} label="Dive Log" {...a11yProps(0)} />
-          <Tab data-testid={"map_tab"} label="Map" {...a11yProps(1)} />
-        </Tabs>
-        <TabPanel value={this.state.value} index={0}>
-          <DiveLog handleTabChange={this.handleChange} />
-        </TabPanel>
-        <TabPanel value={this.state.value} index={1}>
-          <MapContainer />
-        </TabPanel>
+      <div>
+        <Media queries={{
+          small: "(max-width: 799px)",
+          medium: "(min-width: 800px)",
+        }}>
+          {matches => (
+            <Fragment>
+              {matches.small &&
+                <div><Tabs value={this.state.value} onChange={this.handleChange} aria-label="simple tabs example" centered>
+                  <Tab data-testid={"dive_log_tab"} label="Dive Log" />
+                  <Tab data-testid={"map_tab"} label="Map" />
+                </Tabs>
+                  <TabPanel value={this.state.value} index={0}>
+                    <DiveLog handleTabChange={this.handleChange} />
+                  </TabPanel>
+                  <TabPanel value={this.state.value} index={1}>
+                    <MapContainer />
+                  </TabPanel></div>
+              }
+              {matches.medium && <div>
+                <Grid container spacing={1}>
+                  <Grid item xs>
+                    <DiveLog handleTabChange={this.handleChange} />
+                  </Grid>
+                  <Grid item xs>
+                    <MapContainer />
+                  </Grid>
+                </Grid>
+              </div>}
+            </Fragment>
+          )}
+        </Media>
+
+
       </div>
     );
   }

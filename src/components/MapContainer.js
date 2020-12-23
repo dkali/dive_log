@@ -5,11 +5,6 @@ import { getDiveList, getCurrentDiveData } from "../redux/selectors";
 
 var constants = require('../ApiKey.js');
 
-const map_style = {
-  height: 'calc(100vh - 98px)',
-  width: '50vw'
-}
-
 export class MapContainer extends React.Component {
   createMarker(location) {
     return (<Marker
@@ -46,7 +41,7 @@ export class MapContainer extends React.Component {
     }
 
     return (
-      <Map google={this.props.google} zoom={8} style={map_style}
+      <Map google={this.props.google} zoom={8} style={this.props.map_style}
         initialCenter={{
           lat: center_lat,
           lng: center_lon

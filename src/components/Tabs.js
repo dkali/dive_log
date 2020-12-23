@@ -41,7 +41,7 @@ class SimpleTabs extends React.Component {
 
   render() {
     return (
-      <div>
+      <Fragment>
         <Media queries={{
           small: "(max-width: 799px)",
           medium: "(min-width: 800px)",
@@ -57,7 +57,11 @@ class SimpleTabs extends React.Component {
                     <DiveLog handleTabChange={this.handleChange} />
                   </TabPanel>
                   <TabPanel value={this.state.value} index={1}>
-                    <MapContainer />
+                  <MapContainer map_style={{
+                      height: 'calc(100vh - 98px)',
+                      width: "auto"
+                    }
+                    } />
                   </TabPanel></div>
               }
               {matches.medium && <div>
@@ -66,7 +70,11 @@ class SimpleTabs extends React.Component {
                     <DiveLog handleTabChange={this.handleChange} />
                   </Grid>
                   <Grid item xs>
-                    <MapContainer />
+                    <MapContainer map_style={{
+                      height: 'calc(100vh - 50px)',
+                      width: '50vw'
+                    }
+                    } />
                   </Grid>
                 </Grid>
               </div>}
@@ -75,7 +83,7 @@ class SimpleTabs extends React.Component {
         </Media>
 
 
-      </div>
+      </Fragment>
     );
   }
 }

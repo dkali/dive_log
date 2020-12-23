@@ -6,13 +6,15 @@ import 'date-fns';
 import format from "date-fns/format";
 import fromUnixTime from 'date-fns/fromUnixTime'
 import { connect } from "react-redux";
-import { getCurrentDiveData, getCurrentDiveID } from "../redux/selectors";
+import { getCurrentDiveData } from "../redux/selectors";
 import IconButton from '@material-ui/core/IconButton';
 import { NavLink } from 'react-router-dom';
 import DeleteConfirmationDialog from './DeleteConfirmationDialog.js';
 import globe_icon from '../icons/globe-4-512.png';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import HeightOutlinedIcon from '@material-ui/icons/HeightOutlined';
+import TimerOutlinedIcon from '@material-ui/icons/TimerOutlined';
 
 const flex_row_style = {
   display: "flex",
@@ -26,13 +28,6 @@ const flex_header_style = {
 const flex_column_style = {
   display: "flex",
   flexDirection: "column",
-}
-const offset_style = {
-  paddingLeft: "4em",
-}
-const text_center_style = {
-  marginLeft: "auto",
-  marginRight: "auto",
 }
 const globe_icon_style = {
   height: "170px",
@@ -54,6 +49,9 @@ const jend = {
   flexDirection: "row",
   marginRight: "0px",
   marginLeft: "auto",
+}
+const separator_style = {
+  paddingRight: "1em",
 }
 
 class DiveInfoDialog extends React.Component {
@@ -87,7 +85,7 @@ class DiveInfoDialog extends React.Component {
           <Dialog open={open} onClose={this.props.handleClickCloseDialog}>
             <DialogTitle id="form-dialog-title" style={dialog_header_style}>
               <div style={flex_header_style}>
-                Dive Info
+                {this.props.dive_data.location.name}
                 <div style={jend}>
                   <NavLink to="/edit_dive">
                     <IconButton data-testid={"edit_icon"} size="small">
@@ -105,17 +103,16 @@ class DiveInfoDialog extends React.Component {
             <DialogContent style={dialog_body_style}>
               <div style={flex_column_style}>
                 <div style={flex_row_style}>
-                  <div data-testid="info_dialog_num">Dive #{this.props.dive_num}</div>
-                  <div data-testid="info_dialog_date" style={offset_style}>{format(fromUnixTime(this.props.dive_data.date.seconds), "MMM dd, yyyy")}</div>
+                  <HeightOutlinedIcon />
+                  <div data-testid="info_dialog_depth"
+                    style={separator_style}>{this.props.dive_data.depth} m</div>
+                  <TimerOutlinedIcon />
+                  <div data-testid="info_dialog_duration"
+                    style={separator_style}>{this.props.dive_data.duration} min</div>
+                  <div data-testid="info_dialog_date" >{format(fromUnixTime(this.props.dive_data.date.seconds), "MMM dd, yyyy")}</div>
                 </div>
-                <div data-testid="info_dialog_site" style={{ ...flex_row_style, ...text_center_style }}>
-                  <h3>{this.props.dive_data.location.name}</h3>
-                </div>
+
                 <div style={flex_row_style}>
-                  <div style={flex_column_style}>
-                    <div data-testid="info_dialog_depth">Depth: {this.props.dive_data.depth} m</div>
-                    <div data-testid="info_dialog_duration">Duration: {this.props.dive_data.duration} min</div>
-                  </div>
                   <IconButton data-testid={"globe_icon"} onClick={this.clickMapBurron}>
                     <img style={globe_icon_style}
                       src={globe_icon}
@@ -138,11 +135,10 @@ class DiveInfoDialog extends React.Component {
 
 function mapStateToProps(state) {
   let dive_data = getCurrentDiveData(state)
-  let dive_num = getCurrentDiveID(state);
   if (dive_data === undefined) {
     dive_data = {}
   }
-  return { dive_data, dive_num };
+  return { dive_data };
 }
 
 export default connect(

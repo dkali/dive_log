@@ -1,9 +1,9 @@
 import React from 'react';
-import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
+import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
 import { connect } from "react-redux";
 import { getDiveList, getCurrentDiveData } from "../redux/selectors";
 
-var constants = require('../ApiKey.js'); 
+var constants = require('../ApiKey.js');
 
 const map_style = {
   height: '90vh',
@@ -16,12 +16,12 @@ export class MapContainer extends React.Component {
       title={location.name}
       name={location.name}
       key={location.geopoint.latitude + location.geopoint.longitude}
-      position={{lat: location.geopoint.latitude, lng: location.geopoint.longitude}}
+      position={{ lat: location.geopoint.latitude, lng: location.geopoint.longitude }}
       onClick={this.props.onMarkerClick}
       // custom fields
       loc_id={location.loc_id}
       geopoint={location.geopoint}
-      />)
+    />)
   }
 
   render() {
@@ -41,19 +41,19 @@ export class MapContainer extends React.Component {
     var center_lat = 56.336893;
     var center_lon = 43.986196;
     if (dives.length > 0) {
-      center_lat = cur_dive === undefined ? dives[dives.length-1].location.geopoint.latitude : cur_dive.location.geopoint.latitude;
-      center_lon = cur_dive === undefined ? dives[dives.length-1].location.geopoint.longitude : cur_dive.location.geopoint.longitude;
+      center_lat = cur_dive === undefined ? dives[dives.length - 1].location.geopoint.latitude : cur_dive.location.geopoint.latitude;
+      center_lon = cur_dive === undefined ? dives[dives.length - 1].location.geopoint.longitude : cur_dive.location.geopoint.longitude;
     }
 
     return (
       <Map google={this.props.google} zoom={8} style={map_style}
-            initialCenter={{
-              lat: center_lat,
-              lng: center_lon
-            }}
-            onClick={this.props.mapClicked}
-            >
- 
+        initialCenter={{
+          lat: center_lat,
+          lng: center_lon
+        }}
+        onClick={this.props.mapClicked}
+      >
+
         {listItems}
         {this.props.newMarker != null && this.props.newMarker}
       </Map>

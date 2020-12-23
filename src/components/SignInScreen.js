@@ -18,7 +18,7 @@ const progress_style = {
   top: "40%",
 };
 
-var sign_in_states = Object.freeze({"unknown": 0, "sign_in_required": 1, "logged_in": 2})
+var sign_in_states = Object.freeze({ "unknown": 0, "sign_in_required": 1, "logged_in": 2 })
 
 class SignInScreen extends React.Component {
   constructor(props) {
@@ -34,11 +34,11 @@ class SignInScreen extends React.Component {
   }
 
   handleEmailChange(event) {
-    this.setState({email: event.target.value});
+    this.setState({ email: event.target.value });
   }
 
   handlePswdChange(event) {
-    this.setState({password: event.target.value});
+    this.setState({ password: event.target.value });
   }
 
   // Listen to the Firebase Auth state and set the local state.
@@ -46,9 +46,9 @@ class SignInScreen extends React.Component {
     this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
       (user) => {
         if (user) {
-          this.setState({isSignedIn: sign_in_states.logged_in});
+          this.setState({ isSignedIn: sign_in_states.logged_in });
         } else {
-          this.setState({isSignedIn: sign_in_states.sign_in_required});
+          this.setState({ isSignedIn: sign_in_states.sign_in_required });
         }
       }
     );
@@ -59,15 +59,15 @@ class SignInScreen extends React.Component {
     this.unregisterAuthObserver();
   }
 
-  handleSignInClick(){
+  handleSignInClick() {
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-    .then(function(firebaseUser) {
-      // Success
-    })
-    .catch(function(error) {
-      // Handle Errors here
-      console.log("Failed to SignIn: error code ", error.code, " msg: ", error.message);
-    });
+      .then(function (firebaseUser) {
+        // Success
+      })
+      .catch(function (error) {
+        // Handle Errors here
+        console.log("Failed to SignIn: error code ", error.code, " msg: ", error.message);
+      });
   }
   // Configure FirebaseUI.
   uiConfig = {
@@ -94,21 +94,21 @@ class SignInScreen extends React.Component {
     }
 
     if (this.state.isSignedIn === sign_in_states.unknown) {
-        return <CircularProgress color="primary" style={progress_style} />
+      return <CircularProgress color="primary" style={progress_style} />
     }
 
     return (
       <div>
         <div style={centered_style}>
           <p>Please sign-in:</p>
-          <StyledFirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()}/>
-          
+          <StyledFirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()} />
+
           <p>or enter with local account:</p>
           <div>
-            <TextField id="standard-basic" label="email" onChange={this.handleEmailChange}/>
+            <TextField id="standard-basic" label="email" onChange={this.handleEmailChange} />
           </div>
           <div>
-            <TextField id="standard-basic" label="password" onChange={this.handlePswdChange}/>
+            <TextField id="standard-basic" label="password" onChange={this.handlePswdChange} />
           </div>
           <p></p>
           <div>

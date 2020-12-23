@@ -41,11 +41,11 @@ const text_center_style = {
 }
 
 const globe_icon_style = {
-    height: "170px",
-    width: "170px",
-    display: "block",
-    paddingLeft: "1em",
-    paddingBottom: "1em",
+  height: "170px",
+  width: "170px",
+  display: "block",
+  paddingLeft: "1em",
+  paddingBottom: "1em",
 }
 
 const header_icon_style = {
@@ -72,7 +72,7 @@ const jend = {
 }
 
 class DiveInfoDialog extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       del_confirmation_opened: false,
@@ -85,11 +85,11 @@ class DiveInfoDialog extends React.Component {
   }
 
   handleDeleteClick = () => {
-    this.setState({del_confirmation_opened: true})
+    this.setState({ del_confirmation_opened: true })
   }
 
   handleClickCloseDelConfirmationDialog = () => {
-    this.setState({del_confirmation_opened: false})
+    this.setState({ del_confirmation_opened: false })
     this.props.handleClickCloseDialog();
   }
 
@@ -113,13 +113,13 @@ class DiveInfoDialog extends React.Component {
                     <IconButton data-testid={"edit_icon"} size="small">
                       <img style={header_icon_style}
                         src={edit_icon}
-                        alt="edit"/>
+                        alt="edit" />
                     </IconButton>
                   </NavLink>
                   <IconButton data-testid={"delete_icon"} onClick={this.handleDeleteClick} size="small">
                     <img style={header_icon_style}
                       src={delete_icon}
-                      alt="delete"/>
+                      alt="delete" />
                   </IconButton>
                 </div>
               </div>
@@ -130,7 +130,7 @@ class DiveInfoDialog extends React.Component {
                   <div data-testid="info_dialog_num">Dive #{this.props.dive_num}</div>
                   <div data-testid="info_dialog_date" style={offset_style}>{format(fromUnixTime(this.props.dive_data.date.seconds), "MMM dd, yyyy")}</div>
                 </div>
-                <div data-testid="info_dialog_site" style={{...flex_row_style, ...text_center_style}}>
+                <div data-testid="info_dialog_site" style={{ ...flex_row_style, ...text_center_style }}>
                   <h3>{this.props.dive_data.location.name}</h3>
                 </div>
                 <div style={flex_row_style}>
@@ -141,7 +141,7 @@ class DiveInfoDialog extends React.Component {
                   <IconButton data-testid={"globe_icon"} onClick={this.clickMapBurron}>
                     <img style={globe_icon_style}
                       src={globe_icon}
-                      alt="globe"/>
+                      alt="globe" />
                   </IconButton>
                 </div>
               </div>
@@ -150,9 +150,9 @@ class DiveInfoDialog extends React.Component {
         }
         {this.state.del_confirmation_opened &&
           <DeleteConfirmationDialog data-testid={'delete_confirmation'}
-                        opened={this.state.del_confirmation_opened}
-                        handleClickCloseDelConfirmationDialog={this.handleClickCloseDelConfirmationDialog}
-                        dive_id={this.props.dive_data.dive_id}/>}
+            opened={this.state.del_confirmation_opened}
+            handleClickCloseDelConfirmationDialog={this.handleClickCloseDelConfirmationDialog}
+            dive_id={this.props.dive_data.dive_id} />}
       </div>
     )
   }
@@ -161,8 +161,7 @@ class DiveInfoDialog extends React.Component {
 function mapStateToProps(state) {
   let dive_data = getCurrentDiveData(state)
   let dive_num = getCurrentDiveID(state);
-  if (dive_data === undefined)
-  {
+  if (dive_data === undefined) {
     dive_data = {}
   }
   return { dive_data, dive_num };

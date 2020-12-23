@@ -12,7 +12,7 @@ class DiveEntry extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(){
+  handleClick() {
     this.props.selectDive(this.props.dive_num);
     this.props.handleEntryClick();
   }
@@ -27,9 +27,9 @@ class DiveEntry extends React.Component {
       height: "50px",
       background: "#495361",
       borderRadius: "12px",
-      marginBottom: "10px",      
+      marginBottom: "10px",
     }
-    
+
     const dive_num_style = {
       width: "20%",
       fontSize: "x-large",
@@ -38,14 +38,14 @@ class DiveEntry extends React.Component {
       marginBottom: "auto",
       marginLeft: "1em",
     }
-    
+
     const dive_date_style = {
       width: "30%",
       color: "white",
       marginTop: "auto",
       marginBottom: "auto",
     }
-    
+
     const dive_site_style = {
       width: "50%",
       color: "white",
@@ -53,7 +53,7 @@ class DiveEntry extends React.Component {
       marginBottom: "auto",
     }
 
-    return(
+    return (
       <div data-testid={"dive_entry"} style={entry_style} onClick={this.handleClick}>
         <div data-testid={"dive_entry_number"} style={dive_num_style}>
           {dive_num}

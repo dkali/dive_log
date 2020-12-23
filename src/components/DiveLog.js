@@ -18,7 +18,7 @@ class DiveLog extends React.Component {
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     var db = firebase.firestore();
     var user = firebase.auth().currentUser;
     if (user != null) {
@@ -27,38 +27,38 @@ class DiveLog extends React.Component {
       var query = divesRef.where("user", "==", user.uid).orderBy("timestamp", "asc");
       var vld = this;
       query.get()
-      .then(function(querySnapshot) {
-        let dive_list_init = [];
-        querySnapshot.forEach(function(doc) {
-          let dive_data = new Map();
-          dive_data["dive_id"] = doc.id;
-          dive_data["date"] = doc.data().timestamp;
-          dive_data["depth"] = doc.data().depth;
-          dive_data["duration"] = doc.data().duration;
-          let location = new DiveLocation(doc.data().location.name,
-                                          doc.data().location.loc_id,
-                                          doc.data().location.geopoint);
-          dive_data["location"] = location;
-          
-          dive_list_init.push(dive_data);
-          // location: new firebase.firestore.GeoPoint(latitude, longitude)
-        });
+        .then(function (querySnapshot) {
+          let dive_list_init = [];
+          querySnapshot.forEach(function (doc) {
+            let dive_data = new Map();
+            dive_data["dive_id"] = doc.id;
+            dive_data["date"] = doc.data().timestamp;
+            dive_data["depth"] = doc.data().depth;
+            dive_data["duration"] = doc.data().duration;
+            let location = new DiveLocation(doc.data().location.name,
+              doc.data().location.loc_id,
+              doc.data().location.geopoint);
+            dive_data["location"] = location;
 
-        // save data to redux
-        vld.props.initStore(dive_list_init);
-      })
-      .catch(function(error) {
+            dive_list_init.push(dive_data);
+            // location: new firebase.firestore.GeoPoint(latitude, longitude)
+          });
+
+          // save data to redux
+          vld.props.initStore(dive_list_init);
+        })
+        .catch(function (error) {
           console.log("Error getting dives: ", error);
-      });
+        });
     }
   }
 
   handleEntryClick = () => {
-    this.setState({dive_info_opened: true})
+    this.setState({ dive_info_opened: true })
   }
 
   handleClickCloseDialog = () => {
-    this.setState({dive_info_opened: false})
+    this.setState({ dive_info_opened: false })
   }
 
   render() {
@@ -78,20 +78,20 @@ class DiveLog extends React.Component {
     return (
       <div data-testid={'dive_log'}>
         <div style={dive_log_style}>
-          <DiveList handleEntryClick={this.handleEntryClick}/>
+          <DiveList handleEntryClick={this.handleEntryClick} />
           <NavLink to="/add_dive">
             <Fab style={add_dive_style}
-                color="primary"
-                data-testid={'add_new_dive_btn'}>
+              color="primary"
+              data-testid={'add_new_dive_btn'}>
               <AddIcon />
             </Fab>
           </NavLink>
         </div>
         <DiveInfoDialog data-testid={'dive_info_dialog'}
-                        opened={this.state.dive_info_opened}
-                        handleClickCloseDialog={this.handleClickCloseDialog}
-                        handleTabChange={this.props.handleTabChange}
-                        handleDeleteClick={this.handleDeleteClick} />
+          opened={this.state.dive_info_opened}
+          handleClickCloseDialog={this.handleClickCloseDialog}
+          handleTabChange={this.props.handleTabChange}
+          handleDeleteClick={this.handleDeleteClick} />
       </div>
     )
   }

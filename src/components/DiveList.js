@@ -3,14 +3,14 @@ import DiveEntry from './DiveEntry';
 import { connect } from "react-redux";
 import { getDiveList } from "../redux/selectors";
 
-const DiveList = ( {dives, handleEntryClick} ) => {
+const DiveList = ({ dives, handleEntryClick }) => {
   let entries = []
-  for (let ind = dives.length - 1 ; ind >= 0; ind--) {
+  for (let ind = dives.length - 1; ind >= 0; ind--) {
     let dive_entry = dives[ind];
     entries.push(<DiveEntry entryData={dive_entry}
-                            key={dives.length - ind}
-                            dive_num={ind + 1}
-                            handleEntryClick={handleEntryClick}/>)
+      key={dives.length - ind}
+      dive_num={ind + 1}
+      handleEntryClick={handleEntryClick} />)
   }
 
   return entries;

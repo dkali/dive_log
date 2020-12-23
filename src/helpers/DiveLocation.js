@@ -1,4 +1,4 @@
-class DiveLocation{
+class DiveLocation {
   constructor(name, loc_id, geopoint) {
     this.name = name;
     this.loc_id = loc_id;

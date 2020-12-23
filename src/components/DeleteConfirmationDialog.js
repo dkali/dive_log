@@ -33,13 +33,13 @@ class DeleteConfirmationDialog extends React.Component {
     var db = firebase.firestore();
 
     let vld = this;
-    db.collection("dives").doc(this.props.dive_id).delete().then(function() {
+    db.collection("dives").doc(this.props.dive_id).delete().then(function () {
       console.log("Dive successfully deleted!");
       vld.props.handleClickCloseDelConfirmationDialog();
       vld.props.deleteDive();
-    }).catch(function(error) {
+    }).catch(function (error) {
       console.error("Error removing dive: ", error);
-    });    
+    });
   }
 
   render() {
@@ -55,13 +55,13 @@ class DeleteConfirmationDialog extends React.Component {
         <DialogContent style={dialog_body_style}>
           <div style={flex_row_style}>
             <Button onClick={this.props.handleClickCloseDelConfirmationDialog}
-                color="primary"
-                data-testid={'del_confirm_dialog_cancel'} >
+              color="primary"
+              data-testid={'del_confirm_dialog_cancel'} >
               Cancel
             </Button>
             <Button onClick={this.handleClickDelete}
-                    color="primary"
-                    data-testid={'del_confirm_dialog_delete'}>
+              color="primary"
+              data-testid={'del_confirm_dialog_delete'}>
               Delete
             </Button>
           </div>

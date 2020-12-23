@@ -56,7 +56,7 @@ function ProfileDialog(props) {
                     }}>
                     <img style={header_icon_style}
                       src={logout_icon}
-                      alt="logout"/>
+                      alt="logout" />
                   </IconButton>
                 </NavLink>
               </div>

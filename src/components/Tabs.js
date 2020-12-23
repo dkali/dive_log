@@ -44,9 +44,9 @@ class SimpleTabs extends React.Component {
       value: 0,
     };
   }
-  
+
   handleChange = (event, newValue) => {
-    this.setState({value: newValue})
+    this.setState({ value: newValue })
   };
 
   render() {
@@ -61,7 +61,7 @@ class SimpleTabs extends React.Component {
           <Tab data-testid={"map_tab"} label="Map" {...a11yProps(1)} />
         </Tabs>
         <TabPanel value={this.state.value} index={0}>
-          <DiveLog handleTabChange={this.handleChange}/>
+          <DiveLog handleTabChange={this.handleChange} />
         </TabPanel>
         <TabPanel value={this.state.value} index={1}>
           <MapContainer />

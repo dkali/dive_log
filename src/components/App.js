@@ -36,7 +36,7 @@ const theme = createMuiTheme({
 const NoMatch = () => <h1>404 Not Found :(</h1>
 
 // Configure Firebase.
-var constants = require('../ApiKey.js'); 
+var constants = require('../ApiKey.js');
 firebase.initializeApp({
   apiKey: constants.FIRESTORE_API_KEY,
   authDomain: 'divelog-ee00d.firebaseapp.com',
@@ -54,33 +54,33 @@ class App extends React.Component {
     this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
       (user) => {
         if (user) {
-          this.setState({isSignedIn: SignInStates.logged_in});
+          this.setState({ isSignedIn: SignInStates.logged_in });
         } else {
-          this.setState({isSignedIn: SignInStates.sign_in_required});
+          this.setState({ isSignedIn: SignInStates.sign_in_required });
         }
       }
     );
   }
-  
+
   // Make sure we un-register Firebase observers when the component unmounts.
   componentWillUnmount() {
     this.unregisterAuthObserver();
   }
 
   render() {
-    return(
+    return (
       <ThemeProvider theme={theme}>
         <BrowserRouter>
-          <TopAppBar/>
+          <TopAppBar />
           <div>
             <Switch>
-              <PrivateRoute exact path="/" component={SimpleTabs} isSignedIn={this.state.isSignedIn}/>
-              <Route path="/login" component={SignInScreen}/>
-              <PrivateRoute path="/add_dive" component={AddDive} isSignedIn={this.state.isSignedIn}/>
-              <PrivateRoute path="/edit_dive" component={EditDive} isSignedIn={this.state.isSignedIn}/>
-              <Route component={NoMatch}/>
+              <PrivateRoute exact path="/" component={SimpleTabs} isSignedIn={this.state.isSignedIn} />
+              <Route path="/login" component={SignInScreen} />
+              <PrivateRoute path="/add_dive" component={AddDive} isSignedIn={this.state.isSignedIn} />
+              <PrivateRoute path="/edit_dive" component={EditDive} isSignedIn={this.state.isSignedIn} />
+              <Route component={NoMatch} />
             </Switch>
-          </div> 
+          </div>
         </BrowserRouter>
       </ThemeProvider>
     )

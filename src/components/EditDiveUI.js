@@ -56,12 +56,14 @@ class EditDiveUI extends React.Component {
     this.onMarkerClick = this.onMarkerClick.bind(this);
   }
 
-  onMarkerClick(marker){
-    let selected_marker = {type: "old", 
-                           name: marker.name,
-                           geopoint: marker.geopoint,
-                           loc_id: marker.loc_id};
-    this.setState({new_marker: null});
+  onMarkerClick(marker) {
+    let selected_marker = {
+      type: "old",
+      name: marker.name,
+      geopoint: marker.geopoint,
+      loc_id: marker.loc_id
+    };
+    this.setState({ new_marker: null });
     this.props.changeSelectedLoc(selected_marker);
     // TODO: change selected marker icon to be unique and remove "new" marker from map
   }
@@ -75,17 +77,19 @@ class EditDiveUI extends React.Component {
     };
 
     var mark = <Marker
-                title={"New Location"}
-                name={"New Location"}
-                key={clickEvent.latLng.lat() + clickEvent.latLng.lng()}
-                position={clickEvent.latLng}
-                onClick={this.onMarkerClick}
-                icon={icon}/>
+      title={"New Location"}
+      name={"New Location"}
+      key={clickEvent.latLng.lat() + clickEvent.latLng.lng()}
+      position={clickEvent.latLng}
+      onClick={this.onMarkerClick}
+      icon={icon} />
 
-    this.setState({new_marker: mark})
-    let selected_marker = {type: "new", 
-                           geopoint: new firebase.firestore.GeoPoint(clickEvent.latLng.lat(),
-                                                                     clickEvent.latLng.lng())};
+    this.setState({ new_marker: mark })
+    let selected_marker = {
+      type: "new",
+      geopoint: new firebase.firestore.GeoPoint(clickEvent.latLng.lat(),
+        clickEvent.latLng.lng())
+    };
     this.props.changeSelectedLoc(selected_marker);
   }
 
@@ -96,25 +100,25 @@ class EditDiveUI extends React.Component {
           <div style={flex_row_style}>
             {this.props.dive_data.selected_loc.type === "old" &&
               <TextField
-              autoFocus
-              disabled
-              margin="dense"
-              inputProps={{ 'data-testid': 'edit_dialog_site' }}
-              label="Dive Site"
-              fullWidth
-              value={this.props.dive_data.location.name}
+                autoFocus
+                disabled
+                margin="dense"
+                inputProps={{ 'data-testid': 'edit_dialog_site' }}
+                label="Dive Site"
+                fullWidth
+                value={this.props.dive_data.location.name}
               />}
 
             {(this.props.dive_data.selected_loc.type === "new" ||
               Object.keys(this.props.dive_data.selected_loc).length === 0) &&
               <TextField
-              autoFocus
-              margin="dense"
-              inputProps={{ 'data-testid': 'edit_dialog_site' }}
-              label="Dive Site"
-              fullWidth
-              value={this.props.dive_data.location.name}
-              onChange={this.props.handleSiteChange}
+                autoFocus
+                margin="dense"
+                inputProps={{ 'data-testid': 'edit_dialog_site' }}
+                label="Dive Site"
+                fullWidth
+                value={this.props.dive_data.location.name}
+                onChange={this.props.handleSiteChange}
               />}
           </div>
           <div style={flex_row_style}>
@@ -156,18 +160,18 @@ class EditDiveUI extends React.Component {
           </div>
           <div style={flex_row_style}>
             <Button onClick={this.props.handleClickClose}
-                    color="primary"
-                    data-testid={'edit_dialog_close'} >
+              color="primary"
+              data-testid={'edit_dialog_close'} >
               Cancel
             </Button>
             {this.props.dive_data.input_valid === false && <Button disabled
-                    color="primary"
-                    data-testid={'edit_dialog_save'}>
+              color="primary"
+              data-testid={'edit_dialog_save'}>
               Save
             </Button>}
             {this.props.dive_data.input_valid === true && <Button onClick={this.props.handleClickSave}
-                    color="primary"
-                    data-testid={'edit_dialog_save'}>
+              color="primary"
+              data-testid={'edit_dialog_save'}>
               Save
             </Button>}
           </div>
@@ -178,7 +182,7 @@ class EditDiveUI extends React.Component {
             <MapContainer
               mapClicked={this.mapClicked}
               onMarkerClick={this.onMarkerClick}
-              newMarker={this.state.new_marker}/>
+              newMarker={this.state.new_marker} />
           </div>
         </div>
       </div>

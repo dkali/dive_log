@@ -4,7 +4,7 @@ import SignInStates from './enums';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const location = useLocation();
-  var {isSignedIn} = rest;
+  var { isSignedIn } = rest;
 
   if (isSignedIn === SignInStates.logged_in) {
     // User is signed in.

@@ -69,53 +69,53 @@ function TopAppBar() {
   if (user != null) {
     photoUrl = user.photoURL;
   }
-  var user_pic = photoUrl === null? user_icon : photoUrl;
+  var user_pic = photoUrl === null ? user_icon : photoUrl;
 
-  return(
+  return (
     <div>
-    <AppBar position="static">
-      <div style={flex_header_style}>
-        <div style={left_side}>
-          {(screen === 'edit' || screen === 'add') &&
-            <NavLink to="/">
-              <IconButton data-testid={"back_icon"} size="small">
-                <img style={header_icon_style}
-                  src={back_icon}
-                  alt="back"/>
-              </IconButton>
-            </NavLink>
-          }
-        </div>
+      <AppBar position="static">
+        <div style={flex_header_style}>
+          <div style={left_side}>
+            {(screen === 'edit' || screen === 'add') &&
+              <NavLink to="/">
+                <IconButton data-testid={"back_icon"} size="small">
+                  <img style={header_icon_style}
+                    src={back_icon}
+                    alt="back" />
+                </IconButton>
+              </NavLink>
+            }
+          </div>
 
-        {screen === 'default' &&
-          <div style={header_title}>
-            <h2>Welcome to Dive Log</h2>
-          </div>
-        }
-        {screen === 'edit' &&
-          <div style={header_title}>
-            <h2>Edit dive</h2>
-          </div>
-        }
-        {screen === 'add' &&
-          <div style={header_title}>
-            <h2>Add new dive</h2>
-          </div>
-        }
-        
-        <div style={right_side}>
-          {screen === 'main' &&
-            <IconButton data-testid={"user_icon"} size="small" onClick={clickOnProfile}>
-              <img style={header_icon_style}
-                src={user_pic}
-                alt="user"/>
-            </IconButton>
+          {screen === 'default' &&
+            <div style={header_title}>
+              <h2>Welcome to Dive Log</h2>
+            </div>
           }
+          {screen === 'edit' &&
+            <div style={header_title}>
+              <h2>Edit dive</h2>
+            </div>
+          }
+          {screen === 'add' &&
+            <div style={header_title}>
+              <h2>Add new dive</h2>
+            </div>
+          }
+
+          <div style={right_side}>
+            {screen === 'main' &&
+              <IconButton data-testid={"user_icon"} size="small" onClick={clickOnProfile}>
+                <img style={header_icon_style}
+                  src={user_pic}
+                  alt="user" />
+              </IconButton>
+            }
+          </div>
         </div>
-      </div>
-    </AppBar>
-    <ProfileDialog open={profileOpen}
-      onClose={handleClose}/>
+      </AppBar>
+      <ProfileDialog open={profileOpen}
+        onClose={handleClose} />
     </div>
   )
 }

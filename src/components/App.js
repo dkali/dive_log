@@ -10,38 +10,25 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import TopAppBar from './TopAppBar';
 import PrivateRoute from './../helpers/PrivateRoute';
 import SignInStates from './../helpers/enums';
+import { green, orange } from '@material-ui/core/colors';
+import { CssBaseline } from '@material-ui/core';
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#2196F3',
-    },
-    secondary: {
-      main: '#E10050',
-    },
-  },
-
-  overrides: {
-    MuiInput: {
-      root: {
-        color: "#ffebee",
-        '& p': {
-          color: '#ffebee'
-        }
-      },
-    }
-  }
-});
+const theme = createMuiTheme();
 
 const NoMatch = () => <h1>404 Not Found :(</h1>
 
 // Configure Firebase.
 var constants = require('../ApiKey.js');
-firebase.initializeApp({
-  apiKey: constants.FIRESTORE_API_KEY,
-  authDomain: 'divelog-ee00d.firebaseapp.com',
-  projectId: 'divelog-ee00d'
-});
+if (!firebase.apps.length) {
+  firebase.initializeApp({
+    apiKey: constants.FIRESTORE_API_KEY,
+    authDomain: 'divelog-ee00d.firebaseapp.com',
+    projectId: 'divelog-ee00d'
+  });
+} else {
+  firebase.app(); // if already initialized, use that one
+}
+
 
 class App extends React.Component {
   // The component's Local state.
@@ -70,6 +57,7 @@ class App extends React.Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <BrowserRouter>
           <TopAppBar />
           <div>

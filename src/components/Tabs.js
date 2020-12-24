@@ -90,7 +90,7 @@ class SimpleTabs extends React.Component {
                   </TabPanel>
                   <TabPanel value={this.state.value} index={1}>
                     <MapContainer map_style={{
-                      height: 'calc(100vh - 98px)',
+                      height: 'calc(100vh - 107px)',
                     }
                     } />
                   </TabPanel></Fragment>
@@ -110,7 +110,7 @@ class SimpleTabs extends React.Component {
                   </Grid>
                   <Grid item xs={8} spacing={3}>
                     <MapContainer map_style={{
-                      height: 'calc(100vh - 50px)',
+                      height: 'calc(100vh - 59px)',
                     }
                     } />
                   </Grid>

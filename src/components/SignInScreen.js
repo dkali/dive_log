@@ -91,9 +91,7 @@ class SignInScreen extends React.Component {
 
     if (this.state.isSignedIn === sign_in_states.logged_in) {
       return <Redirect push to="/" />;
-    }
-
-    if (this.state.isSignedIn === sign_in_states.unknown) {
+    } else if (this.state.isSignedIn === sign_in_states.unknown) {
       return <CircularProgress color="primary" style={progress_style} />
     }
 

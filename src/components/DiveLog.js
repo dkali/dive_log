@@ -1,6 +1,5 @@
 import React from 'react';
 
-import DiveInfoDialog from './DiveInfoDialog.js';
 import DiveList from './DiveList.js';
 
 import firebase from 'firebase/app';
@@ -69,17 +68,12 @@ class DiveLog extends React.Component {
       marginTop: "8px",
       position: "relative",
     }
-    
+
     return (
       <div data-testid={'dive_log'}>
         <div style={dive_log_style}>
           <DiveList handleEntryClick={this.handleEntryClick} />
         </div>
-        <DiveInfoDialog data-testid={'dive_info_dialog'}
-          opened={this.state.dive_info_opened}
-          handleClickCloseDialog={this.handleClickCloseDialog}
-          handleTabChange={this.props.handleTabChange}
-          handleDeleteClick={this.handleDeleteClick} />
       </div>
     )
   }

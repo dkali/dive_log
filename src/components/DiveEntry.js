@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import Box from '@material-ui/core/Box';
-import { Pool, Timelapse } from '@material-ui/icons';
+import { Check, Pool, Timelapse } from '@material-ui/icons';
 
 
 const styles = theme => ({
@@ -54,13 +54,17 @@ class DiveEntry extends React.Component {
                     </Typography>
                     <Typography variant="body2" className={classes.icons} align="center">
                       <Box p={1}>
-                        <Pool fontSize="small" />
+                        <Check fontSize="small" />
                       </Box>
                       <span>{dive_num}</span>
                       <Box p={1}>
-                        <Timelapse fontSize="small" />
+                        <Pool fontSize="small" />
                       </Box>
                       <span>{entryData.depth}</span>
+                      <Box p={1}>
+                        <Timelapse fontSize="small" />
+                      </Box>
+                      <span>{entryData.duration}</span>
                     </Typography>
                   </Grid>
                 </Grid>

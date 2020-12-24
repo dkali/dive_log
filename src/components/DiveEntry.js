@@ -19,10 +19,6 @@ const styles = theme => ({
   },
   paper: {
     width: "100%",
-  },
-  icons: {
-    display: "flex",
-    alignItems: "center"
   }
 });
 
@@ -44,33 +40,49 @@ class DiveEntry extends React.Component {
     return (
       <ListItem className={classes.root} onClick={this.handleClick}>
         <Paper className={classes.paper}>
-          <Box p={1}>
+          <Box bgcolor="primary.main" color="primary.contrastText" p={2}>
             <Grid container>
-              <Grid item xs={12} sm container>
-                <Grid item xs container direction="column" spacing={2}>
-                  <Grid item xs alignItems="center">
-                    <Typography gutterBottom variant="subtitle1">
-                      {entryData.location.name}
-                    </Typography>
-                    <Typography variant="body2" className={classes.icons} align="center">
-                      <Box p={1}>
-                        <Check fontSize="small" />
-                      </Box>
-                      <span>{dive_num}</span>
-                      <Box p={1}>
-                        <Pool fontSize="small" />
-                      </Box>
-                      <span>{entryData.depth}</span>
-                      <Box p={1}>
-                        <Timelapse fontSize="small" />
-                      </Box>
-                      <span>{entryData.duration}</span>
+              <Grid item xs container direction="column" spacing={2}>
+                <Typography variant="subtitle1" gutterBottom>
+                  {entryData.location.name}
+                </Typography>
+                <Grid
+                  container
+                  direction="row"
+                  justify="flex-start"
+                  alignItems="flex-start"
+                >
+                  <Grid item xs={2} container direction="row" alignItems="center">
+                    <Box p={1}>
+                      <Check fontSize="small" />
+                    </Box>
+                    <Typography variant="body2" gutterBottom>
+                      {dive_num}
                     </Typography>
                   </Grid>
+
+                  <Grid item xs={2} container direction="row" alignItems="center">
+                    <Box p={1}>
+                      <Pool fontSize="small" />
+                    </Box>
+                    <Typography variant="body2" gutterBottom>
+                      {entryData.depth}
+                    </Typography>
+                  </Grid>
+
+                  <Grid item xs={2} container direction="row" alignItems="center">
+                    <Box p={1}>
+                      <Timelapse fontSize="small" />
+                    </Box>
+                    <Typography variant="body2" gutterBottom>
+                      {entryData.duration}
+                    </Typography>
+                  </Grid>
+
                 </Grid>
-                <Grid item>
-                  <Typography variant="subtitle1">{format(fromUnixTime(entryData.date.seconds), "MMM dd, yyyy")}</Typography>
-                </Grid>
+              </Grid>
+              <Grid item>
+                <Typography variant="subtitle1">{format(fromUnixTime(entryData.date.seconds), "MMM dd, yyyy")}</Typography>
               </Grid>
             </Grid>
           </Box>

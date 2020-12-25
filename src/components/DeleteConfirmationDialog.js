@@ -8,24 +8,15 @@ import { deleteDive } from "../redux/actions";
 import firebase from 'firebase/app';
 
 const flex_row_style = {
-  display: "flex",
-  flexDirection: "row",
-  paddingTop: "1em",
 }
 
 const flex_header_style = {
-  display: "flex",
-  flexDirection: "row",
 }
 
 const dialog_header_style = {
-  backgroundColor: "#5A6478",
-  color: "white",
 }
 
 const dialog_body_style = {
-  backgroundColor: "#495361",
-  color: "white",
 }
 
 class DeleteConfirmationDialog extends React.Component {

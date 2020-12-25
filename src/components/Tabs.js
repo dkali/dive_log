@@ -79,18 +79,16 @@ class SimpleTabs extends React.Component {
                 </Tabs>
                   <TabPanel value={this.state.value} index={0}>
                     <DiveLog handleTabChange={this.handleChange} />
-                    <NavLink to="/add_dive">
                       <Fab style={add_dive_style}
                         component={Link} to={"/add_dive"}
                         color="primary"
                         data-testid={'add_new_dive_btn'}>
                         <AddIcon />
                       </Fab>
-                    </NavLink>
                   </TabPanel>
                   <TabPanel value={this.state.value} index={1}>
                     <MapContainer map_style={{
-                      height: 'calc(100vh - 98px)',
+                      height: 'calc(100vh - 107px)',
                     }
                     } />
                   </TabPanel></Fragment>
@@ -110,7 +108,7 @@ class SimpleTabs extends React.Component {
                   </Grid>
                   <Grid item xs={8} spacing={3}>
                     <MapContainer map_style={{
-                      height: 'calc(100vh - 50px)',
+                      height: 'calc(100vh - 59px)',
                     }
                     } />
                   </Grid>

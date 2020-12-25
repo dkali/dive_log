@@ -1,14 +1,14 @@
 import React from 'react';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
+
 import DiveInfoDialog from './DiveInfoDialog.js';
 import DiveList from './DiveList.js';
-import { NavLink } from 'react-router-dom';
+
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import { connect } from "react-redux";
 import { initStore } from "../redux/actions";
 import DiveLocation from '../helpers/DiveLocation.js'
+
 
 class DiveLog extends React.Component {
   constructor(props) {
@@ -62,30 +62,18 @@ class DiveLog extends React.Component {
   }
 
   render() {
-    const add_dive_style = {
-      position: "fixed",
-      bottom: "2em",
-      right: "2em",
-    }
-
     const dive_log_style = {
       display: "flex",
       flexDirection: "column",
-      alignItems: "flex-start",
-      justifyContent: "space-around",
+      alignItems: "center",
+      marginTop: "8px",
+      position: "relative",
     }
-
+    
     return (
       <div data-testid={'dive_log'}>
         <div style={dive_log_style}>
           <DiveList handleEntryClick={this.handleEntryClick} />
-          <NavLink to="/add_dive">
-            <Fab style={add_dive_style}
-              color="primary"
-              data-testid={'add_new_dive_btn'}>
-              <AddIcon />
-            </Fab>
-          </NavLink>
         </div>
         <DiveInfoDialog data-testid={'dive_info_dialog'}
           opened={this.state.dive_info_opened}

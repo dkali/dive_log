@@ -10,8 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import Box from '@material-ui/core/Box';
-import { Check, Pool, Timelapse } from '@material-ui/icons';
-
+import { Check, Height, Timelapse } from '@material-ui/icons';
 
 const styles = theme => ({
   root: {
@@ -63,7 +62,7 @@ class DiveEntry extends React.Component {
 
                   <Grid item xs={2} container direction="row" alignItems="center">
                     <Box p={1}>
-                      <Pool fontSize="small" />
+                      <Height fontSize="small" />
                     </Box>
                     <Typography variant="body2" gutterBottom>
                       {entryData.depth}

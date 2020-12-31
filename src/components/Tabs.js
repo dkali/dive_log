@@ -73,10 +73,11 @@ class SimpleTabs extends React.Component {
           {matches => (
             <Fragment>
               {matches.small &&
-                <Fragment><Tabs value={this.state.value} onChange={this.handleChange} aria-label="simple tabs example" centered>
-                  <Tab data-testid={"dive_log_tab"} label="Dive Log" />
-                  <Tab data-testid={"map_tab"} label="Map" />
-                </Tabs>
+                <Fragment>
+                  <Tabs value={this.state.value} onChange={this.handleChange} aria-label="simple tabs example" centered>
+                    <Tab data-testid={"dive_log_tab"} label="Dive Log" />
+                    <Tab data-testid={"map_tab"} label="Map" />
+                  </Tabs>
                   <TabPanel value={this.state.value} index={0}>
                     <DiveLog handleTabChange={this.handleChange} />
                       <Fab style={add_dive_style}
@@ -89,32 +90,32 @@ class SimpleTabs extends React.Component {
                   <TabPanel value={this.state.value} index={1}>
                     <MapContainer map_style={{
                       height: 'calc(100vh - 107px)',
-                    }
-                    } />
-                  </TabPanel></Fragment>
+                    }} />
+                  </TabPanel>
+                </Fragment>
               }
-              {matches.medium && <Fragment>
-                <Grid container>
-                  <Grid item xs={4}>
-                    <DiveLog handleTabChange={this.handleChange} />
-                    <NavLink to="/add_dive">
-                      <Fab style={add_dive_style_calc}
-                        component={Link} to={"/add_dive"}
-                        color="primary"
-                        data-testid={'add_new_dive_btn'}>
-                        <AddIcon />
-                      </Fab>
-                    </NavLink>
+              {matches.medium && 
+                <Fragment>
+                  <Grid container>
+                    <Grid item xs={4}>
+                      <DiveLog handleTabChange={this.handleChange} />
+                      <NavLink to="/add_dive">
+                        <Fab style={add_dive_style_calc}
+                          component={Link} to={"/add_dive"}
+                          color="primary"
+                          data-testid={'add_new_dive_btn'}>
+                          <AddIcon />
+                        </Fab>
+                      </NavLink>
+                    </Grid>
+                    <Grid item xs={8}>
+                      <MapContainer map_style={{
+                        height: 'calc(100vh - 59px)',
+                      }
+                      } />
+                    </Grid>
                   </Grid>
-                  <Grid item xs={8} spacing={3}>
-                    <MapContainer map_style={{
-                      height: 'calc(100vh - 59px)',
-                    }
-                    } />
-                  </Grid>
-                </Grid>
-
-              </Fragment>}
+                </Fragment>}
             </Fragment>
           )}
         </Media>

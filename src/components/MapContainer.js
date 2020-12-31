@@ -9,7 +9,6 @@ const containerStyle = {
   position: 'relative',  
   width: '100%',
   height: '100%',
-  zIndex: -1
 }
 
 export class MapContainer extends React.Component {

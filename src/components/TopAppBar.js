@@ -46,7 +46,7 @@ function TopAppBar() {
 
   const getLeftIcon = () => screen === 'edit' || screen === 'add' ?
     <NavLink to="/">
-      <IconButton color="pallete.primary.contrastText">
+      <IconButton>
         <ArrowBackIcon />
       </IconButton>
     </NavLink> :

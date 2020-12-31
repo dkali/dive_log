@@ -7,7 +7,7 @@ const DiveList = ({ dives, handleEntryClick }) => {
   return dives.map((dive, index) =>
     <DiveEntry entryData={dive}
       key={index}
-      dive_num={index+1}
+      dive_num={dives.length - index}
       handleEntryClick={handleEntryClick} />
   );
 }

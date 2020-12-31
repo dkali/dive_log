@@ -180,10 +180,10 @@ class EditDiveUI extends React.Component {
         <div style={flex_column_style2}>
           <div style={flex_row_style}>
             <MapContainer
-            map_style={{
-              height: '50vh',
-              width: "90vw"
-            }}
+              map_style={{
+                height: '50vh',
+                width: "90vw"
+              }}
               mapClicked={this.mapClicked}
               onMarkerClick={this.onMarkerClick}
               newMarker={this.state.new_marker} />

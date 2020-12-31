@@ -23,7 +23,7 @@ class DiveLog extends React.Component {
     if (user != null) {
       console.log("initializing store for user id " + user.uid);
       var divesRef = db.collection("dives");
-      var query = divesRef.where("user", "==", user.uid).orderBy("timestamp", "asc");
+      var query = divesRef.where("user", "==", user.uid).orderBy("timestamp", "desc");
       var vld = this;
       query.get()
         .then(function (querySnapshot) {

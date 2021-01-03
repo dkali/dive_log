@@ -3,18 +3,19 @@ import EditDiveUI from './EditDiveUI.js';
 import 'date-fns';
 import { connect } from "react-redux";
 import { editDive } from "../redux/actions";
-import { getCurrentDiveData } from "../redux/selectors";
+import { getCurrentDiveData, getDiveById } from "../redux/selectors";
 import { Redirect } from 'react-router';
 import DiveLocation from '../helpers/DiveLocation.js'
-
+import { withRouter } from "react-router";
 import firebase from 'firebase/app';
 
 class EditDive extends React.Component {
   constructor(props) {
     super(props);
     
-    this.state = this.props.initial_dialog_data
-    this.state["selected_loc"] = this.props.initial_dialog_data.location
+    this.state = this.props.initial_dialog_data;
+    this.state["firestore_id"] = this.props.match.params.firestore_id;
+    this.state["selected_loc"] = this.props.initial_dialog_data.location;
     this.state["selected_loc"]["type"] = "old";
     this.state["input_valid"] = true;
 
@@ -89,7 +90,7 @@ class EditDive extends React.Component {
         console.log("Dive ID ", vld.state.dive_id, " updated");
 
         // On success Firestore update - also update redux
-        let redux_entry = vld.createReduxEntry(vld.state.dive_id, this.state);
+        let redux_entry = vld.createReduxEntry(vld.state.dive_id, vld.state);
         vld.props.editDive(vld.state.dive_id, redux_entry);
         vld.handleClickClose();
       })
@@ -159,6 +160,7 @@ class EditDive extends React.Component {
   }
 
   render() {
+    // const {firestore_id} = useParams();
     if (this.state.redirect) {
       return <Redirect push to="/" />;
     }
@@ -180,9 +182,10 @@ class EditDive extends React.Component {
 function mapStateToProps(state, ownProps) {
   const initial_dialog_data = getCurrentDiveData(state);
   return { initial_dialog_data }
+  // this.props.match.params.firestore_id
 }
 
 export default connect(
   mapStateToProps,
   { editDive }
-)(EditDive);
+)(withRouter(EditDive));

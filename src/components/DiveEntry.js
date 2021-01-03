@@ -88,7 +88,7 @@ class DiveEntry extends React.Component {
               <Grid item>
                 <Typography variant="subtitle1">{format(fromUnixTime(entryData.date.seconds), "MMM dd, yyyy")}</Typography>
                 <IconButton>
-                  <NavLink to="/edit_dive">
+                  <NavLink to={`/dive/${this.props.firestore_id}`}>
                     <Edit />
                   </NavLink >
                 </IconButton>

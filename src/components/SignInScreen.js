@@ -4,7 +4,7 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase/app';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import { Redirect } from 'react-router';
+import { Redirect, withRouter } from 'react-router';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const centered_style = {
@@ -78,19 +78,16 @@ class SignInScreen extends React.Component {
       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
       firebase.auth.FacebookAuthProvider.PROVIDER_ID
     ],
-    // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
-    // signInSuccessUrl: '/',
-    // callbacks: {
-    //   // Avoid redirects after sign-in.
-    //   signInSuccessWithAuthResult: () => false
-    // }
   };
 
   render() {
     console.log("sign-in: render login page");
 
+    const { state } = this.props.location;
+    const { from } = state || { from: { pathname: "/" } };
+
     if (this.state.isSignedIn === sign_in_states.logged_in) {
-      return <Redirect push to="/" />;
+      return <Redirect push to={from} />;
     } else if (this.state.isSignedIn === sign_in_states.unknown) {
       return <CircularProgress color="primary" style={progress_style} />
     }
@@ -118,4 +115,4 @@ class SignInScreen extends React.Component {
   }
 }
 
-export default SignInScreen;
+export default withRouter(SignInScreen);

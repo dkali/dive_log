@@ -61,10 +61,17 @@ class App extends React.Component {
           <TopAppBar />
           <div>
             <Switch>
-              <PrivateRoute exact path="/" component={SimpleTabs} isSignedIn={this.state.isSignedIn} />
-              <Route path="/login" component={SignInScreen} />
-              <PrivateRoute path="/add_dive" component={AddDive} isSignedIn={this.state.isSignedIn} />
-              <PrivateRoute path="/edit_dive" component={EditDive} isSignedIn={this.state.isSignedIn} />
+              <PrivateRoute exact path="/"
+                component={SimpleTabs}
+                isSignedIn={this.state.isSignedIn} />
+              <Route path="/login"
+                component={SignInScreen} />
+              <PrivateRoute path="/add_dive"
+                component={AddDive}
+                isSignedIn={this.state.isSignedIn} />
+              <PrivateRoute path={"/dive/:firestore_id"}
+                component={EditDive}
+                isSignedIn={this.state.isSignedIn} />
               <Route component={NoMatch} />
             </Switch>
           </div>

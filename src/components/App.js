@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import SimpleTabs from './Tabs';
-import AddDive from './AddDiveDialog';
-import EditDive from './EditDiveDialog';
+import AddDive from './AddDive';
+import EditDive from './EditDive';
 import SignInScreen from './SignInScreen';
 import firebase from 'firebase/app';
 import { createMuiTheme } from '@material-ui/core/styles';
@@ -10,7 +10,6 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import TopAppBar from './TopAppBar';
 import PrivateRoute from './../helpers/PrivateRoute';
 import SignInStates from './../helpers/enums';
-import { green, orange } from '@material-ui/core/colors';
 import { CssBaseline } from '@material-ui/core';
 
 const theme = createMuiTheme();

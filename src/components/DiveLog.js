@@ -10,13 +10,6 @@ import DiveLocation from '../helpers/DiveLocation.js'
 
 
 class DiveLog extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dive_info_opened: false,
-    };
-  }
-
   componentDidMount() {
     var db = firebase.firestore();
     var user = firebase.auth().currentUser;
@@ -52,14 +45,6 @@ class DiveLog extends React.Component {
     }
   }
 
-  handleEntryClick = () => {
-    this.setState({ dive_info_opened: true })
-  }
-
-  handleClickCloseDialog = () => {
-    this.setState({ dive_info_opened: false })
-  }
-
   render() {
     const dive_log_style = {
       display: "flex",
@@ -72,7 +57,7 @@ class DiveLog extends React.Component {
     return (
       <div data-testid={'dive_log'}>
         <div style={dive_log_style}>
-          <DiveList handleEntryClick={this.handleEntryClick} />
+          <DiveList />
         </div>
       </div>
     )

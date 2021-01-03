@@ -9,7 +9,7 @@ import DiveLocation from '../helpers/DiveLocation.js'
 
 import firebase from 'firebase/app';
 
-class EditDiveDialog extends React.Component {
+class EditDive extends React.Component {
   constructor(props) {
     super(props);
     
@@ -185,4 +185,4 @@ function mapStateToProps(state, ownProps) {
 export default connect(
   mapStateToProps,
   { editDive }
-)(EditDiveDialog);
+)(EditDive);

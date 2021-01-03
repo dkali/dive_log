@@ -7,7 +7,7 @@ import { Redirect } from 'react-router';
 import firebase from 'firebase/app';
 import DiveLocation from '../helpers/DiveLocation.js'
 
-class AddDiveDialog extends React.Component {
+class AddDive extends React.Component {
   constructor(props) {
     super(props);
 
@@ -192,4 +192,4 @@ class AddDiveDialog extends React.Component {
 export default connect(
   null,
   { addDive }
-)(AddDiveDialog);
+)(AddDive);

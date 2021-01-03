@@ -10,7 +10,10 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import Box from '@material-ui/core/Box';
-import { Check, Height, Timelapse } from '@material-ui/icons';
+import { Check, Height, Timelapse, Edit } from '@material-ui/icons';
+import IconButton from '@material-ui/core/IconButton';
+import { NavLink } from 'react-router-dom';
+
 
 const styles = theme => ({
   root: {
@@ -84,6 +87,11 @@ class DiveEntry extends React.Component {
               </Grid>
               <Grid item>
                 <Typography variant="subtitle1">{format(fromUnixTime(entryData.date.seconds), "MMM dd, yyyy")}</Typography>
+                <IconButton>
+                  <NavLink to="/edit_dive">
+                    <Edit />
+                  </NavLink >
+                </IconButton>
               </Grid>
             </Grid>
           </Box>

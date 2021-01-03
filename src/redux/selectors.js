@@ -7,7 +7,7 @@ export function getDiveById(store, id) {
   if (id < 0 || getDivesState(store).diveList.length === 0) {
     return {};
   }
-  return getDivesState(store).diveList[id - 1];
+  return getDivesState(store).diveList.find(elem => elem.dive_id === id)
 }
 
 export function getCurrentDiveData(store) { 

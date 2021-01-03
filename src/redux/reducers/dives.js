@@ -6,7 +6,7 @@ const initialState = {
   current_dive: 0,
 }
 
-export default function(state = initialState, action) {
+export default function foo(state = initialState, action) {
   var updated_diveList = null;
 
   switch (action.type) {

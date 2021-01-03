@@ -9,10 +9,6 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Grid from '@material-ui/core/Grid';
 import { NavLink } from 'react-router-dom';
-import { Box, Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { withStyles } from '@material-ui/core/styles';
-import { MemoryRouter as Router } from 'react-router';
 import { Link } from 'react-router-dom';
 
 function TabPanel(props) {
@@ -45,7 +41,6 @@ class SimpleTabs extends React.Component {
   handleChange = (event, newValue) => {
     this.setState({ value: newValue })
   };
-
 
   render() {
 
@@ -98,7 +93,7 @@ class SimpleTabs extends React.Component {
                 <Fragment>
                   <Grid container>
                     <Grid item xs={4}>
-                      <DiveLog handleTabChange={this.handleChange} />
+                      <DiveLog />
                       <NavLink to="/add_dive">
                         <Fab style={add_dive_style_calc}
                           component={Link} to={"/add_dive"}

@@ -28,7 +28,10 @@ class DiveEntry extends React.Component {
   }
 
   handleClick() {
-    this.props.selectDive(this.props.dive_num);
+    this.props.selectDive(this.props.firestore_id);
+    if (this.props.handleTabChange !== undefined) {
+      this.props.handleTabChange(null, 1);
+    }
   }
 
   render() {

@@ -57,7 +57,7 @@ class DiveLog extends React.Component {
     return (
       <div data-testid={'dive_log'}>
         <div style={dive_log_style}>
-          <DiveList />
+          <DiveList handleTabChange={this.props.handleTabChange}/>
         </div>
       </div>
     )

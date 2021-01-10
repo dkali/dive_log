@@ -30,7 +30,8 @@ export default function foo(state = initialState, action) {
     case EDIT_DIVE: {
       let {dive_id, content} = action.payload;
       updated_diveList = [...state.diveList];
-      updated_diveList[dive_id - 1] = content;
+      const index = updated_diveList.findIndex(elem => elem.dive_id === dive_id);
+      updated_diveList[index] = content;
       return {
         ...state,
         diveList: updated_diveList,

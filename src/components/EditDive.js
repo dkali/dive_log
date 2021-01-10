@@ -1,29 +1,52 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import EditDiveUI from './EditDiveUI.js';
 import 'date-fns';
 import { connect } from "react-redux";
 import { editDive } from "../redux/actions";
-import { getCurrentDiveData, getDiveById } from "../redux/selectors";
+import { getCurrentDiveData} from "../redux/selectors";
 import { Redirect } from 'react-router';
 import DiveLocation from '../helpers/DiveLocation.js'
 import { withRouter } from "react-router";
 import firebase from 'firebase/app';
+import { selectDive } from "../redux/actions";
 
 class EditDive extends React.Component {
   constructor(props) {
     super(props);
     
-    this.state = this.props.initial_dialog_data;
-    this.state["firestore_id"] = this.props.match.params.firestore_id;
-    this.state["selected_loc"] = this.props.initial_dialog_data.location;
-    this.state["selected_loc"]["type"] = "old";
-    this.state["input_valid"] = true;
+    this.state = {};
+
+    if (this.props.initial_dialog_data.location !== undefined) {
+      // we have location data from redux already
+      this.state = this.props.initial_dialog_data;
+      this.state["firestore_id"] = this.props.match.params.firestore_id;
+      this.state["selected_loc"] = this.props.initial_dialog_data.location;
+      this.state["selected_loc"]["type"] = "old";
+      this.state["input_valid"] = true;
+    } else {
+      // page was reloaded, select firestore id as current dive 
+      // and let Redux to reload the updated data from store
+      this.props.selectDive(this.props.match.params.firestore_id);
+    }
 
     this.handleSiteChange = this.handleSiteChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleDepthChange = this.handleDepthChange.bind(this);
     this.handleDurationChange = this.handleDurationChange.bind(this);
     this.changeSelectedLoc = this.changeSelectedLoc.bind(this);
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    // init local state once we got Redux data after page reload
+    if (this.state["selected_loc"] === undefined &&
+    Object.keys(this.props.initial_dialog_data).length !== 0) {
+      this.setState({
+        ...this.props.initial_dialog_data,
+        ...{firestore_id: this.props.match.params.firestore_id,
+          selected_loc: { ...this.props.initial_dialog_data.location,
+                          ...{type: "old"}},
+          input_valid: true}});
+    }
   }
 
   handleDateChange = date => {
@@ -166,26 +189,31 @@ class EditDive extends React.Component {
     }
 
     return (
-      <EditDiveUI dive_data = {this.state}
-                  handleSiteChange = {this.handleSiteChange}
-                  handleDateChange = {this.handleDateChange}
-                  handleDepthChange = {this.handleDepthChange}
-                  handleDurationChange = {this.handleDurationChange}
-                  handleClickSave = {this.handleClickSave}
-                  handleClickClose = {this.handleClickClose}
-                  changeSelectedLoc = {this.changeSelectedLoc}
-                  />
+      <Fragment>
+        {/* do not render when page reloaded and we are still waiting for data from FS */}
+        {this.state["selected_loc"] !== undefined &&
+          <EditDiveUI dive_data = {this.state}
+                      handleSiteChange = {this.handleSiteChange}
+                      handleDateChange = {this.handleDateChange}
+                      handleDepthChange = {this.handleDepthChange}
+                      handleDurationChange = {this.handleDurationChange}
+                      handleClickSave = {this.handleClickSave}
+                      handleClickClose = {this.handleClickClose}
+                      changeSelectedLoc = {this.changeSelectedLoc}
+                      />
+        }
+      </Fragment>
     )
   }
 }
 
 function mapStateToProps(state, ownProps) {
+  // const initial_dialog_data = getDiveById(state, this.props.match.params.firestore_id)
   const initial_dialog_data = getCurrentDiveData(state);
   return { initial_dialog_data }
-  // this.props.match.params.firestore_id
 }
 
 export default connect(
   mapStateToProps,
-  { editDive }
+  { editDive, selectDive }
 )(withRouter(EditDive));

@@ -58,30 +58,25 @@ class App extends React.Component {
       var divesRef = db.collection("dives");
       var query = divesRef.where("user", "==", user.uid).orderBy("timestamp", "desc");
       var vld = this;
-      query.get()
-        .then(function (querySnapshot) {
-          let dive_list_init = [];
-          querySnapshot.forEach(function (doc) {
-            let dive_data = new Map();
-            dive_data["dive_id"] = doc.id;
-            dive_data["date"] = doc.data().timestamp;
-            dive_data["depth"] = doc.data().depth;
-            dive_data["duration"] = doc.data().duration;
-            let location = new DiveLocation(doc.data().location.name,
-              doc.data().location.loc_id,
-              doc.data().location.geopoint);
-            dive_data["location"] = location;
+      query.onSnapshot(function(querySnapshot) {
+        let dive_list_init = [];
+        querySnapshot.forEach(function (doc) {
+          let dive_data = new Map();
+          dive_data["dive_id"] = doc.id;
+          dive_data["date"] = doc.data().timestamp;
+          dive_data["depth"] = doc.data().depth;
+          dive_data["duration"] = doc.data().duration;
+          let location = new DiveLocation(doc.data().location.name,
+            doc.data().location.loc_id,
+            doc.data().location.geopoint);
+          dive_data["location"] = location;
 
-            dive_list_init.push(dive_data);
-            // location: new firebase.firestore.GeoPoint(latitude, longitude)
-          });
-
-          // save data to redux
-          vld.props.initStore(dive_list_init);
-        })
-        .catch(function (error) {
-          console.log("Error getting dives: ", error);
+          dive_list_init.push(dive_data);
         });
+
+        // save data to redux
+        vld.props.initStore(dive_list_init);
+      })
     }
   }
 

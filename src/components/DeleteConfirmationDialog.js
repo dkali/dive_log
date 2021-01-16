@@ -3,8 +3,6 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
-import { connect } from "react-redux";
-import { deleteDive } from "../redux/actions";
 import firebase from 'firebase/app';
 
 const flex_row_style = {
@@ -27,7 +25,6 @@ class DeleteConfirmationDialog extends React.Component {
     db.collection("dives").doc(this.props.dive_id).delete().then(function () {
       console.log("Dive successfully deleted!");
       vld.props.handleClickCloseDelConfirmationDialog();
-      vld.props.deleteDive();
     }).catch(function (error) {
       console.error("Error removing dive: ", error);
     });
@@ -62,7 +59,4 @@ class DeleteConfirmationDialog extends React.Component {
   }
 }
 
-export default connect(
-  null,
-  { deleteDive }
-)(DeleteConfirmationDialog);
+export default DeleteConfirmationDialog;

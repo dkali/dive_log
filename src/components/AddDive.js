@@ -1,11 +1,8 @@
 import React from 'react';
 import EditDiveUI from './EditDiveUI.js';
 import 'date-fns';
-import { connect } from "react-redux";
-import { addDive } from "../redux/actions";
 import { Redirect } from 'react-router';
 import firebase from 'firebase/app';
-import DiveLocation from '../helpers/DiveLocation.js'
 
 class AddDive extends React.Component {
   constructor(props) {
@@ -64,20 +61,6 @@ class AddDive extends React.Component {
     return fire_store_entry;
   }
 
-  createReduxEntry(id, state) {
-    let redux_entry = new Map();
-    redux_entry["dive_id"] = id;
-    redux_entry["date"] = state.date;
-    redux_entry["depth"] = state.depth;
-    redux_entry["duration"] = state.duration;
-    let location = new DiveLocation(state.selected_loc.name,
-      state.selected_loc.loc_id,
-      state.selected_loc.geopoint);
-    redux_entry["location"] = location;
-
-    return redux_entry;
-  }
-
   handleClickSave = () => {
     var db = firebase.firestore();
 
@@ -90,10 +73,6 @@ class AddDive extends React.Component {
       db.collection("dives").add(fire_store_entry)
         .then(function (docRef) {
           console.log("New Dive added with ID: ", docRef.id);
-
-          // On success Firestore update - also update redux
-          let redux_entry = this.createReduxEntry(docRef.id, this.state);
-          vld.props.addDive(redux_entry);
           vld.handleClickClose();
         })
         .catch(function (error) {
@@ -123,9 +102,6 @@ class AddDive extends React.Component {
           db.collection("dives").add(fire_store_entry)
             .then(function (docRef) {
               console.log("New Dive added with ID: ", docRef.id);
-              // On success Firestore update - also update redux
-              let redux_entry = vld.createReduxEntry(docRef.id, vld.state);
-              vld.props.addDive(redux_entry);
               vld.handleClickClose();
             })
             .catch(function (error) {
@@ -189,7 +165,4 @@ class AddDive extends React.Component {
   }
 }
 
-export default connect(
-  null,
-  { addDive }
-)(AddDive);
+export default AddDive;

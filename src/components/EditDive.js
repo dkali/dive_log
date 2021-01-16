@@ -2,10 +2,8 @@ import React, { Fragment } from 'react';
 import EditDiveUI from './EditDiveUI.js';
 import 'date-fns';
 import { connect } from "react-redux";
-import { editDive } from "../redux/actions";
 import { getCurrentDiveData} from "../redux/selectors";
 import { Redirect } from 'react-router';
-import DiveLocation from '../helpers/DiveLocation.js'
 import { withRouter } from "react-router";
 import firebase from 'firebase/app';
 import { selectDive } from "../redux/actions";
@@ -85,20 +83,6 @@ class EditDive extends React.Component {
     return fire_store_entry;
   }
 
-  createReduxEntry(id, state) {
-    let redux_entry = new Map();
-    redux_entry["dive_id"] = id;
-    redux_entry["date"] = state.date;
-    redux_entry["depth"] = state.depth;
-    redux_entry["duration"] = state.duration;
-    let location = new DiveLocation(state.selected_loc.name,
-                                    state.selected_loc.loc_id,
-                                    state.selected_loc.geopoint);
-    redux_entry["location"] = location;
-
-    return redux_entry;
-  }
-
   handleClickSave = () => {
     var db = firebase.firestore();
 
@@ -111,10 +95,6 @@ class EditDive extends React.Component {
       db.collection("dives").doc(vld.state.dive_id).set(fire_store_entry)
       .then(function() {
         console.log("Dive ID ", vld.state.dive_id, " updated");
-
-        // On success Firestore update - also update redux
-        let redux_entry = vld.createReduxEntry(vld.state.dive_id, vld.state);
-        vld.props.editDive(vld.state.dive_id, redux_entry);
         vld.handleClickClose();
       })
       .catch(function(error) {
@@ -139,9 +119,6 @@ class EditDive extends React.Component {
         db.collection("dives").doc(vld.state.dive_id).set(fire_store_entry)
         .then(function() {
           console.log("Dive ID ", vld.state.dive_id, " updated");
-          // On success Firestore update - also update redux
-          let redux_entry = vld.createReduxEntry(docRef.id, vld.state);
-          vld.props.editDive(this.state.dive_id, redux_entry);
           vld.handleClickClose();
         })
         .catch(function(error) {
@@ -215,5 +192,5 @@ function mapStateToProps(state, ownProps) {
 
 export default connect(
   mapStateToProps,
-  { editDive, selectDive }
+  { selectDive }
 )(withRouter(EditDive));

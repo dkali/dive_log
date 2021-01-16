@@ -15,7 +15,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 require('firebase/auth')
 
 function TopAppBar() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

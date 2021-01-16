@@ -3,6 +3,10 @@ import EditDiveUI from './EditDiveUI.js';
 import 'date-fns';
 import { Redirect } from 'react-router';
 import firebase from 'firebase/app';
+import { firebaseAddDive,
+  firebaseCreateLocAndAddDive,
+  createFireStoreDiveEntry,
+  createFireStoreLocationEntry } from '../helpers/FirebaseInterface'
 
 class AddDive extends React.Component {
   constructor(props) {
@@ -45,75 +49,19 @@ class AddDive extends React.Component {
       () => { this.validate_input() })
   }
 
-  createFireStoreEntry(state) {
-    let fire_store_entry = {
-      depth: Number(state.depth),
-      duration: Number(state.duration),
-      timestamp: state.date,
-      user: firebase.auth().currentUser.uid,
-      location: {
-        geopoint: state.selected_loc.geopoint,
-        loc_id: state.selected_loc.loc_id,
-        name: state.selected_loc.name,
-      },
-    };
-
-    return fire_store_entry;
-  }
-
   handleClickSave = () => {
-    var db = firebase.firestore();
-
-    let vld = this;
     if (this.state.selected_loc.type === "old") {
       // reuse the existing location
-      let fire_store_entry = this.createFireStoreEntry(this.state);
-
-      // TODO reject empty input
-      db.collection("dives").add(fire_store_entry)
-        .then(function (docRef) {
-          console.log("New Dive added with ID: ", docRef.id);
-          vld.handleClickClose();
-        })
-        .catch(function (error) {
-          console.error("Error adding dive: ", error);
-          vld.handleClickClose();
-        });
+      let fs_dive_data = createFireStoreDiveEntry(this.state);
+      firebaseAddDive(fs_dive_data);
     }
     else if (this.state.selected_loc.type === "new") {
       // we need to create a new Location in a Firestore first
-      let fire_store_entry = {
-        description: "",
-        geopoint: this.state.selected_loc.geopoint,
-        name: this.state.location.name
-      };
-      db.collection("locations").add(fire_store_entry)
-        .then(function (docRef) {
-          console.log("New Location created with ID: ", docRef.id);
-          vld.setState({
-            selected_loc: {
-              geopoint: vld.state.selected_loc.geopoint,
-              loc_id: docRef.id,
-              name: vld.state.location.name,
-            }
-          })
-          // add new dive using created location
-          let fire_store_entry = vld.createFireStoreEntry(vld.state);
-          db.collection("dives").add(fire_store_entry)
-            .then(function (docRef) {
-              console.log("New Dive added with ID: ", docRef.id);
-              vld.handleClickClose();
-            })
-            .catch(function (error) {
-              console.error("Error adding dive: ", error);
-              vld.handleClickClose();
-            });
-        })
-        .catch(function (error) {
-          console.error("Error creating location: ", error);
-          vld.handleClickClose();
-        });
+      let fs_location_data = createFireStoreLocationEntry(this.state);
+      let fs_dive_data = createFireStoreDiveEntry(this.state);
+      firebaseCreateLocAndAddDive(fs_location_data, fs_dive_data);
     }
+    this.handleClickClose();
   }
 
   handleClickClose = () => {

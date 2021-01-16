@@ -77,7 +77,7 @@ class SimpleTabs extends React.Component {
                     <DiveLog handleTabChange={this.handleChange} />
                       <Fab style={add_dive_style}
                         component={Link} to={"/add_dive"}
-                        color="primary"
+                        color="secondary"
                         data-testid={'add_new_dive_btn'}>
                         <AddIcon />
                       </Fab>

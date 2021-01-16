@@ -20,7 +20,8 @@ const dialog_body_style = {
 class DeleteConfirmationDialog extends React.Component {
   handleClickDelete = () => {
     firebaseDeleteDive(this.props.dive_id);
-    this.props.handleClickCloseDelConfirmationDialog();
+    this.props.handleClickClose();
+    this.props.confirmDeletion();
   }
 
   render() {
@@ -35,7 +36,7 @@ class DeleteConfirmationDialog extends React.Component {
         </DialogTitle>
         <DialogContent style={dialog_body_style}>
           <div style={flex_row_style}>
-            <Button onClick={this.props.handleClickCloseDelConfirmationDialog}
+            <Button onClick={this.props.handleClickClose}
               color="primary"
               data-testid={'del_confirm_dialog_cancel'} >
               Cancel

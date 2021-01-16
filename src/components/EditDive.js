@@ -133,6 +133,7 @@ class EditDive extends React.Component {
                       handleClickSave = {this.handleClickSave}
                       handleClickClose = {this.handleClickClose}
                       changeSelectedLoc = {this.changeSelectedLoc}
+                      editMode = {true}
                       />
         }
       </Fragment>

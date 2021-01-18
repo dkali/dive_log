@@ -1,26 +1,26 @@
 import firebase from 'firebase/app';
 
-export function createFireStoreDiveEntry(state) {
+export function createFireStoreDiveEntry(depth, duration, date, selectedLoc) {
   let fire_store_entry = {
-    depth: Number(state.depth),
-    duration: Number(state.duration),
-    timestamp: state.date,
+    depth: Number(depth),
+    duration: Number(duration),
+    timestamp: date,
     user: firebase.auth().currentUser.uid,
     location: {
-      geopoint: state.selected_loc.geopoint,
-      loc_id: state.selected_loc.loc_id,
-      name: state.selected_loc.name,
+      geopoint: selectedLoc.geopoint,
+      loc_id: selectedLoc.loc_id,
+      name: selectedLoc.name,
     },
   };
 
   return fire_store_entry;
 }
 
-export function createFireStoreLocationEntry(state) {
+export function createFireStoreLocationEntry(selectedLoc, location) {
   let fs_location_data = {
     description: "",
-    geopoint: state.selected_loc.geopoint,
-    name: state.location.name
+    geopoint: selectedLoc.geopoint,
+    name: location.name
   };
 
   return fs_location_data

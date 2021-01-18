@@ -4,6 +4,7 @@ const initialState = {
   diveList: [
   ],
   current_dive: 0,
+  init_complete: false
 }
 
 export default function foo(state = initialState, action) {
@@ -19,6 +20,7 @@ export default function foo(state = initialState, action) {
       return {
         ...state,
         diveList: action.payload,
+        init_complete: true
       };
     }
 

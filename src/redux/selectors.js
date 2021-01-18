@@ -5,7 +5,7 @@ export const getDiveList = store =>
 
 export function getDiveById(store, id) {
   if (id < 0 || getDivesState(store).diveList.length === 0) {
-    return {};
+    return undefined;
   }
   return getDivesState(store).diveList.find(elem => elem.dive_id === id)
 }
@@ -16,4 +16,8 @@ export function getCurrentDiveData(store) {
 
 export function getCurrentDiveID(store) {
   return getDivesState(store).current_dive;
+}
+
+export function getInitComplete(store) {
+  return getDivesState(store).init_complete;
 }

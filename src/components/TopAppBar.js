@@ -33,7 +33,7 @@ function TopAppBar() {
   let location = useLocation();
   let screen = 'main';
   let title = 'Welcome to DiveLog';
-  if (location.pathname === '/edit_dive') {
+  if (location.pathname.startsWith('/dive')) {
     screen = 'edit';
     title = 'Edit dive';
   }

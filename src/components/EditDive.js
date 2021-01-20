@@ -10,7 +10,7 @@ import { firebaseUpdateDive,
   firebaseCreateLocationAndUpdateDive,
   createFireStoreDiveEntry,
   createFireStoreLocationEntry } from '../helpers/FirebaseInterface';
-  import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 function EditDive(props) {
   let { firestore_id } = useParams();

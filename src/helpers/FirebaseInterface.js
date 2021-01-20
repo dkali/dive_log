@@ -1,5 +1,16 @@
 import firebase from 'firebase/app';
 
+export function firebaseSignInUser(email, password) {
+  firebase.auth().signInWithEmailAndPassword(email, password)
+    .then(function (firebaseUser) {
+      // Success
+    })
+    .catch(function (error) {
+      // Handle Errors here
+      console.log("Failed to SignIn: error code ", error.code, " msg: ", error.message);
+    });
+}
+
 export function createFireStoreDiveEntry(depth, duration, date, selectedLoc) {
   let fire_store_entry = {
     depth: Number(depth),

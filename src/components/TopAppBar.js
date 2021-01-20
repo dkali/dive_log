@@ -54,9 +54,16 @@ function TopAppBar() {
       <SettingsIcon />
     </IconButton>
 
-  const getProfileIcon = () => user !== null && user.photoURL !== null ?
-    <img src={user.photoURL} alt="user" /> :
-    <PersonIcon fontSize="large" />
+  const getProfileIcon = () => {
+    if (user !== null) {
+      if (user.photoURL !== null) {
+        return <img src={user.photoURL} alt="user" style={{width: "35px"}}/>;
+      }
+      else {
+        return <PersonIcon fontSize="large" />;
+      }
+    }
+  }
 
   return (
     <div>

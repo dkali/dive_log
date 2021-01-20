@@ -100,10 +100,10 @@ class SignInScreen extends React.Component {
 
           <p>or enter with local account:</p>
           <div>
-            <TextField id="standard-basic" label="email" onChange={this.handleEmailChange} />
+            <TextField id="email" label="email" onChange={this.handleEmailChange} />
           </div>
           <div>
-            <TextField id="standard-basic" label="password" onChange={this.handlePswdChange} />
+            <TextField id="password" label="password" onChange={this.handlePswdChange} />
           </div>
           <p></p>
           <div>

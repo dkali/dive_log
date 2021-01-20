@@ -37,13 +37,15 @@ class App extends React.Component {
 
   // Listen to the Firebase Auth state and set the local state.
   componentDidMount() {
+    let unsubscribe = () => {};
     this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
       (user) => {
         if (user) {
           this.setState({ isSignedIn: SignInStates.logged_in });
-          this.initFireStore();
+          unsubscribe = this.initFireStore();
         } else {
           this.setState({ isSignedIn: SignInStates.sign_in_required });
+          unsubscribe();
         }
       }
     );
@@ -58,7 +60,7 @@ class App extends React.Component {
       var divesRef = db.collection("dives");
       var query = divesRef.where("user", "==", user.uid).orderBy("timestamp", "desc");
       var vld = this;
-      query.onSnapshot(function(querySnapshot) {
+      var unsubscribe = query.onSnapshot(function(querySnapshot) {
         let dive_list_init = [];
         querySnapshot.forEach(function (doc) {
           let dive_data = new Map();
@@ -77,6 +79,8 @@ class App extends React.Component {
         // save data to redux
         vld.props.initStore(dive_list_init);
       })
+
+      return unsubscribe;
     }
   }
 

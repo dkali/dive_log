@@ -52,13 +52,19 @@ class AddDive extends React.Component {
   handleClickSave = () => {
     if (this.state.selected_loc.type === "old") {
       // reuse the existing location
-      let fs_dive_data = createFireStoreDiveEntry(this.state);
+      let fs_dive_data = createFireStoreDiveEntry(this.state.depth,
+         this.state.duration,
+         this.state.date,
+         this.state.selected_loc);
       firebaseAddDive(fs_dive_data);
     }
     else if (this.state.selected_loc.type === "new") {
       // we need to create a new Location in a Firestore first
-      let fs_location_data = createFireStoreLocationEntry(this.state);
-      let fs_dive_data = createFireStoreDiveEntry(this.state);
+      let fs_location_data = createFireStoreLocationEntry(this.state.selected_loc, this.state.location);
+      let fs_dive_data = createFireStoreDiveEntry(this.state.depth,
+        this.state.duration,
+        this.state.date,
+        this.state.selected_loc);
       firebaseCreateLocAndAddDive(fs_location_data, fs_dive_data);
     }
     this.handleClickClose();

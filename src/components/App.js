@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import SimpleTabs from './Tabs';
 import AddDive from './AddDive';
@@ -29,29 +29,32 @@ if (!firebase.apps.length) {
   });
 }
 
-class App extends React.Component {
-  // The component's Local state.
-  state = {
-    isSignedIn: SignInStates.unknown // Local signed-in state.
-  };
+function App(props) {
+  const [signedState, setSignedState] = useState(SignInStates.unknown);
 
   // Listen to the Firebase Auth state and set the local state.
-  componentDidMount() {
+  useEffect(() => {
+    // Listen to the Firebase Auth state and set the local state.
     let unsubscribe = () => {};
-    this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
+    let unregisterAuthObserver = firebase.auth().onAuthStateChanged(
       (user) => {
         if (user) {
-          this.setState({ isSignedIn: SignInStates.logged_in });
-          unsubscribe = this.initFireStore();
+          setSignedState(SignInStates.logged_in);
+          unsubscribe = initFireStore();
         } else {
-          this.setState({ isSignedIn: SignInStates.sign_in_required });
+          setSignedState(SignInStates.sign_in_required);
           unsubscribe();
         }
       }
     );
-  }
 
-  initFireStore() {
+    // Make sure we un-register Firebase observers when the component unmounts.
+    return function unregister() {
+      unregisterAuthObserver();
+    }
+  }, [])
+
+  const initFireStore = () => {
     // init FireStore   
     var db = firebase.firestore();
     var user = firebase.auth().currentUser;
@@ -59,7 +62,6 @@ class App extends React.Component {
       console.log("initializing store for user id " + user.uid);
       var divesRef = db.collection("dives");
       var query = divesRef.where("user", "==", user.uid).orderBy("timestamp", "desc");
-      var vld = this;
       var unsubscribe = query.onSnapshot(function(querySnapshot) {
         let dive_list_init = [];
         querySnapshot.forEach(function (doc) {
@@ -77,44 +79,37 @@ class App extends React.Component {
         });
 
         // save data to redux
-        vld.props.initStore(dive_list_init);
+        props.initStore(dive_list_init);
       })
 
       return unsubscribe;
     }
   }
 
-  // Make sure we un-register Firebase observers when the component unmounts.
-  componentWillUnmount() {
-    this.unregisterAuthObserver();
-  }
-
-  render() {
-    return (
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <BrowserRouter>
-          <TopAppBar />
-          <div>
-            <Switch>
-              <PrivateRoute exact path="/"
-                component={SimpleTabs}
-                isSignedIn={this.state.isSignedIn} />
-              <Route path="/login"
-                component={SignInScreen} />
-              <PrivateRoute path="/add_dive"
-                component={AddDive}
-                isSignedIn={this.state.isSignedIn} />
-              <PrivateRoute path={"/dive/:firestore_id"}
-                component={EditDive}
-                isSignedIn={this.state.isSignedIn} />
-              <Route component={NoMatch} />
-            </Switch>
-          </div>
-        </BrowserRouter>
-      </ThemeProvider>
-    )
-  }
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <BrowserRouter>
+        <TopAppBar />
+        <div>
+          <Switch>
+            <PrivateRoute exact path="/"
+              component={SimpleTabs}
+              isSignedIn={signedState} />
+            <Route path="/login"
+              component={SignInScreen} />
+            <PrivateRoute path="/add_dive"
+              component={AddDive}
+              isSignedIn={signedState} />
+            <PrivateRoute path={"/dive/:firestore_id"}
+              component={EditDive}
+              isSignedIn={signedState} />
+            <Route component={NoMatch} />
+          </Switch>
+        </div>
+      </BrowserRouter>
+    </ThemeProvider>
+  )
 }
 
 export default connect(

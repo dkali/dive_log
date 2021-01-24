@@ -66,7 +66,6 @@ function TopAppBar() {
   }
 
   return (
-    <div>
       <AppBar color="primary" position="static">
         <Grid
           container
@@ -81,7 +80,7 @@ function TopAppBar() {
           </Typography>
 
           <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-              {getProfileIcon()}
+            {getProfileIcon()}
           </IconButton>
           <Menu
             anchorEl={anchorEl}
@@ -94,8 +93,6 @@ function TopAppBar() {
           </Menu>
         </Grid>
       </AppBar>
-
-    </div>
   )
 }
 

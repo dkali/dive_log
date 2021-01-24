@@ -8,15 +8,10 @@ import { Redirect, useLocation } from 'react-router';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { firebaseSignInUser } from '../helpers/FirebaseInterface';
 import Grid from '@material-ui/core/Grid';
-
-var sign_in_states = Object.freeze({ 
-  "unknown": 0,
-  "sign_in_required": 1,
-  "logged_in": 2
-})
+import SignInStates from './../helpers/enums';
 
 function SignInScreen() {
-  const [signedState, setSignedState] = useState(sign_in_states.unknown);
+  const [signedState, setSignedState] = useState(SignInStates.unknown);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -33,9 +28,9 @@ function SignInScreen() {
     let unregisterAuthObserver = firebase.auth().onAuthStateChanged(
       (user) => {
         if (user) {
-          setSignedState(sign_in_states.logged_in);
+          setSignedState(SignInStates.logged_in);
         } else {
-          setSignedState(sign_in_states.sign_in_required);
+          setSignedState(SignInStates.sign_in_required);
         }
       }
     );
@@ -66,9 +61,9 @@ function SignInScreen() {
   const { state } = useLocation();
   const { from } = state || { from: { pathname: "/" } };
 
-  if (signedState === sign_in_states.logged_in) {
+  if (signedState === SignInStates.logged_in) {
     return <Redirect push to={from} />;
-  } else if (signedState === sign_in_states.unknown) {
+  } else if (signedState === SignInStates.unknown) {
     return <LinearProgress color="secondary" />
   }
 

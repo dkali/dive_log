@@ -1,25 +1,30 @@
 import React from 'react';
-import DiveList from './DiveList.js';
+import DiveEntry from './DiveEntry';
+import { connect } from "react-redux";
+import { getDiveList } from "../redux/selectors";
+import Grid from '@material-ui/core/Grid';
 
-class DiveLog extends React.Component {
-  
-  render() {
-    const dive_log_style = {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      marginTop: "8px",
-      position: "relative",
-    }
-
-    return (
-      <div data-testid={'dive_log'}>
-        <div style={dive_log_style}>
-          <DiveList handleTabChange={this.props.handleTabChange}/>
-        </div>
-      </div>
-    )
-  }
+function DiveLog({dives, handleTabChange}) {
+  return (
+    <Grid container
+          direction="column"
+          justify="center"
+          alignItems="stretch">
+      {dives.map((dive, index ) =>
+        <Grid item key={index}>
+          <DiveEntry entryData={dive}
+            firestore_id={dive.dive_id}
+            dive_num={dives.length - index}
+            handleTabChange={handleTabChange} />
+        </Grid>
+      )}
+    </Grid>
+  )
 }
 
-export default DiveLog;
+const mapStateToProps = state => {
+  const dives = getDiveList(state);
+  return { dives };
+}
+
+export default connect(mapStateToProps)(DiveLog);

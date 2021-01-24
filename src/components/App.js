@@ -34,6 +34,38 @@ function App(props) {
 
   // Listen to the Firebase Auth state and set the local state.
   useEffect(() => {
+    const initFireStore = () => {
+      // init FireStore   
+      var db = firebase.firestore();
+      var user = firebase.auth().currentUser;
+      if (user != null) {
+        console.log("initializing store for user id " + user.uid);
+        var divesRef = db.collection("dives");
+        var query = divesRef.where("user", "==", user.uid).orderBy("timestamp", "desc");
+        var unsubscribe = query.onSnapshot(function(querySnapshot) {
+          let dive_list_init = [];
+          querySnapshot.forEach(function (doc) {
+            let dive_data = new Map();
+            dive_data["dive_id"] = doc.id;
+            dive_data["date"] = doc.data().timestamp;
+            dive_data["depth"] = doc.data().depth;
+            dive_data["duration"] = doc.data().duration;
+            let location = new DiveLocation(doc.data().location.name,
+              doc.data().location.loc_id,
+              doc.data().location.geopoint);
+            dive_data["location"] = location;
+  
+            dive_list_init.push(dive_data);
+          });
+  
+          // save data to redux
+          props.initStore(dive_list_init);
+        })
+  
+        return unsubscribe;
+      }
+    }
+    
     // Listen to the Firebase Auth state and set the local state.
     let unsubscribe = () => {};
     let unregisterAuthObserver = firebase.auth().onAuthStateChanged(
@@ -52,39 +84,8 @@ function App(props) {
     return function unregister() {
       unregisterAuthObserver();
     }
-  }, [])
+  }, [props])
 
-  const initFireStore = () => {
-    // init FireStore   
-    var db = firebase.firestore();
-    var user = firebase.auth().currentUser;
-    if (user != null) {
-      console.log("initializing store for user id " + user.uid);
-      var divesRef = db.collection("dives");
-      var query = divesRef.where("user", "==", user.uid).orderBy("timestamp", "desc");
-      var unsubscribe = query.onSnapshot(function(querySnapshot) {
-        let dive_list_init = [];
-        querySnapshot.forEach(function (doc) {
-          let dive_data = new Map();
-          dive_data["dive_id"] = doc.id;
-          dive_data["date"] = doc.data().timestamp;
-          dive_data["depth"] = doc.data().depth;
-          dive_data["duration"] = doc.data().duration;
-          let location = new DiveLocation(doc.data().location.name,
-            doc.data().location.loc_id,
-            doc.data().location.geopoint);
-          dive_data["location"] = location;
-
-          dive_list_init.push(dive_data);
-        });
-
-        // save data to redux
-        props.initStore(dive_list_init);
-      })
-
-      return unsubscribe;
-    }
-  }
 
   return (
     <ThemeProvider theme={theme}>

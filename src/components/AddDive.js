@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import EditDiveUI from './EditDiveUI.js';
 import 'date-fns';
 import { Redirect } from 'react-router';
@@ -8,115 +8,93 @@ import { firebaseAddDive,
   createFireStoreDiveEntry,
   createFireStoreLocationEntry } from '../helpers/FirebaseInterface'
 
-class AddDive extends React.Component {
-  constructor(props) {
-    super(props);
+function AddDive() {
+  const [date, setDate] = useState(firebase.firestore.Timestamp.fromDate(new Date()));
+  const [depth, setDepth] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [location, setLocation] = useState({ name: '' });
+  const [selectedLoc, setSelectedLoc] = useState({});
+  const [redirect, setRedirect] = useState(false);
 
-    this.state = {
-      date: firebase.firestore.Timestamp.fromDate(new Date()),
-      location: { name: '' },
-      depth: 0,
-      duration: 0,
-
-      selected_loc: {},
-      input_valid: false,
-    };
-
-    this.handleSiteChange = this.handleSiteChange.bind(this);
-    this.handleDateChange = this.handleDateChange.bind(this);
-    this.handleDepthChange = this.handleDepthChange.bind(this);
-    this.handleDurationChange = this.handleDurationChange.bind(this);
-    this.changeSelectedLoc = this.changeSelectedLoc.bind(this);
+  const handleDateChange = date => {
+    setDate(firebase.firestore.Timestamp.fromDate(date));
   }
 
-  handleDateChange = date => {
-    // TDOD: handle users manual input, when date is invalid
-    this.setState({ date: firebase.firestore.Timestamp.fromDate(date) })
+  const handleSiteChange = (event) => {
+    setLocation({ name: event.target.value });
   }
 
-  handleSiteChange(event) {
-    this.setState({ location: { name: event.target.value } },
-      () => { this.validate_input() });
+  const handleDepthChange = (event) => {
+    setDepth(event.target.value);
   }
 
-  handleDepthChange(event) {
-    this.setState({ depth: event.target.value },
-      () => { this.validate_input() })
+  const handleDurationChange = (event) => {
+    setDuration(event.target.value);
   }
 
-  handleDurationChange(event) {
-    this.setState({ duration: event.target.value },
-      () => { this.validate_input() })
-  }
-
-  handleClickSave = () => {
-    if (this.state.selected_loc.type === "old") {
+  const handleClickSave = () => {
+    if (selectedLoc.type === "old") {
       // reuse the existing location
-      let fs_dive_data = createFireStoreDiveEntry(this.state.depth,
-         this.state.duration,
-         this.state.date,
-         this.state.selected_loc);
+      let fs_dive_data = createFireStoreDiveEntry(depth, duration, date, selectedLoc);
       firebaseAddDive(fs_dive_data);
     }
-    else if (this.state.selected_loc.type === "new") {
+    else if (selectedLoc.type === "new") {
       // we need to create a new Location in a Firestore first
-      let fs_location_data = createFireStoreLocationEntry(this.state.selected_loc, this.state.location);
-      let fs_dive_data = createFireStoreDiveEntry(this.state.depth,
-        this.state.duration,
-        this.state.date,
-        this.state.selected_loc);
+      let fs_location_data = createFireStoreLocationEntry(selectedLoc, location);
+      let fs_dive_data = createFireStoreDiveEntry(depth, duration, date, selectedLoc);
       firebaseCreateLocAndAddDive(fs_location_data, fs_dive_data);
     }
-    this.handleClickClose();
+    handleClickClose();
   }
 
-  handleClickClose = () => {
-    this.setState({ redirect: true });
+  const handleClickClose = () => {
+    setRedirect(true);
   }
 
   // selected_marker - Map object
-  changeSelectedLoc(selected_marker) {
-    let updated_chunk = {
-      selected_loc: {
-        type: selected_marker.type,
-        geopoint: selected_marker.geopoint,
-        name: selected_marker.name,
-        loc_id: selected_marker.loc_id
-      }
+  const changeSelectedLoc = (selected_marker) => {
+    let selected_loc = {
+      type: selected_marker.type,
+      geopoint: selected_marker.geopoint,
+      name: selected_marker.name,
+      loc_id: selected_marker.loc_id
     }
 
-    updated_chunk.location = selected_marker.name === undefined ? { name: "" } : { name: selected_marker.name };
-    this.setState(updated_chunk, () => { this.validate_input() });
+    let location = selected_marker.name === undefined ?
+      { name: "" } :
+      { name: selected_marker.name };
+    setLocation(location);
+    setSelectedLoc(selected_loc);
   }
 
-  validate_input() {
-    let regex = /^\d+$/;
-    let valid = (this.state.location.name === "" ||
-      Object.keys(this.state.selected_loc).length === 0 ||
-      regex.test(this.state.depth) === false ||
-      this.state.depth === 0 ||
-      regex.test(this.state.duration) === false ||
-      this.state.duration === 0) ? false : true;
-    this.setState({ input_valid: valid });
+  let inputValid = (location.name === "" ||
+                    depth <= 0 ||
+                    duration <= 0) ? false : true;
+
+  if (redirect) {
+    return <Redirect push to="/" />;
   }
 
-  render() {
-    if (this.state.redirect) {
-      return <Redirect push to="/" />;
-    }
+  let dive_data = {
+    selected_loc: selectedLoc,
+    location: location,
+    depth: depth,
+    duration: duration,
+    date: date,
+    input_valid: inputValid
+  };
 
-    return (
-      <EditDiveUI dive_data={this.state}
-        handleSiteChange={this.handleSiteChange}
-        handleDateChange={this.handleDateChange}
-        handleDepthChange={this.handleDepthChange}
-        handleDurationChange={this.handleDurationChange}
-        handleClickSave={this.handleClickSave}
-        handleClickClose={this.handleClickClose}
-        changeSelectedLoc={this.changeSelectedLoc}
-      />
-    )
-  }
+  return (
+    <EditDiveUI dive_data={dive_data}
+      handleSiteChange={handleSiteChange}
+      handleDateChange={handleDateChange}
+      handleDepthChange={handleDepthChange}
+      handleDurationChange={handleDurationChange}
+      handleClickSave={handleClickSave}
+      handleClickClose={handleClickClose}
+      changeSelectedLoc={changeSelectedLoc}
+    />
+  )
 }
 
 export default AddDive;

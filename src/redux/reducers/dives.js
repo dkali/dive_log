@@ -1,10 +1,14 @@
-import { SELECT_DIVE, INIT_STORE } from "../actionTypes"
+import { SELECT_DIVE, INIT_STORE, SELECT_CUR_GEOPOINT } from "../actionTypes"
 
 const initialState = {
   diveList: [
   ],
   current_dive: 0,
-  init_complete: false
+  init_complete: false,
+  cur_geopoint: {
+    latitude: 56.336893,
+    longitude: 43.986196
+  }
 }
 
 export default function foo(state = initialState, action) {
@@ -13,6 +17,13 @@ export default function foo(state = initialState, action) {
       return {
         ...state,
         current_dive: action.dive_id,
+      }
+    }
+
+    case SELECT_CUR_GEOPOINT: {
+      return {
+        ...state,
+        cur_geopoint: action.geopoint,
       }
     }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
-import { selectDive } from "../redux/actions";
+import { selectDive, selectCurrentGeopoint } from "../redux/actions";
 import 'date-fns';
 import format from "date-fns/format";
 import fromUnixTime from 'date-fns/fromUnixTime'
@@ -25,14 +25,15 @@ const styles = theme => ({
 });
 
 function DiveEntry(props) {
+  const { entryData, dive_num, classes } = props;
+
   const handleClick = () => {
     props.selectDive(props.firestore_id);
+    props.selectCurrentGeopoint(entryData.location.geopoint);
     if (props.handleTabChange !== undefined) {
       props.handleTabChange(null, 1);
     }
   }
-
-  const { entryData, dive_num, classes } = props;
 
   return (
     <ListItem className={classes.root} onClick={handleClick}>
@@ -95,5 +96,5 @@ function DiveEntry(props) {
 
 export default connect(
   null,
-  { selectDive }
+  { selectDive, selectCurrentGeopoint }
 )(withStyles(styles)(DiveEntry));

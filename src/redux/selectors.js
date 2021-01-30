@@ -21,3 +21,7 @@ export function getCurrentDiveID(store) {
 export function getInitComplete(store) {
   return getDivesState(store).init_complete;
 }
+
+export function getCurGeopoint(store) {
+  return getDivesState(store).cur_geopoint;
+}

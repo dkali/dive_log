@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { getCurrentDiveData, getInitComplete} from "../redux/selectors";
 import { Redirect } from 'react-router';
 import firebase from 'firebase/app';
-import { selectDive } from "../redux/actions";
+import { selectDive, selectCurrentGeopoint } from "../redux/actions";
 import { firebaseUpdateDive,
   firebaseCreateLocationAndUpdateDive,
   createFireStoreDiveEntry,
@@ -96,6 +96,8 @@ function EditDive(props) {
     } else {
       setLocation({...location, ...{name: selected_marker.name}});
     }
+
+    props.selectCurrentGeopoint(selected_marker.geopoint);
   }
 
   let inputValid = (location.name === "" ||
@@ -155,5 +157,5 @@ function mapStateToProps(state, ownProps) {
 
 export default connect(
   mapStateToProps,
-  { selectDive }
+  { selectDive, selectCurrentGeopoint }
 )(EditDive);

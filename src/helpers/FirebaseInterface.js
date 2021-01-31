@@ -113,3 +113,21 @@ export function firebaseDeleteDive(dive_id){
     console.error("Error removing dive: ", error);
   });
 }
+
+export function devConfig() {
+  var constants = require('../ApiKey.js');
+  return {
+    apiKey: constants.FIRESTORE_DEV_API_KEY,
+    authDomain: 'divelog-ee00d.firebaseapp.com',
+    projectId: 'divelog-ee00d'
+  }
+}
+
+export function prodConfig() {
+  var constants = require('../ApiKey.js');
+  return {
+    apiKey: constants.FIRESTORE_PROD_API_KEY,
+    authDomain: 'divelogprod.firebaseapp.com',
+    projectId: 'divelogprod'
+  }
+}

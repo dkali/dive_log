@@ -14,19 +14,19 @@ import { CssBaseline } from '@material-ui/core';
 import DiveLocation from '../helpers/DiveLocation.js'
 import { connect } from "react-redux";
 import { initStore } from "../redux/actions";
+import { devConfig, prodConfig } from "./../helpers/FirebaseInterface"
 
 const theme = createMuiTheme();
 
 const NoMatch = () => <h1>404 Not Found :(</h1>
 
 // Configure Firebase.
-var constants = require('../ApiKey.js');
 if (!firebase.apps.length) {
-  firebase.initializeApp({
-    apiKey: constants.FIRESTORE_API_KEY,
-    authDomain: 'divelog-ee00d.firebaseapp.com',
-    projectId: 'divelog-ee00d'
-  });
+  let backendEnv = "dev";
+  // backendEnv = "prod";
+  backendEnv === "prod" ?
+    firebase.initializeApp(prodConfig()) :
+    firebase.initializeApp(devConfig());
 }
 
 function App(props) {

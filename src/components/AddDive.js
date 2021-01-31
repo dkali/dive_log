@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import EditDiveUI from './EditDiveUI.js';
 import 'date-fns';
+import { connect } from "react-redux";
 import { Redirect } from 'react-router';
 import firebase from 'firebase/app';
+import { selectCurrentGeopoint } from "../redux/actions";
 import { firebaseAddDive,
   firebaseCreateLocAndAddDive,
   createFireStoreDiveEntry,
   createFireStoreLocationEntry } from '../helpers/FirebaseInterface'
 
-function AddDive() {
+function AddDive(props) {
   const [date, setDate] = useState(firebase.firestore.Timestamp.fromDate(new Date()));
   const [depth, setDepth] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -53,18 +55,21 @@ function AddDive() {
 
   // selected_marker - Map object
   const changeSelectedLoc = (selected_marker) => {
-    let selected_loc = {
-      type: selected_marker.type,
+    setSelectedLoc({type: selected_marker.type,
       geopoint: selected_marker.geopoint,
       name: selected_marker.name,
-      loc_id: selected_marker.loc_id
+      loc_id: selected_marker.loc_id});
+
+    if (selected_marker.name === undefined) {
+    setLocation( {...location, ...{name: ""}} );
+    } else {
+    setLocation({...location, ...{name: selected_marker.name}});
     }
 
-    let location = selected_marker.name === undefined ?
-      { name: "" } :
-      { name: selected_marker.name };
-    setLocation(location);
-    setSelectedLoc(selected_loc);
+    // undefined will be when unselect the New Marker
+    if (selected_marker.geopoint !== undefined) {
+      props.selectCurrentGeopoint(selected_marker.geopoint);
+    }
   }
 
   let inputValid = (location.name === "" ||
@@ -97,4 +102,7 @@ function AddDive() {
   )
 }
 
-export default AddDive;
+export default connect(
+  null,
+  { selectCurrentGeopoint }
+)(AddDive);

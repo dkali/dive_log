@@ -97,7 +97,10 @@ function EditDive(props) {
       setLocation({...location, ...{name: selected_marker.name}});
     }
 
-    props.selectCurrentGeopoint(selected_marker.geopoint);
+    // undefined will be when unselect the New Marker
+    if (selected_marker.geopoint !== undefined) {
+      props.selectCurrentGeopoint(selected_marker.geopoint);
+    }
   }
 
   let inputValid = (location.name === "" ||

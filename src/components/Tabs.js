@@ -65,13 +65,15 @@ function SimpleTabs() {
                   <Tab data-testid={"map_tab"} label="Map" />
                 </Tabs>
                 <TabPanel value={value} index={0}>
-                  <DiveLog handleTabChange={handleChange} />
-                    <Fab style={add_dive_style}
-                      component={Link} to={"/add_dive"}
-                      color="secondary"
-                      data-testid={'add_new_dive_btn'}>
-                      <AddIcon />
-                    </Fab>
+                  <div style={{overflow: "auto", height: 'calc(100vh - 107px)'}} >
+                    <DiveLog handleTabChange={handleChange} />
+                      <Fab style={add_dive_style}
+                        component={Link} to={"/add_dive"}
+                        color="secondary"
+                        data-testid={'add_new_dive_btn'}>
+                        <AddIcon />
+                      </Fab>
+                  </div>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
                   <MapContainer map_style={{
@@ -84,15 +86,17 @@ function SimpleTabs() {
               <Fragment>
                 <Grid container>
                   <Grid item xs={4}>
-                    <DiveLog />
-                    <NavLink to="/add_dive">
-                      <Fab style={add_dive_style_calc}
-                        component={Link} to={"/add_dive"}
-                        color="primary"
-                        data-testid={'add_new_dive_btn'}>
-                        <AddIcon />
-                      </Fab>
-                    </NavLink>
+                    <div style={{overflow: "auto", height: 'calc(100vh - 59px)'}} >
+                      <DiveLog />
+                      <NavLink to="/add_dive">
+                        <Fab style={add_dive_style_calc}
+                          component={Link} to={"/add_dive"}
+                          color="secondary"
+                          data-testid={'add_new_dive_btn'}>
+                          <AddIcon />
+                        </Fab>
+                      </NavLink>
+                    </div>
                   </Grid>
                   <Grid item xs={8}>
                     <MapContainer map_style={{

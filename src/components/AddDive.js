@@ -60,10 +60,8 @@ function AddDive(props) {
       name: selected_marker.name,
       loc_id: selected_marker.loc_id});
 
-    if (selected_marker.name === undefined) {
-    setLocation( {...location, ...{name: ""}} );
-    } else {
-    setLocation({...location, ...{name: selected_marker.name}});
+    if (selected_marker.name !== undefined) {
+      setLocation({...location, ...{name: selected_marker.name}});
     }
 
     // undefined will be when unselect the New Marker

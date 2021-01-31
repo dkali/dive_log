@@ -47,7 +47,7 @@ function EditDiveUI(props) {
 
     var mark = <Marker
       title={"New Location"}
-      name={"New Location"}
+      name={""}
       key={clickEvent.latLng.lat() + clickEvent.latLng.lng()}
       position={clickEvent.latLng}
       onClick={onMarkerClick}

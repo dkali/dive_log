@@ -91,9 +91,7 @@ function EditDive(props) {
                     name: selected_marker.name,
                     loc_id: selected_marker.loc_id});
     
-    if (selected_marker.name === undefined) {
-      setLocation( {...location, ...{name: ""}} );
-    } else {
+    if (selected_marker.name !== undefined) {
       setLocation({...location, ...{name: selected_marker.name}});
     }
 

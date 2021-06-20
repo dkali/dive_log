@@ -72,7 +72,9 @@ function AddDive(props) {
 
   let inputValid = (location.name === "" ||
                     depth <= 0 ||
-                    duration <= 0) ? false : true;
+                    duration <= 0 ||
+                    (selectedLoc && Object.keys(selectedLoc).length === 0 &&
+                     selectedLoc.constructor === Object)) ? false : true;
 
   if (redirect) {
     return <Redirect push to="/" />;

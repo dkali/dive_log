@@ -11,7 +11,7 @@ import { firebaseAddDive,
   createFireStoreLocationEntry } from '../helpers/FirebaseInterface'
 
 function AddDive(props) {
-  const [date, setDate] = useState(firebase.firestore.Timestamp.fromDate(new Date()));
+  const [date, setDate] = useState(Date.now());
   const [depth, setDepth] = useState(0);
   const [duration, setDuration] = useState(0);
   const [location, setLocation] = useState({ name: '' });
@@ -19,7 +19,7 @@ function AddDive(props) {
   const [redirect, setRedirect] = useState(false);
 
   const handleDateChange = date => {
-    setDate(firebase.firestore.Timestamp.fromDate(date));
+    setDate(date);
   }
 
   const handleSiteChange = (event) => {
@@ -35,15 +35,17 @@ function AddDive(props) {
   }
 
   const handleClickSave = () => {
+    // in Firestore we will keep date as a timestamp
+    let fs_date = firebase.firestore.Timestamp.fromDate(date)
     if (selectedLoc.type === "old") {
       // reuse the existing location
-      let fs_dive_data = createFireStoreDiveEntry(depth, duration, date, selectedLoc);
+      let fs_dive_data = createFireStoreDiveEntry(depth, duration, fs_date, selectedLoc);
       firebaseAddDive(fs_dive_data);
     }
     else if (selectedLoc.type === "new") {
       // we need to create a new Location in a Firestore first
       let fs_location_data = createFireStoreLocationEntry(selectedLoc, location);
-      let fs_dive_data = createFireStoreDiveEntry(depth, duration, date, selectedLoc);
+      let fs_dive_data = createFireStoreDiveEntry(depth, duration, fs_date, selectedLoc);
       firebaseCreateLocAndAddDive(fs_location_data, fs_dive_data);
     }
     handleClickClose();
@@ -74,7 +76,9 @@ function AddDive(props) {
                     depth <= 0 ||
                     duration <= 0 ||
                     (selectedLoc && Object.keys(selectedLoc).length === 0 &&
-                     selectedLoc.constructor === Object)) ? false : true;
+                     selectedLoc.constructor === Object) ||
+                    !date instanceof Date ||
+                    isNaN(date)) ? false : true;
 
   if (redirect) {
     return <Redirect push to="/" />;

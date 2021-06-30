@@ -11,6 +11,8 @@ import { firebaseUpdateDive,
   createFireStoreDiveEntry,
   createFireStoreLocationEntry } from '../helpers/FirebaseInterface';
 import { useParams } from "react-router-dom";
+import format from "date-fns/format";
+import fromUnixTime from 'date-fns/fromUnixTime'
 
 function EditDive(props) {
   let { firestore_id } = useParams();
@@ -47,7 +49,7 @@ function EditDive(props) {
   });
           
   const handleDateChange = date => {
-    setDate(firebase.firestore.Timestamp.fromDate(date));
+    setDate(date);
   }
 
   const handleSiteChange = (event) => {
@@ -64,15 +66,17 @@ function EditDive(props) {
   }
 
   const handleClickSave = () => {
+    // in Firestore we will keep date as a timestamp
+    let fs_date = firebase.firestore.Timestamp.fromDate(date)
     if (selectedLoc.type === "old") {
       // reuse the existing location
-      let fs_dive_data = createFireStoreDiveEntry(depth, duration, date, selectedLoc);
+      let fs_dive_data = createFireStoreDiveEntry(depth, duration, fs_date, selectedLoc);
       firebaseUpdateDive(diveID, fs_dive_data);
     }
     else if (selectedLoc.type === "new") {
       // we need to create a new Location in a Firestore first
       let fs_location_data = createFireStoreLocationEntry(selectedLoc, location);
-      let fs_dive_data = createFireStoreDiveEntry(depth, duration, date, selectedLoc);
+      let fs_dive_data = createFireStoreDiveEntry(depth, duration, fs_date, selectedLoc);
       firebaseCreateLocationAndUpdateDive(fs_location_data,
         diveID,
         fs_dive_data);
@@ -103,7 +107,9 @@ function EditDive(props) {
 
   let inputValid = (location.name === "" ||
                 depth <= 0 ||
-                duration <= 0) ? false : true;
+                duration <= 0 ||
+                !date instanceof Date ||
+                isNaN(date)) ? false : true;
 
   if (redirect) {
     return <Redirect push to="/" />;
@@ -147,7 +153,8 @@ function mapStateToProps(state, ownProps) {
     initial_dive_data = {location: {}};
   }
 
-  return { date: initial_dive_data.date,
+  // in firestore we keep date as timestanp, so we need to convert it back to Date obj
+  return { date: fromUnixTime(initial_dive_data.date.seconds),
     depth: initial_dive_data.depth,
     dive_id: initial_dive_data.dive_id,
     duration: initial_dive_data.duration,

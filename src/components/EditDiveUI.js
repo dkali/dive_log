@@ -6,9 +6,6 @@ import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import DateFnsUtils from '@date-io/date-fns';
-import 'date-fns';
-import format from "date-fns/format";
-import fromUnixTime from 'date-fns/fromUnixTime'
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -131,13 +128,11 @@ function EditDiveUI(props) {
       <Grid item xs={"auto"}>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <KeyboardDatePicker
-            disableToolbar
-            variant="inline"
-            format="MMM dd, yyyy"
+            format="MM/dd/yyyy"
             margin="normal"
             inputProps={{ 'data-testid': 'edit_dialog_date-picker-inline' }}
             label="Date picker inline"
-            value={format(fromUnixTime(props.dive_data.date.seconds), "MMM dd, yyyy")}
+            value={props.dive_data.date}
             onChange={props.handleDateChange}
             KeyboardButtonProps={{
               'aria-label': 'change date',

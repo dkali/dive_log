@@ -11,7 +11,7 @@ import { firebaseAddDive,
   createFireStoreLocationEntry } from '../helpers/FirebaseInterface'
 
 function AddDive(props) {
-  const [date, setDate] = useState(Date.now());
+  const [date, setDate] = useState(new Date());
   const [depth, setDepth] = useState(0);
   const [duration, setDuration] = useState(0);
   const [location, setLocation] = useState({ name: '' });

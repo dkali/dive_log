@@ -1,27 +1,26 @@
 /* global google */
 
 import React, { useState } from 'react';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Input from '@material-ui/core/Input';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Input from '@mui/material/Input';
+import InputAdornment from '@mui/material/InputAdornment';
+import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import MapContainer from './MapContainer';
-import { Marker } from 'google-maps-react';
-import firebase from 'firebase/app';
+import { getFirestore, GeoPoint } from 'firebase/firestore';
+import { initializeApp } from 'firebase/app';
 import arrow_icon from '../icons/arrow-down-4-512.png';
-import Grid from '@material-ui/core/Grid';
+import Grid from '@mui/material/Grid';
 import DeleteConfirmationDialog from './DeleteConfirmationDialog';
-import { Redirect } from 'react-router';
+import { useNavigate } from 'react-router-dom';
+import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 
 function EditDiveUI(props) {
   const [new_marker, set_new_marker] = useState(null);
   const [deleteConfOpen, setDeleteConfOpen] = useState(false);
   const [deletionConfirmed, setDeletionConfirmed] = useState(false);
+  const navigate = useNavigate();
 
   const onMarkerClick = marker => {
     let selected_marker = {
@@ -34,7 +33,11 @@ function EditDiveUI(props) {
     props.changeSelectedLoc(selected_marker);
   }
 
-  const mapClicked = (mapProps, map, clickEvent) => {
+  const mapClicked = (clickEvent) => {
+    if (!clickEvent.latLng) {
+      return;
+    }
+
     var icon = {
       url: arrow_icon,
       scaledSize: new google.maps.Size(40, 40),
@@ -53,7 +56,7 @@ function EditDiveUI(props) {
     set_new_marker(mark);
     let selected_marker = {
       type: "new",
-      geopoint: new firebase.firestore.GeoPoint(clickEvent.latLng.lat(),
+      geopoint: new GeoPoint(clickEvent.latLng.lat(),
         clickEvent.latLng.lng())
     };
     props.changeSelectedLoc(selected_marker);
@@ -72,19 +75,20 @@ function EditDiveUI(props) {
   }
 
   if (deletionConfirmed) {
-    return <Redirect push to="/" />;
+    navigate('/');
+    return null;
   }
 
   return (
     <div style={{ padding: 20 }}>
     <Grid container direction="column" spacing={2}>
-      <Grid item xs={"auto"}>
+      <Grid size="auto">
         {props.dive_data.selected_loc.type === "old" &&
           <TextField
             autoFocus
             disabled
             margin="dense"
-            inputProps={{ 'data-testid': 'edit_dialog_site' }}
+            slotProps={{ htmlInput: { 'data-testid': 'edit_dialog_site' } }}
             label="Dive Site"
             fullWidth
             value={props.dive_data.location.name}
@@ -95,7 +99,7 @@ function EditDiveUI(props) {
           <TextField
             autoFocus
             margin="dense"
-            inputProps={{ 'data-testid': 'edit_dialog_site' }}
+            slotProps={{ htmlInput: { 'data-testid': 'edit_dialog_site' } }}
             label="Dive Site"
             fullWidth
             value={props.dive_data.location.name}
@@ -103,9 +107,9 @@ function EditDiveUI(props) {
             />}
       </Grid>
 
-      <Grid item xs={"auto"}>
+      <Grid size="auto">
         <Input
-          inputProps={{ 'data-testid': 'edit_dialog_depth' }}
+          slotProps={{ input: { 'data-testid': 'edit_dialog_depth' } }}
           endAdornment={<InputAdornment position="end">meters</InputAdornment>}
           value={props.dive_data.depth}
           onChange={props.handleDepthChange}
@@ -114,9 +118,9 @@ function EditDiveUI(props) {
         />
       </Grid>
 
-      <Grid item xs={"auto"}>
+      <Grid size="auto">
         <Input
-          inputProps={{ 'data-testid': 'edit_dialog_duration' }}
+          slotProps={{ input: { 'data-testid': 'edit_dialog_duration' } }}
           endAdornment={<InputAdornment position="end">minutes</InputAdornment>}
           value={props.dive_data.duration}
           onChange={props.handleDurationChange}
@@ -125,23 +129,24 @@ function EditDiveUI(props) {
         />
       </Grid>
 
-      <Grid item xs={"auto"}>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <KeyboardDatePicker
+      <Grid size="auto">
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <DatePicker
             format="MM/dd/yyyy"
-            margin="normal"
-            inputProps={{ 'data-testid': 'edit_dialog_date-picker-inline' }}
             label="Date picker inline"
             value={props.dive_data.date}
             onChange={props.handleDateChange}
-            KeyboardButtonProps={{
-              'aria-label': 'change date',
+            slotProps={{
+              textField: {
+                margin: 'normal',
+                'data-testid': 'edit_dialog_date-picker-inline'
+              }
             }}
           />
-        </MuiPickersUtilsProvider>
+        </LocalizationProvider>
       </Grid>
 
-      <Grid item xs={"auto"}>
+      <Grid size="auto">
         <Button onClick={props.handleClickClose}
           color="primary"
           data-testid={'edit_dialog_close'} >
@@ -164,7 +169,7 @@ function EditDiveUI(props) {
         </Button>}
       </Grid>
 
-      <Grid item xs={"auto"}>
+      <Grid size="auto">
         <MapContainer
           map_style={{
             height: '50vh',

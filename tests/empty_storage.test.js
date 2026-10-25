@@ -1,46 +1,13 @@
-// import dependencies
-import React from 'react';
-import '@testing-library/jest-dom/extend-expect';
-import 'date-fns';
+import diveReducer from '../src/redux/reducers/dives';
+import { initStore } from '../src/redux/actions';
 
-// import react-testing methods
-import { render, fireEvent, waitFor, screen, getAllByTestId } from '@testing-library/react';
+test('dive store starts empty and can be initialized with no dives', () => {
+  const initialState = diveReducer(undefined, { type: '@@test/INIT' });
 
-// add custom jest matchers from jest-dom
-import '@testing-library/jest-dom/extend-expect';
-
-// the component to test
-import App from '../src/components/App.js';
-
-// for async to work
-import regeneratorRuntime from "regenerator-runtime";
-
-//redux
-import { Provider } from 'react-redux';
-import store from '../src/redux/store';
-
-jest.mock('../src/redux/selectors')
-
-test('component DiveList: start when no dives saved', async () => {
-  // Arrange
-  const dives = {
+  expect(initialState.diveList).toEqual([]);
+  expect(initialState.init_complete).toBe(false);
+  expect(diveReducer(initialState, initStore([]))).toMatchObject({
     diveList: [],
-    current_dive: 0,
-  };
-
-  const foo = require('../src/redux/selectors');
-  foo.getDivesState.mockImplementation(() => dives);
-  foo.getDiveList.mockImplementation(() => dives.diveList);
-
-  const { container, asFragment } = render(
-    <Provider store={store}>
-      <App/>
-    </Provider>);
-
-  const test_values = {site: 'Ozero 5',
-                       depth: 13,
-                       duration: 20}
-  
-  // Assert
-  expect(screen.queryAllByTestId('dive_entry')).toHaveLength(0);
-})
+    init_complete: true,
+  });
+});

@@ -1,13 +1,13 @@
 import React, { Fragment, useState } from 'react';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import DiveLog from './DiveLog.js';
-import MapContainer from './MapContainer.js';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import DiveLog from './DiveLog';
+import MapContainer from './MapContainer';
 import Media from 'react-media';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-import Grid from '@material-ui/core/Grid';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import Grid from '@mui/material/Grid';
 import { NavLink } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
@@ -85,7 +85,7 @@ function SimpleTabs() {
             {matches.medium && 
               <Fragment>
                 <Grid container>
-                  <Grid item xs={4}>
+                  <Grid size={4}>
                     <div style={{overflow: "auto", height: 'calc(100vh - 59px)'}} >
                       <DiveLog />
                       <NavLink to="/add_dive">
@@ -98,7 +98,7 @@ function SimpleTabs() {
                       </NavLink>
                     </div>
                   </Grid>
-                  <Grid item xs={8}>
+                  <Grid size={8}>
                     <MapContainer map_style={{
                       height: 'calc(100vh - 59px)',
                     }

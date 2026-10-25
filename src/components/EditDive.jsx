@@ -1,10 +1,11 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import EditDiveUI from './EditDiveUI.js';
+import EditDiveUI from './EditDiveUI';
 import 'date-fns';
 import { connect } from "react-redux";
 import { getCurrentDiveData, getInitComplete} from "../redux/selectors";
-import { Redirect } from 'react-router';
-import firebase from 'firebase/app';
+import { Navigate } from 'react-router-dom';
+import { initializeApp } from 'firebase/app';
+import { getFirestore, Timestamp } from 'firebase/firestore';
 import { selectDive, selectCurrentGeopoint } from "../redux/actions";
 import { firebaseUpdateDive,
   firebaseCreateLocationAndUpdateDive,
@@ -67,7 +68,7 @@ function EditDive(props) {
 
   const handleClickSave = () => {
     // in Firestore we will keep date as a timestamp
-    let fs_date = firebase.firestore.Timestamp.fromDate(date)
+    let fs_date = Timestamp.fromDate(date)
     if (selectedLoc.type === "old") {
       // reuse the existing location
       let fs_dive_data = createFireStoreDiveEntry(depth, duration, fs_date, selectedLoc);
@@ -112,7 +113,7 @@ function EditDive(props) {
                 isNaN(date)) ? false : true;
 
   if (redirect) {
-    return <Redirect push to="/" />;
+    return <Navigate to="/" />;
   }
 
   let dive_data = {

@@ -2,73 +2,53 @@
   "name": "dive_log",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
   "dependencies": {
-    "@date-io/date-fns": "^1.3.13",
-    "@material-ui/core": "^4.8.3",
-    "@material-ui/icons": "^4.5.1",
-    "@material-ui/pickers": "^3.2.9",
-    "@material-ui/styles": "^4.11.2",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/user-event": "^7.2.1",
-    "date-fns": "^2.9.0",
-    "firebase": "^8.1.1",
-    "google-maps-react": "^2.0.2",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-firebaseui": "^4.1.0",
+    "@date-io/date-fns": "^3.2.1",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^9.5.0",
+    "@mui/lab": "^9.0.0-beta.10",
+    "@mui/material": "^9.5.0",
+    "@mui/x-date-pickers": "^9.16.0",
+    "@react-google-maps/api": "^2.20.8",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/user-event": "^14.6.8",
+    "date-fns": "^4.4.0",
+    "firebase": "^13.1.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "react-media": "^1.10.0",
-    "react-redux": "^7.2.0",
-    "react-responsive": "^8.2.0",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.1",
-    "redux": "^4.0.5",
-    "typeface-roboto": "0.0.75"
+    "react-redux": "^9.3.0",
+    "react-responsive": "^10.0.1",
+    "react-router-dom": "^6.30.6",
+    "redux": "^5.0.1",
+    "typeface-roboto": "1.1.13"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "jest",
-    "eject": "react-scripts eject",
+    "start": "vite",
+    "build": "vite build",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "predeploy": "npm run build",
     "deploy": "scp -r /Users/dkalinnikov/git/dive_log/build pi@192.168.0.141:/home/pi/git/dive_log/",
     "server": "node-env-run server --exec nodemon"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "devDependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/preset-env": "^7.9.5",
-    "@babel/preset-react": "^7.9.4",
-    "@testing-library/react": "^9.5.0",
-    "body-parser": "^1.19.0",
-    "express": "^4.17.1",
-    "express-pino-logger": "^5.0.0",
-    "gh-pages": "^3.0.0",
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/react": "^16.3.3",
+    "body-parser": "^2.4.0",
+    "express": "^5.3.0",
+    "express-pino-logger": "^7.0.0",
+    "gh-pages": "^6.3.0",
     "node-env-run": "^4.0.2",
-    "nodemon": "^2.0.6",
+    "nodemon": "^3.1.14",
     "npm-run-all": "^4.1.5",
-    "pino-colada": "^2.1.0",
-    "react-test-renderer": "^16.13.1",
-    "redux-devtools": "^3.5.0"
-  },
-  "jest": {
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/assetsTransformer.js",
-      "\\.(css|less)$": "<rootDir>/assetsTransformer.js"
-    }
+    "pino-colada": "^2.2.2",
+    "react-test-renderer": "^19.3.1",
+    "@vitejs/plugin-react": "^6.1.2",
+    "jsdom": "^30.1.3",
+    "vite": "^8.3.5",
+    "vitest": "^5.0.5",
+    "whatwg-fetch": "^3.6.20"
   }
 }

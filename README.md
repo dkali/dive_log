@@ -1,68 +1,157 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# DiveLog
 
-## Available Scripts
+DiveLog is a React single-page application built with Vite and tested
+with Vitest.
 
-In the project directory, you can run:
+## Requirements
 
-### `npm start`
+-   Node.js 22.12 or newer
+-   npm
+-   A local `src/ApiKey.js` file containing the Firebase and Google Maps
+    API key exports expected by the app. This file is ignored by Git;
+    obtain its values through the project's approved configuration
+    channel.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Getting started
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Install dependencies:
 
-### `npm test`
+``` sh
+npm install
+```
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Start the Vite development server:
 
-### `npm run build`
+``` sh
+npm start
+```
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Vite prints the local URL in the terminal (usually
+http://localhost:5173).
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Tests
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Run the test suite once:
 
-### `npm run eject`
+``` sh
+npm test
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Run Vitest in watch mode:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+``` sh
+npm run test:watch
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Production build and deployment
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Build the app into `build/`:
 
-## Learn More
+``` sh
+npm run build
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Deploy with:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+``` sh
+npm run deploy
+```
 
-### Code Splitting
+The deploy script rebuilds the app and copies `build/` to the configured
+deployment host. 
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+### Deploy to Firebase Hosting
 
-### Analyzing the Bundle Size
+Firebase Hosting deployment is separate from `npm run deploy`, which
+copies the build to the project's other configured deployment host.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+### Prerequisites
 
-### Making a Progressive Web App
+-   Access to the Firebase project used by DiveLogProd.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+-   Firebase CLI installed:
 
-### Advanced Configuration
+    ``` sh
+    npm install -g firebase-tools
+    ```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+-   Node.js 22.12 or newer, as required by this project.
 
-### Deployment
+### First-time setup
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+Sign in to Firebase:
 
-### `npm run build` fails to minify
+``` sh
+firebase login
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+List the Firebase projects available to your account and identify the
+correct project ID:
+
+``` sh
+firebase projects:list
+```
+
+From the repository root, select the correct Firebase project:
+
+``` sh
+firebase use <PROJECT_ID>
+```
+
+Replace `<PROJECT_ID>` with the actual Firebase project ID. Do not
+assume the Firebase Console display name is the project ID.
+
+### Build and deploy
+
+Install dependencies and create a production build:
+
+``` sh
+npm install
+npm run build
+```
+
+Check that the build output directory matches the `hosting.public`
+setting in `firebase.json`. This repository's Firebase Hosting
+configuration currently specifies `build`. Vite's default output
+directory is `dist`, unless the Vite configuration overrides it (for
+example, with `build.outDir: "build"`). If the directories do not match,
+update one of the configurations so Firebase serves the newly generated
+files.
+
+Once the output directory is correct, deploy only Firebase Hosting:
+
+``` sh
+firebase deploy --only hosting
+```
+
+After deployment, open the Hosting URL printed by the CLI. The
+production site currently uses:
+
+-   https://divelogprod.web.app
+-   https://divelogprod.firebaseapp.com
+
+### Subsequent deployments
+
+After committing your changes to Git, pull or check out the desired
+commit on the machine you deploy from, then run:
+
+``` sh
+npm install
+npm run build
+firebase deploy --only hosting
+```
+
+A Git commit by itself does not publish the app unless a CI/CD
+deployment workflow has been configured.
+
+### Troubleshooting
+
+-   **Wrong or old files are published:** verify that the build output
+    directory matches `hosting.public` in `firebase.json`, then rebuild
+    and deploy again.
+-   **Permission or project errors:** run `firebase login`, check
+    `firebase projects:list`, and select the correct project with
+    `firebase use`.
+-   **Need to deploy to the other configured host:** `npm run deploy` is
+    a different script and is not the Firebase Hosting deployment
+    command.

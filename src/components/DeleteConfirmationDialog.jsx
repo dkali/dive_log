@@ -1,10 +1,6 @@
 import React from 'react';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Button from '@material-ui/core/Button';
-import { firebaseDeleteDive } from '../helpers/FirebaseInterface'
-import Grid from '@material-ui/core/Grid';
+import { Dialog, DialogTitle, DialogContent, Button, Grid } from '@mui/material';
+import { firebaseDeleteDive } from '../helpers/FirebaseInterface';
 
 function DeleteConfirmationDialog(props) {
   const handleClickDelete = () => {
@@ -19,15 +15,15 @@ function DeleteConfirmationDialog(props) {
         Are you sure you want to delete Dive entry?
       </DialogTitle>
       <DialogContent>
-        <Grid container justify="center">
-          <Grid item>
+        <Grid container sx={{ justifyContent: 'center' }}>
+          <Grid>
             <Button onClick={props.handleClickClose}
               color="primary"
               data-testid={'del_confirm_dialog_cancel'} >
               Cancel
             </Button>
           </Grid>
-          <Grid item>
+          <Grid>
             <Button onClick={handleClickDelete}
               color="primary"
               data-testid={'del_confirm_dialog_delete'}>
